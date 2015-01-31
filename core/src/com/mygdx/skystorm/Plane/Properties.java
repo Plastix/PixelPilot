@@ -7,12 +7,12 @@ public class Properties {
     int speed;
     int armor;
     int turnSpeed;
-    FileHandle sprite;
+    FileHandle spriteHandle;
 
-    public Properties(int speed, int armor, int turnSpeed, FileHandle sprite) {
+    public Properties(int speed, int armor, int turnSpeed, FileHandle spriteHandle) {
         this.speed = speed;
         this.armor = armor;
         this.turnSpeed = turnSpeed;
-        this.sprite = sprite;
+        this.spriteHandle = spriteHandle;
     }
 }
