@@ -7,15 +7,15 @@ import com.badlogic.gdx.math.Vector2;
 public class PlaneBody {
 
     Vector2 position;
-    Properties properties;
-    Weapon weapon;
+    PlaneProperties planeProperties;
+    WeaponProperties weaponProperties;
     Sprite sprite;
 
-    public PlaneBody(Properties properties, Weapon weapon) {
+    public PlaneBody(PlaneProperties planeProperties, WeaponProperties weaponProperties) {
         this.position = new Vector2(0,0);
-        this.properties = properties;
-        this.weapon = weapon;
-        this.sprite = new Sprite(new Texture(properties.spriteHandle));
+        this.planeProperties = planeProperties;
+        this.weaponProperties = weaponProperties;
+        this.sprite = new Sprite(new Texture(planeProperties.spriteHandle));
     }
 
     public void render(){
