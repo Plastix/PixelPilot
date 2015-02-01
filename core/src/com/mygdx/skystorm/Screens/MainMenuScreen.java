@@ -33,7 +33,7 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(view);
 
         for(int i = 0; i < 15; i++)
-            stage.addActor(new Cloud(Utils.randomFloat(0, Gdx.graphics.getWidth()), Utils.randomFloat(0, Gdx.graphics.getHeight()), 3));
+            stage.addActor(new Cloud(Utils.randomFloat(0, Gdx.graphics.getWidth()), Utils.randomFloat(0, Gdx.graphics.getHeight()), 5));
 
         Gdx.input.setInputProcessor(stage);
 
