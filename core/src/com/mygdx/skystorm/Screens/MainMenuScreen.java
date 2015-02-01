@@ -113,8 +113,7 @@ public class MainMenuScreen implements Screen {
                         game.setScreen(new PlaneShowcaseScreen());
                     }
                 });
-        buttonTable.add(optionsButton).space(15)
-                .size(optionsButton.getWidth() * btnScale, optionsButton.getHeight() * btnScale)
+        buttonTable.add(optionsButton).space(15).size(optionsButton.getWidth() * btnScale, optionsButton.getHeight() * btnScale)
                 .padBottom(10);
 
         table.add(buttonTable);

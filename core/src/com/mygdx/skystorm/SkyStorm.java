@@ -1,11 +1,9 @@
 package com.mygdx.skystorm;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.skystorm.Data.GameData;
+import com.mygdx.skystorm.Data.XMLParser;
+import com.mygdx.skystorm.Plane.PlanePreset;
 import com.mygdx.skystorm.Screens.MainMenuScreen;
 
 public class SkyStorm extends Game {

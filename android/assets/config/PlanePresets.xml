@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<plane-presets>
+
+    <plane-preset name="Spitfire LF Mk IX">
+        <plane-property>Basic Plane</plane-property>
+        <weapon>single-shot</weapon>
+        <!--<controller name="RegularEnemyController"/>-->
+    </plane-preset>
+
+</plane-presets>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<weapons>
+    <weapon name="single-shot" type="projectile">
+        <damage>10</damage>
+        <reload-time>1</reload-time>
+        <lifespan>2</lifespan>
+        <sprite path="path/to/sprite"/>
+    </weapon>
+    <weapon name="double-shot" type="projectile">
+        <damage>20</damage>
+        <reload-time>1</reload-time>
+        <lifespan>2</lifespan>
+        <sprite path="path/to/sprite"/>
+    </weapon>
+</weapons>
+
