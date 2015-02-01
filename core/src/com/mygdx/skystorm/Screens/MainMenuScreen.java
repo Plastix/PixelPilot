@@ -33,7 +33,10 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(view);
 
         for(int i = 0; i < 15; i++)
-            stage.addActor(new Cloud(Utils.randomFloat(0, Gdx.graphics.getWidth()), Utils.randomFloat(0, Gdx.graphics.getHeight()), 5));
+            stage.addActor(new Cloud(
+                    Utils.randomFloat(0, Gdx.graphics.getWidth()),
+                    Utils.randomFloat(0, Gdx.graphics.getHeight()),
+                    75, 75, 5));
 
         Gdx.input.setInputProcessor(stage);
 
@@ -70,6 +73,7 @@ public class MainMenuScreen implements Screen {
         table.row();
 
         Table buttonTable = new Table();
+        float btnScale = scale-0.1f;
 
         // create the buttons
         Button playButton = createButton(
@@ -82,7 +86,7 @@ public class MainMenuScreen implements Screen {
                     }
                 });
         buttonTable.add(playButton).space(15)
-                .size(playButton.getWidth() * scale, playButton.getHeight() * scale);
+                .size(playButton.getWidth() * btnScale, playButton.getHeight() * btnScale);
 
         buttonTable.row();
 
@@ -96,7 +100,7 @@ public class MainMenuScreen implements Screen {
                     }
                 });
         buttonTable.add(planesButton).space(15)
-                .size(planesButton.getWidth() * scale, planesButton.getHeight() * scale);
+                .size(planesButton.getWidth() * btnScale, planesButton.getHeight() * btnScale);
 
         buttonTable.row();
 
@@ -110,7 +114,7 @@ public class MainMenuScreen implements Screen {
                     }
                 });
         buttonTable.add(optionsButton).space(15)
-                .size(optionsButton.getWidth() * scale, optionsButton.getHeight() * scale);
+                .size(optionsButton.getWidth() * btnScale, optionsButton.getHeight() * btnScale);
 
         table.add(buttonTable);
 
