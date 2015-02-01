@@ -18,14 +18,12 @@ public class Cloud extends Group {
 
     private static final FileHandle cloudImg = Gdx.files.internal("cloud.png");
 
-    public Cloud(float x, float y, int numPuffs) {
-        int randomX = 75;
-        int randomY = 75;
+    public Cloud(float x, float y, float sizeX, float sizeY, int numPuffs) {
         for (int i = 0; i < numPuffs; i++) {
             Image puff = new Image(new Texture(cloudImg));
             puff.setOrigin(puff.getWidth() / 2, puff.getHeight() / 2);
-            puff.setPosition(x - puff.getWidth() / 2 + Utils.randomFloat(-randomX, randomX),
-                             y - puff.getHeight() / 2 + Utils.randomFloat(-randomY, randomY));
+            puff.setPosition(x - puff.getWidth() / 2 + Utils.randomFloat(-sizeX, sizeX),
+                             y - puff.getHeight() / 2 + Utils.randomFloat(-sizeY, sizeY));
             puff.setScale(-Utils.randomFloat(0.1f, 0.3f));
             puff.setColor(1f, 1f, 1f, (float) (Math.random()) / 2f);
             MoveToAction slideAcrossScreen = new MoveToAction();
