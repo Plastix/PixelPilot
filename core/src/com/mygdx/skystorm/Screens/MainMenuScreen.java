@@ -31,8 +31,9 @@ public class MainMenuScreen implements Screen {
         camera.setToOrtho(false);
         ScreenViewport view = new ScreenViewport(camera);
         stage = new Stage(view);
-        for(int i = 0; i < 5; i++)
-            stage.addActor(new Cloud(Utils.randomFloat(0, Gdx.graphics.getWidth()), Utils.randomFloat(0, Gdx.graphics.getHeight()), 1));
+
+        for(int i = 0; i < 15; i++)
+            stage.addActor(new Cloud(Utils.randomFloat(0, Gdx.graphics.getWidth()), Utils.randomFloat(0, Gdx.graphics.getHeight()), 3));
 
         Gdx.input.setInputProcessor(stage);
 
@@ -48,7 +49,6 @@ public class MainMenuScreen implements Screen {
 
         // create title logo header
         Table logoTable = new Table();
-
 
         Image logo = new Image(new Texture(Gdx.files.internal("menu_logo.png")));
         Image text1 = new Image(new Texture(Gdx.files.internal("menu_txt_pixel.png")));
@@ -88,7 +88,7 @@ public class MainMenuScreen implements Screen {
 
         Button planesButton = createButton(
                 Gdx.files.internal("menu_button_planes.png"),
-                Gdx.files.internal("menu_button_planes.png"),
+                Gdx.files.internal("menu_button_planes_down.png"),
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
@@ -102,7 +102,7 @@ public class MainMenuScreen implements Screen {
 
         Button optionsButton = createButton(
                 Gdx.files.internal("menu_button_options.png"),
-                Gdx.files.internal("menu_button_options.png"),
+                Gdx.files.internal("menu_button_options_down.png"),
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
