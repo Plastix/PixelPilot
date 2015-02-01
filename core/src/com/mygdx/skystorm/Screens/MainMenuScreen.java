@@ -59,9 +59,9 @@ public class MainMenuScreen implements Screen {
         logo.setScaling(Scaling.fit);
         text1.setScaling(Scaling.fit);
         text2.setScaling(Scaling.fit);
-        logoTable.add(text1).padRight(15).padLeft(10).fill().expand();
-        logoTable.add(logo).fill().expand();
-        logoTable.add(text2).padLeft(15).padRight(10).fill().expand();
+        logoTable.add(text1).padRight(15).padLeft(10).fill().expand().minHeight(25);
+        logoTable.add(logo).fill().expand().minSize(70, 70);
+        logoTable.add(text2).padLeft(15).padRight(10).fill().expand().minHeight(25);
         float scale = 0.6f;
         table.top();
         table.add(logoTable)
@@ -114,7 +114,8 @@ public class MainMenuScreen implements Screen {
                     }
                 });
         buttonTable.add(optionsButton).space(15)
-                .size(optionsButton.getWidth() * btnScale, optionsButton.getHeight() * btnScale);
+                .size(optionsButton.getWidth() * btnScale, optionsButton.getHeight() * btnScale)
+                .padBottom(10);
 
         table.add(buttonTable);
 
