@@ -1,4 +1,4 @@
-package com.mygdx.skystorm.Plane;
+package com.mygdx.skystorm.plane;
 
 public class PlaneFactory {
 

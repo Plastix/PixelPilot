@@ -1,8 +1,8 @@
-package com.mygdx.skystorm.Data;
+package com.mygdx.skystorm.data;
 
-import com.mygdx.skystorm.Plane.PlanePreset;
-import com.mygdx.skystorm.Plane.PlaneProperty;
-import com.mygdx.skystorm.Plane.WeaponProperty;
+import com.mygdx.skystorm.plane.PlanePreset;
+import com.mygdx.skystorm.plane.PlaneProperty;
+import com.mygdx.skystorm.plane.WeaponProperty;
 
 import java.util.List;
 

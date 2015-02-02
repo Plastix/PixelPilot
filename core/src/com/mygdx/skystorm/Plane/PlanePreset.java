@@ -1,8 +1,8 @@
-package com.mygdx.skystorm.Plane;
+package com.mygdx.skystorm.plane;
 
-import com.mygdx.skystorm.Data.converter.PlanePropertyConverter;
-import com.mygdx.skystorm.Data.converter.WeaponPropertyConverter;
-import com.mygdx.skystorm.Plane.Controller.Controller;
+import com.mygdx.skystorm.data.converter.PlanePropertyConverter;
+import com.mygdx.skystorm.data.converter.WeaponPropertyConverter;
+import com.mygdx.skystorm.plane.controller.Controller;
 import org.xmappr.Attribute;
 import org.xmappr.Element;
 

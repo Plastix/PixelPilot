@@ -1,4 +1,4 @@
-package com.mygdx.skystorm.Screens;
+package com.mygdx.skystorm.screen;
 
 import com.badlogic.gdx.Screen;
 

@@ -1,7 +1,6 @@
-package com.mygdx.skystorm.Data;
+package com.mygdx.skystorm.data;
 
 import com.badlogic.gdx.Gdx;
-import com.mygdx.skystorm.Plane.PlaneProperty;
 import org.xmappr.Xmappr;
 
 import java.io.File;

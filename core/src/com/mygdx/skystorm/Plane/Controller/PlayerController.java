@@ -1,6 +1,6 @@
-package com.mygdx.skystorm.Plane.Controller;
+package com.mygdx.skystorm.plane.controller;
 
-import com.mygdx.skystorm.Plane.PlaneBody;
+import com.mygdx.skystorm.plane.PlaneBody;
 
 public class PlayerController extends Controller {
 

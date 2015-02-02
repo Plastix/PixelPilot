@@ -1,6 +1,6 @@
-package com.mygdx.skystorm.Data;
+package com.mygdx.skystorm.data;
 
-import com.mygdx.skystorm.Plane.PlaneProperty;
+import com.mygdx.skystorm.plane.PlaneProperty;
 import org.xmappr.Element;
 import org.xmappr.RootElement;
 

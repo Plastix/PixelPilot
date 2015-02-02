@@ -1,4 +1,4 @@
-package com.mygdx.skystorm.Utils;
+package com.mygdx.skystorm.util;
 
 public class Utils {
     public static float randomFloat(float low, float high){

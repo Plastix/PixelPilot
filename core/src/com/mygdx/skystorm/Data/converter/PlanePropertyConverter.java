@@ -1,7 +1,7 @@
-package com.mygdx.skystorm.Data.converter;
+package com.mygdx.skystorm.data.converter;
 
-import com.mygdx.skystorm.Data.GameData;
-import com.mygdx.skystorm.Plane.PlaneProperty;
+import com.mygdx.skystorm.data.GameData;
+import com.mygdx.skystorm.plane.PlaneProperty;
 import org.xmappr.converters.ValueConverter;
 
 public class PlanePropertyConverter extends ValueConverter {

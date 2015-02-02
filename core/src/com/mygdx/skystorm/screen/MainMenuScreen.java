@@ -1,4 +1,4 @@
-package com.mygdx.skystorm.Screens;
+package com.mygdx.skystorm.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -11,15 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.skystorm.Effects.Cloud;
+import com.mygdx.skystorm.effects.Cloud;
 import com.mygdx.skystorm.SkyStorm;
-import com.mygdx.skystorm.Utils.Utils;
-
-import java.util.ArrayList;
+import com.mygdx.skystorm.util.Utils;
 
 public class MainMenuScreen implements Screen {
     final SkyStorm game;

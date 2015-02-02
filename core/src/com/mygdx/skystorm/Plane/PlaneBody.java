@@ -1,4 +1,4 @@
-package com.mygdx.skystorm.Plane;
+package com.mygdx.skystorm.plane;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;

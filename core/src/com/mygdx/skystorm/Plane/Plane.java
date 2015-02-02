@@ -1,6 +1,6 @@
-package com.mygdx.skystorm.Plane;
+package com.mygdx.skystorm.plane;
 
-import com.mygdx.skystorm.Plane.Controller.Controller;
+import com.mygdx.skystorm.plane.controller.Controller;
 
 public class Plane {
 
