@@ -2,9 +2,9 @@
 <plane-presets>
 
     <plane-preset name="Spitfire LF Mk IX">
-        <plane-property>Basic Plane</plane-property>
+        <plane-definition>Basic Plane</plane-definition>
         <weapon>single-shot</weapon>
-        <!--<controller name="RegularEnemyController"/>-->
+        <controller>BasicAIController</controller>
     </plane-preset>
 
 </plane-presets>

@@ -1,16 +1,16 @@
 package com.mygdx.skystorm.data.converter;
 
 import com.mygdx.skystorm.data.GameData;
-import com.mygdx.skystorm.plane.PlaneProperty;
+import com.mygdx.skystorm.plane.WeaponDefinition;
 import org.xmappr.converters.ValueConverter;
 
-public class PlanePropertyConverter extends ValueConverter {
+public class WeaponDefinitionConverter extends ValueConverter {
 
     @Override
     public Object fromValue(String value, String format, Class targetType, Object targetObject) {
-        for(PlaneProperty planeProperty : GameData.planeProperties){
-            if(value.equals(planeProperty.name)){
-                return planeProperty;
+        for(WeaponDefinition weaponDefinition : GameData.weaponDefinitions){
+            if(value.equals(weaponDefinition.name)){
+                return weaponDefinition;
             }
         }
         return null;
@@ -23,6 +23,6 @@ public class PlanePropertyConverter extends ValueConverter {
 
     @Override
     public boolean canConvert(Class type) {
-        return type.equals(PlaneProperty.class);
+        return type.equals(WeaponDefinition.class);
     }
 }

@@ -3,7 +3,7 @@ package com.mygdx.skystorm.plane;
 import org.xmappr.Attribute;
 import org.xmappr.Element;
 
-public class WeaponProperty {
+public class WeaponDefinition {
 
     @Attribute
     public String name;
@@ -19,4 +19,10 @@ public class WeaponProperty {
 
     @Element
     public String sprite;
+
+    @Override
+    public String toString(){
+        return String.format("name: %s, damage: %s, reload(s): %s, lifespan(s): %s",
+                name, damage, reloadTimeSeconds, lifespanSeconds);
+    }
 }

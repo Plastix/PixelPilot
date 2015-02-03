@@ -1,11 +1,11 @@
 package com.mygdx.skystorm.plane.controller;
 
-import com.mygdx.skystorm.plane.PlaneBody;
+import com.mygdx.skystorm.plane.PlaneActor;
 
 public class BasicAIController extends AIController {
 
     @Override
-    public void control(PlaneBody planeBody) {
+    public void control(PlaneActor planeBody) {
 
     }
 }

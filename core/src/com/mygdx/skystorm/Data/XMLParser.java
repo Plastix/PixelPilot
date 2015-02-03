@@ -10,13 +10,13 @@ public class XMLParser {
 
 
     private static final String WEAPONS_XML_PATH = "config/Weapons.xml";
-    private static final String PLANE_XML_PATH = "config/PlaneProperties.xml";
+    private static final String PLANE_XML_PATH = "config/PlaneDefinitions.xml";
     private static final String PRESET_XML_PATH = "config/PlanePresets.xml";
 
     public static void parsePlanePresets(){
-        if(GameData.planeProperties == null && GameData.weapons == null){
+        if(GameData.planeDefinitions == null && GameData.weaponDefinitions == null){
             parsePlaneWeapons();
-            parsePlaneProperties();
+            parsePlaneDefinitions();
         }
         PlanePresetXMLMap data = (PlanePresetXMLMap) mapXMLtoClass(Gdx.files.internal(PRESET_XML_PATH).file(), PlanePresetXMLMap.class);
         GameData.planePresets = data.planePresets;
@@ -24,12 +24,12 @@ public class XMLParser {
 
     public static void parsePlaneWeapons(){
         WeaponXMLMap data = (WeaponXMLMap) mapXMLtoClass(Gdx.files.internal(WEAPONS_XML_PATH).file(), WeaponXMLMap.class);
-        GameData.weapons = data.weapons;
+        GameData.weaponDefinitions = data.weaponDefinitions;
     }
 
-    public static void parsePlaneProperties(){
-        PlanePropertyXMLMap data = (PlanePropertyXMLMap) mapXMLtoClass(Gdx.files.internal(PLANE_XML_PATH).file(), PlanePropertyXMLMap.class);
-        GameData.planeProperties = data.planeProperties;
+    public static void parsePlaneDefinitions(){
+        PlaneDefinitionXMLMap data = (PlaneDefinitionXMLMap) mapXMLtoClass(Gdx.files.internal(PLANE_XML_PATH).file(), PlaneDefinitionXMLMap.class);
+        GameData.planeDefinitions = data.planeDefinitions;
     }
 
     private static Object mapXMLtoClass(File xmlFile, Class map){

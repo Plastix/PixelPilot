@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -85,46 +86,50 @@ public class MainMenuScreen implements Screen {
         float btnScale = scale-0.1f;
 
         // create the buttons
-        Button playButton = createButton(
-                Gdx.files.internal("menu_button_play.png"),
-                Gdx.files.internal("menu_button_play_down.png"),
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent event, Actor actor) {
-                        game.setScreen(new GameScreen());
-                    }
-                });
-        buttonTable.add(playButton).space(15)
-                .size(playButton.getWidth() * btnScale, playButton.getHeight() * btnScale);
 
-        buttonTable.row();
+        Image button1 = new Image(new Texture(Gdx.files.internal("menu_button_play.png")));
+        buttonTable.add(button1).space(Value.percentHeight(0.2f));
 
-        Button planesButton = createButton(
-                Gdx.files.internal("menu_button_planes.png"),
-                Gdx.files.internal("menu_button_planes_down.png"),
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent event, Actor actor) {
-                        game.setScreen(new OptionsScreen());
-                    }
-                });
-        buttonTable.add(planesButton).space(15)
-                .size(planesButton.getWidth() * btnScale, planesButton.getHeight() * btnScale);
-
-        buttonTable.row();
-
-        Button optionsButton = createButton(
-                Gdx.files.internal("menu_button_options.png"),
-                Gdx.files.internal("menu_button_options_down.png"),
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent event, Actor actor) {
-                        game.setScreen(new PlaneShowcaseScreen());
-                    }
-                });
-        buttonTable.add(optionsButton).space(15).size(optionsButton.getWidth() * btnScale, optionsButton.getHeight() * btnScale)
-                .padBottom(10);
-
+//        Button playButton = createButton(
+//                Gdx.files.internal("menu_button_play.png"),
+//                Gdx.files.internal("menu_button_play_down.png"),
+//                new ChangeListener() {
+//                    @Override
+//                    public void changed(ChangeEvent event, Actor actor) {
+//                        game.setScreen(new GameScreen());
+//                    }
+//                });
+//        buttonTable.add(playButton).space(15)
+//                .size(playButton.getWidth() * btnScale, playButton.getHeight() * btnScale);
+//
+//        buttonTable.row();
+//
+//        Button planesButton = createButton(
+//                Gdx.files.internal("menu_button_planes.png"),
+//                Gdx.files.internal("menu_button_planes_down.png"),
+//                new ChangeListener() {
+//                    @Override
+//                    public void changed(ChangeEvent event, Actor actor) {
+//                        game.setScreen(new OptionsScreen());
+//                    }
+//                });
+//        buttonTable.add(planesButton).space(15)
+//                .size(planesButton.getWidth() * btnScale, planesButton.getHeight() * btnScale);
+//
+//        buttonTable.row();
+//
+//        Button optionsButton = createButton(
+//                Gdx.files.internal("menu_button_options.png"),
+//                Gdx.files.internal("menu_button_options_down.png"),
+//                new ChangeListener() {
+//                    @Override
+//                    public void changed(ChangeEvent event, Actor actor) {
+//                        game.setScreen(new PlaneShowcaseScreen());
+//                    }
+//                });
+//        buttonTable.add(optionsButton).space(15).size(optionsButton.getWidth() * btnScale, optionsButton.getHeight() * btnScale)
+//                .padBottom(10);
+//
         table.add(buttonTable);
 
     }

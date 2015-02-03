@@ -1,19 +1,20 @@
 package com.mygdx.skystorm.plane;
 
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.mygdx.skystorm.plane.controller.Controller;
 
-public class Plane {
+public class Plane extends Group {
 
-    PlaneBody planeBody;
+    PlaneActor planeActor;
     Controller controller;
 
-    public Plane(PlaneBody planeBody, Controller controller) {
-        this.planeBody = planeBody;
+    public Plane(PlaneActor planeActor, Controller controller) {
+        this.planeActor = planeActor;
         this.controller = controller;
+        this.addActor(planeActor);
     }
 
     public void update(){
-        planeBody.update();
-        controller.control(planeBody);
+        controller.control(planeActor);
     }
 }

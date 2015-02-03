@@ -3,7 +3,7 @@ package com.mygdx.skystorm.plane;
 import org.xmappr.Attribute;
 import org.xmappr.Element;
 
-public class PlaneProperty {
+public class PlaneDefinition {
 
     @Attribute
     public String name;
@@ -19,5 +19,11 @@ public class PlaneProperty {
 
     @Element
     public String sprite;
+
+    @Override
+    public String toString(){
+        return String.format("name: %s, speed: %s, armor: %s, turnSpeed: %s, spritePath: %s",
+                name, speed, armor, turnSpeed, sprite);
+    }
 
 }
