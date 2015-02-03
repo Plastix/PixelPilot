@@ -11,8 +11,7 @@ public class PlanePreset {
 
     @Override
     public String toString(){
-        return String.format("PlanePreset (%s), using plane %s and weapon %s with controller %s",
+        return String.format("PlanePreset \"%s\", using plane: (\n\t%s\n) and weapon: (\n\t%s\n) with controller: (%s)",
                 name, planeDefinition, weaponDefinition, controller);
     }
-
 }
