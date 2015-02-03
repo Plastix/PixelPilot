@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -17,6 +18,10 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.skystorm.effects.Cloud;
 import com.mygdx.skystorm.SkyStorm;
 import com.mygdx.skystorm.util.Utils;
+
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.forever;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 public class MainMenuScreen implements Screen {
     final SkyStorm game;
@@ -29,11 +34,18 @@ public class MainMenuScreen implements Screen {
         ScreenViewport view = new ScreenViewport(camera);
         stage = new Stage(view);
 
-        for(int i = 0; i < 15; i++)
-            stage.addActor(new Cloud(
+        for(int i = 0; i < 15; i++) {
+            Cloud cloud = new Cloud(
                     Utils.randomFloat(0, Gdx.graphics.getWidth()),
                     Utils.randomFloat(0, Gdx.graphics.getHeight()),
-                    75, 75, 5));
+                    75, 75, 5);
+            MoveToAction slideAcrossScreen = new MoveToAction();
+            slideAcrossScreen.setPosition(1000, cloud.getY());
+            slideAcrossScreen.setDuration(Utils.randomInt(50, 99));
+            cloud.addAction(forever(sequence(slideAcrossScreen, moveTo(-1000, cloud.getY()))));
+            stage.addActor(cloud);
+
+        }
 
         Gdx.input.setInputProcessor(stage);
 

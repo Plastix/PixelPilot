@@ -24,10 +24,6 @@ public class Cloud extends Group {
                              y - puff.getHeight() / 2 + Utils.randomFloat(-sizeY, sizeY));
             puff.setScale(-Utils.randomFloat(0.1f, 0.3f));
             puff.setColor(1f, 1f, 1f, (float) (Math.random()) / 2f);
-            MoveToAction slideAcrossScreen = new MoveToAction();
-            slideAcrossScreen.setPosition(1000, y);
-            slideAcrossScreen.setDuration(Utils.randomInt(50, 99));
-            puff.addAction(forever(sequence(slideAcrossScreen, moveTo(-1000, y))));
             this.addActor(puff);
         }
     }
