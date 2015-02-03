@@ -1,4 +1,4 @@
-package com.mygdx.skystorm.data.converter;
+package com.mygdx.skystorm.data.serialize;
 
 import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.scalar.ScalarSerializer;
