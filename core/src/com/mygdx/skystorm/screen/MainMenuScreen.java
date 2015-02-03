@@ -31,7 +31,6 @@ public class MainMenuScreen implements Screen {
     OrthographicCamera camera;
     Stage stage;
     public MainMenuScreen(SkyStorm game) {
-        YamlParser.loadAllData();
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
