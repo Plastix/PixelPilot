@@ -1,0 +1,5 @@
+- name: Basic Plane
+  speed: 10
+  armor: 20
+  turnSpeed: 2
+  spritePath: /path/to/sprite

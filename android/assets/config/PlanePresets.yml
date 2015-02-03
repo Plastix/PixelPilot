@@ -1,0 +1,4 @@
+- name: Spitfire LF Mk IX
+  planeDefinition: Basic Plane
+  weaponDefinition: Single Shot
+  controller: BasicAIController

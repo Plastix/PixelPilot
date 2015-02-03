@@ -17,7 +17,7 @@ public class PlaneActor extends Actor {
         this.position = new Vector2(0,0);
         this.def = def;
         this.weapon = new Weapon(weaponDefinition);
-        this.sprite = new Sprite(new Texture(def.sprite));
+        this.sprite = new Sprite(new Texture(def.spritePath));
     }
 
     @Override

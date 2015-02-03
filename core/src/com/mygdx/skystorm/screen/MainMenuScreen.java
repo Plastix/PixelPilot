@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.skystorm.data.GameData;
+import com.mygdx.skystorm.data.YamlParser;
 import com.mygdx.skystorm.effects.Cloud;
 import com.mygdx.skystorm.SkyStorm;
 import com.mygdx.skystorm.util.Utils;
@@ -29,6 +31,7 @@ public class MainMenuScreen implements Screen {
     OrthographicCamera camera;
     Stage stage;
     public MainMenuScreen(SkyStorm game) {
+        YamlParser.loadAllData();
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false);

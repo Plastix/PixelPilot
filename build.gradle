@@ -26,7 +26,6 @@ allprojects {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-        maven { url "http://xmappr.googlecode.com/svn/repo/" }
     }
 }
 
@@ -94,10 +93,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
-        compile("org.xmappr:xmappr:0.9.3"){
-            exclude group: 'stax', module: 'stax-api'
-            exclude group: 'xpp3', module: 'xpp3'
-        }
+        compile "com.esotericsoftware.yamlbeans:yamlbeans:1.08"
 
     }
 }

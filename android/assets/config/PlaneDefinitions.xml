@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<plane-definitions>
-    <plane-definition name="Basic Plane">
-        <speed>10</speed>
-        <armor>20</armor>
-        <turn-speed>2</turn-speed>
-        <sprite path="path/to/sprite"/>
-    </plane-definition>
-</plane-definitions>
