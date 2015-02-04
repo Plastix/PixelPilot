@@ -35,4 +35,9 @@ public class ControllerFactory {
         return controllers.get(name) != null;
     }
 
+    public static boolean isValidAIController(String name){
+        Class controller = controllers.get(name);
+        return controller != null && controller.getSuperclass().equals(AIController.class);
+    }
+
 }

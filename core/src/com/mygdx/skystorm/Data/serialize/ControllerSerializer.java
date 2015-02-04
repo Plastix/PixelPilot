@@ -14,7 +14,7 @@ public class ControllerSerializer implements ScalarSerializer<Controller> {
 
     @Override
     public Controller read(String value) throws YamlException {
-        if(ControllerFactory.isValidController(value)){
+        if(ControllerFactory.isValidAIController(value)){
             return ControllerFactory.build(value);
         }else {
             throw new YamlException("No Controller with name " + value + " found!");
