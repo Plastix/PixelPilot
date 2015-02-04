@@ -22,7 +22,7 @@ public class Cloud extends Group {
             puff.setOrigin(puff.getWidth() / 2, puff.getHeight() / 2);
             puff.setPosition(x - puff.getWidth() / 2 + Utils.randomFloat(-sizeX, sizeX),
                              y - puff.getHeight() / 2 + Utils.randomFloat(-sizeY, sizeY));
-            puff.setScale(-Utils.randomFloat(0.1f, 0.3f));
+            puff.setScale(Utils.randomFloat(0.1f*300, 0.3f*300));
             puff.setColor(1f, 1f, 1f, (float) (Math.random()) / 2f);
             this.addActor(puff);
         }
