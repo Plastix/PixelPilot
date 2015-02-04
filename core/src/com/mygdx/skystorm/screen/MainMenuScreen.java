@@ -2,14 +2,17 @@ package com.mygdx.skystorm.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.skystorm.SkyStorm;
@@ -31,6 +34,12 @@ public class MainMenuScreen implements Screen {
     private static final String btn_opts_down_img = "menu_button_options_down.png";
     private static final String btn_planes_up_img = "menu_button_planes.png";
     private static final String btn_planes_down_img = "menu_button_planes_down.png";
+    Button playButton;
+    Button planesButton;
+    Button optionsButton;
+    Image logo, text1, text2;
+    Backdrop background;
+    Color backgroundColor;
     final SkyStorm game;
     OrthographicCamera camera;
     Stage stage;
@@ -41,8 +50,9 @@ public class MainMenuScreen implements Screen {
         camera.setToOrtho(false);
         ScreenViewport view = new ScreenViewport(camera);
         stage = new Stage(view);
+//        backgroundColor = IslandTheme.new Color(0.3f, 0.66f, 0.9f, 1)
+        background = new Backdrop(240, 135, 4, new IslandTheme());
 
-        Backdrop background = new Backdrop(240, 135, 4, new IslandTheme());
         stage.addActor(background);
 
         for(int i = 0; i < 15; i++) {
@@ -72,12 +82,14 @@ public class MainMenuScreen implements Screen {
         // create title logo header
         Table logoTable = new Table();
 
-        Image logo = new Image(new Texture(menu_logo));
-        Image text1 = new Image(new Texture(menu_text_pixel));
-        Image text2 = new Image(new Texture(menu_text_pilot));
+        logo = new Image(new Texture(menu_logo));
+        text1 = new Image(new Texture(menu_text_pixel));
+        text2 = new Image(new Texture(menu_text_pilot));
+
         logo.setScaling(Scaling.fit);
         text1.setScaling(Scaling.fit);
         text2.setScaling(Scaling.fit);
+
         logoTable.add(text1).padRight(15).padLeft(10).fill().expand().minHeight(25).minWidth(50);
         logoTable.add(logo).fill().expand().minSize(70, 70);
         logoTable.add(text2).padLeft(15).padRight(10).fill().expand().minHeight(25).minWidth(50);
@@ -100,9 +112,11 @@ public class MainMenuScreen implements Screen {
                 new Runnable() {
                     @Override
                     public void run() {
-                        game.setScreen(new GameScreen());
+                        slideButtonsOutAndTransitionTo(new GameScreen());
+
                     }
                 });
+        this.playButton = playButton;
         playButton.setScaling(Scaling.fit);
         buttonTable.add(playButton)
                 .space(Value.percentHeight(0.2f))
@@ -122,6 +136,7 @@ public class MainMenuScreen implements Screen {
                         game.setScreen(new PlaneShowcaseScreen());
                     }
                 });
+        this.planesButton = planesButton;
         planesButton.setScaling(Scaling.fit);
         buttonTable.add(planesButton)
                 .space(Value.percentHeight(0.2f))
@@ -142,6 +157,8 @@ public class MainMenuScreen implements Screen {
                         game.setScreen(new OptionsScreen());
                     }
                 });
+
+        this.optionsButton = optionsButton;
         optionsButton.setScaling(Scaling.fit);
         buttonTable.add(optionsButton)
                 .space(Value.percentHeight(0.2f))
@@ -154,6 +171,60 @@ public class MainMenuScreen implements Screen {
         table.add(buttonTable);
 
     }
+
+    public void slideButtonsOutAndTransitionTo(final Screen next){
+        MoveToAction movePlay = new MoveToAction();
+        movePlay.setDuration(0.7f);
+        movePlay.setInterpolation(Interpolation.exp10);
+        movePlay.setPosition(Gdx.graphics.getWidth() + playButton.getWidth(), playButton.getY());
+        movePlay.setActor(playButton);
+
+        MoveToAction movePlanes = new MoveToAction();
+        movePlanes.setDuration(0.5f);
+        movePlanes.setInterpolation(Interpolation.exp10);
+        movePlanes.setPosition(Gdx.graphics.getWidth() + planesButton.getWidth(), planesButton.getY());
+        movePlanes.setActor(planesButton);
+
+        MoveToAction moveOptions = new MoveToAction();
+        moveOptions.setDuration(0.3f);
+        moveOptions.setInterpolation(Interpolation.exp10);
+        moveOptions.setPosition(Gdx.graphics.getWidth() + optionsButton.getWidth(), optionsButton.getY());
+        moveOptions.setActor(optionsButton);
+
+        MoveToAction moveText1 = new MoveToAction();
+        moveText1.setDuration(0.4f);
+        moveText1.setInterpolation(Interpolation.pow2);
+        moveText1.setPosition(-text1.getImageWidth()*2, text1.getY());
+        moveText1.setActor(text1);
+
+        MoveToAction moveText2 = new MoveToAction();
+        moveText2.setDuration(0.4f);
+        moveText2.setInterpolation(Interpolation.pow2);
+        moveText2.setPosition(Gdx.graphics.getWidth() + text2.getImageWidth(), text2.getY());
+        moveText2.setActor(text2);
+
+        logo.setOrigin(Align.center);
+        ParallelAction moveLogo = Actions.parallel(
+                Actions.scaleBy(-0.5f, -0.5f, 0.4f, Interpolation.pow2),
+                Actions.fadeOut(0.4f, Interpolation.pow2));
+        moveLogo.setActor(logo);
+
+        AlphaAction fadeOut = Actions.fadeOut(0.2f, Interpolation.pow2Out);
+        fadeOut.setActor(stage.getRoot());
+
+        stage.addAction(
+                Actions.sequence(
+                        Actions.parallel(moveOptions, movePlay, movePlanes, moveText1, moveText2, moveLogo),
+                        fadeOut,
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                game.setScreen(next);
+                            }
+                        })
+                ));
+    }
+
 
     @Override
     public void show() {

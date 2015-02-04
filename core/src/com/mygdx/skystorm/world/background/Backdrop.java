@@ -20,6 +20,8 @@ public class Backdrop extends Group {
 
         Image backdrop = new Image(new Texture(renderTexture(), false));
         backdrop.setScale(scale);
+        setWidth(backdrop.getWidth());
+        setHeight(backdrop.getHeight());
         this.addActor(backdrop);
     }
 
