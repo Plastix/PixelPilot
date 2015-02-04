@@ -6,9 +6,4 @@ public abstract class Controller {
 
     public abstract void control(PlaneActor planeBody);
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
 }

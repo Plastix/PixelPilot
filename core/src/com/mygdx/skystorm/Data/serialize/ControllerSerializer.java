@@ -14,7 +14,10 @@ public class ControllerSerializer implements ScalarSerializer<Controller> {
 
     @Override
     public Controller read(String value) throws YamlException {
-        //TODO Move logic out of controller factor into here
-        return ControllerFactory.build(value);
+        if(ControllerFactory.isValidController(value)){
+            return ControllerFactory.build(value);
+        }else {
+            throw new YamlException("No Controller with name " + value + " found!");
+        }
     }
 }
