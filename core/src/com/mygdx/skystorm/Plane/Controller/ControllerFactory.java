@@ -7,13 +7,12 @@ public class ControllerFactory {
 
     private static HashMap<String, Class<? extends Controller>> controllers = new HashMap<String, Class<? extends Controller>>();
 
-    static {
+    public static void registerControllers(){
         ControllerFactory.register(PlayerController.class);
         ControllerFactory.register(BasicAIController.class);
     }
-
-
-    protected static void register(Class<? extends Controller> c){
+    
+    private static void register(Class<? extends Controller> c){
         String name = c.getSimpleName();
         System.out.println("Registering Controller " + name + "...");
         controllers.put(name, c);
