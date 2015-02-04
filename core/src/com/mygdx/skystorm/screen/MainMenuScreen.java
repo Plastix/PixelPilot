@@ -2,49 +2,36 @@ package com.mygdx.skystorm.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.skystorm.data.GameData;
-import com.mygdx.skystorm.data.YamlParser;
-import com.mygdx.skystorm.effects.Cloud;
 import com.mygdx.skystorm.SkyStorm;
+import com.mygdx.skystorm.effects.Cloud;
 import com.mygdx.skystorm.screen.ui.Button;
 import com.mygdx.skystorm.util.Utils;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.forever;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class MainMenuScreen implements Screen {
+    private static final String menu_logo = "menu_logo.png";
+    private static final String menu_text_pixel = "menu_txt_pixel.png";
+    private static final String menu_text_pilot = "menu_txt_pilot.png";
+    private static final String btn_play_up_img = "menu_button_play.png";
+    private static final String btn_play_down_img = "menu_button_play_down.png";
+    private static final String btn_opts_up_img = "menu_button_options.png";
+    private static final String btn_opts_down_img = "menu_button_options_down.png";
+    private static final String btn_planes_up_img = "menu_button_planes.png";
+    private static final String btn_planes_down_img = "menu_button_planes_down.png";
     final SkyStorm game;
     OrthographicCamera camera;
     Stage stage;
-
-    private static final String menu_logo           =     "menu_logo.png";
-    private static final String menu_text_pixel     =     "menu_txt_pixel.png";
-    private static final String menu_text_pilot     =     "menu_txt_pilot.png";
-    private static final String btn_play_up_img     =     "menu_button_play.png";
-    private static final String btn_play_down_img   =     "menu_button_play_down.png";
-    private static final String btn_opts_up_img     =     "menu_button_options.png";
-    private static final String btn_opts_down_img   =     "menu_button_options_down.png";
-    private static final String btn_planes_up_img   =     "menu_button_planes.png";
-    private static final String btn_planes_down_img =     "menu_button_planes_down.png";
 
     public MainMenuScreen(SkyStorm game) {
         this.game = game;
@@ -53,7 +40,7 @@ public class MainMenuScreen implements Screen {
         ScreenViewport view = new ScreenViewport(camera);
         stage = new Stage(view);
 
-        for(int i = 0; i < 15; i++) {
+        for (int i = 0; i < 15; i++) {
             Cloud cloud = new Cloud(
                     Utils.randomFloat(0, Gdx.graphics.getWidth()),
                     Utils.randomFloat(0, Gdx.graphics.getHeight()),
@@ -86,9 +73,9 @@ public class MainMenuScreen implements Screen {
         logo.setScaling(Scaling.fit);
         text1.setScaling(Scaling.fit);
         text2.setScaling(Scaling.fit);
-        logoTable.add(text1).padRight(15).padLeft(10).fill().expand().minHeight(25);
+        logoTable.add(text1).padRight(15).padLeft(10).fill().expand().minHeight(25).minWidth(50);
         logoTable.add(logo).fill().expand().minSize(70, 70);
-        logoTable.add(text2).padLeft(15).padRight(10).fill().expand().minHeight(25);
+        logoTable.add(text2).padLeft(15).padRight(10).fill().expand().minHeight(25).minWidth(50);
         float scale = 0.6f;
         table.top();
         table.add(logoTable)
@@ -100,10 +87,8 @@ public class MainMenuScreen implements Screen {
         table.row();
 
         Table buttonTable = new Table();
-        float btnScale = scale-0.1f;
 
         // create the buttons
-
         final Button playButton = new Button("",
                 new Texture(btn_play_up_img),
                 new Texture(btn_play_down_img),
@@ -114,7 +99,12 @@ public class MainMenuScreen implements Screen {
                     }
                 });
         playButton.setScaling(Scaling.fit);
-        buttonTable.add(playButton).space(Value.percentHeight(0.2f)).minHeight(50);
+        buttonTable.add(playButton)
+                .space(Value.percentHeight(0.2f))
+                .minHeight(50)
+                .padLeft(20)
+                .padRight(20)
+                .minWidth(100);
 
         buttonTable.row();
 
@@ -128,8 +118,12 @@ public class MainMenuScreen implements Screen {
                     }
                 });
         planesButton.setScaling(Scaling.fit);
-
-        buttonTable.add(planesButton).space(Value.percentHeight(0.2f)).minHeight(50);
+        buttonTable.add(planesButton)
+                .space(Value.percentHeight(0.2f))
+                .minHeight(50)
+                .padLeft(20)
+                .padRight(20)
+                .minWidth(100);
 
 
         buttonTable.row();
@@ -144,23 +138,16 @@ public class MainMenuScreen implements Screen {
                     }
                 });
         optionsButton.setScaling(Scaling.fit);
-        buttonTable.add(optionsButton).space(Value.percentHeight(0.2f)).minHeight(50);
+        buttonTable.add(optionsButton)
+                .space(Value.percentHeight(0.2f))
+                .padBottom(15)
+                .padLeft(20)
+                .padRight(20)
+                .minHeight(50)
+                .minWidth(100);
 
         table.add(buttonTable);
 
-    }
-
-    private com.badlogic.gdx.scenes.scene2d.ui.Button createButton(FileHandle up, FileHandle down, ChangeListener lstnr) {
-        Image upImg = new Image(new Texture(up));
-        upImg.setScaling(Scaling.fit);
-        Image downImg = new Image(new Texture(down));
-        downImg.setScaling(Scaling.fit);
-        com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle style = new com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle(upImg.getDrawable(),
-                downImg.getDrawable(),
-                upImg.getDrawable());
-        com.badlogic.gdx.scenes.scene2d.ui.Button button = new com.badlogic.gdx.scenes.scene2d.ui.Button(style);
-        button.addListener(lstnr);
-        return button;
     }
 
     @Override
