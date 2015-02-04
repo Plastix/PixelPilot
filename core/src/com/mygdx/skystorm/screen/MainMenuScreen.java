@@ -13,9 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.skystorm.SkyStorm;
-import com.mygdx.skystorm.effects.Cloud;
 import com.mygdx.skystorm.screen.ui.Button;
 import com.mygdx.skystorm.util.Utils;
+import com.mygdx.skystorm.world.Cloud;
+import com.mygdx.skystorm.world.background.Backdrop;
+import com.mygdx.skystorm.world.background.theme.IslandTheme;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
@@ -40,7 +42,10 @@ public class MainMenuScreen implements Screen {
         ScreenViewport view = new ScreenViewport(camera);
         stage = new Stage(view);
 
-        for (int i = 0; i < 15; i++) {
+        Backdrop background = new Backdrop(240, 135, 4, new IslandTheme());
+        stage.addActor(background);
+
+        for(int i = 0; i < 15; i++) {
             Cloud cloud = new Cloud(
                     Utils.randomFloat(0, Gdx.graphics.getWidth()),
                     Utils.randomFloat(0, Gdx.graphics.getHeight()),

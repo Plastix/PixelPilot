@@ -11,7 +11,7 @@ public class ControllerFactory {
         ControllerFactory.register(PlayerController.class);
         ControllerFactory.register(BasicAIController.class);
     }
-    
+
     private static void register(Class<? extends Controller> c){
         String name = c.getSimpleName();
         System.out.println("Registering Controller " + name + "...");
