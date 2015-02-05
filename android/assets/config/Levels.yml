@@ -1,0 +1,10 @@
+- name: Midway Island
+#  theme: Island
+  waves:
+    - message: Ready Player One
+      enemies:
+        - preset: Spitfire LF Mk IX
+        - preset: Spitfire LF Mk IX
+    - message: Wave 2
+      enemies:
+        - preset: Spitfire LF Mk IX
