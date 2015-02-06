@@ -3,6 +3,7 @@ package com.mygdx.skystorm.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -71,11 +72,10 @@ public class MainMenuScreen extends ActionScreen {
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
-
         // create title logo header
         Table logoTable = new Table();
 
-        logo = new Image(new Texture(Resources.menu_logo));
+        logo  = new Image(new Texture(Resources.menu_logo));
         text1 = new Image(new Texture(Resources.menu_text_pixel));
         text2 = new Image(new Texture(Resources.menu_text_pilot));
 
@@ -97,11 +97,11 @@ public class MainMenuScreen extends ActionScreen {
         table.row();
 
         Table buttonTable = new Table();
-
+        buttonTable.setDebug(true);
         // create the buttons
-        final Button playButton = new Button("",
-                new Texture(Resources.btn_play_up_img),
-                new Texture(Resources.btn_play_down_img),
+        final Button playButton = new Button("Play",
+                new Texture(Resources.menu_button),
+                new Texture(Resources.menu_button_down),
                 new Runnable() {
                     @Override
                     public void run() {
@@ -116,14 +116,14 @@ public class MainMenuScreen extends ActionScreen {
                 .minSize(100, 50)
                 .padLeft(20)
                 .padRight(20)
+                .expandY()
                 .maxSize(2500, 2500);
-
 
         buttonTable.row();
 
-        final Button planesButton = new Button("",
-                new Texture(Resources.btn_planes_up_img),
-                new Texture(Resources.btn_planes_down_img),
+        final Button planesButton = new Button("My Planes",
+                new Texture(Resources.menu_button),
+                new Texture(Resources.menu_button_down),
                 new Runnable() {
                     @Override
                     public void run() {
@@ -137,15 +137,14 @@ public class MainMenuScreen extends ActionScreen {
                 .minSize(100, 50)
                 .maxSize(2500, 2500)
                 .padLeft(20)
+                .expandY()
                 .padRight(20);
 
-
-
         buttonTable.row();
-
-        final Button optionsButton = new Button("",
-                new Texture(Resources.btn_opts_up_img),
-                new Texture(Resources.btn_opts_down_img),
+        table.layout();
+        final Button optionsButton = new Button("Options",
+                new Texture(Resources.menu_button),
+                new Texture(Resources.menu_button_down),
                 new Runnable() {
                     @Override
                     public void run() {
@@ -160,10 +159,11 @@ public class MainMenuScreen extends ActionScreen {
                 .padBottom(15)
                 .padLeft(20)
                 .padRight(20)
+                .expandY()
                 .maxSize(2500, 2500)
                 .minSize(100, 50);
 
-        table.add(buttonTable);
+        table.add(buttonTable).fillY().expandY();
 
     }
 

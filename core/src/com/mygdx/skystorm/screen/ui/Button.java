@@ -1,24 +1,35 @@
 package com.mygdx.skystorm.screen.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.*;
+import com.mygdx.skystorm.data.Resources;
 
 // TODO: Add support for drawing text on top of button
 public class Button extends Image{
+    BitmapFont btnFont;
+    String btnText;
+
     public Button(final String text, final Texture backgroundUp, final Texture backgroundDown, final Runnable callback){
         super(backgroundUp);
         final Button self = this;
-        this.addListener(new ClickListener() {
+        btnText = text;
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Resources.menu_font));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = (int)( 136 * Gdx.graphics.getDensity() ); // how to scale this?
+        btnFont = generator.generateFont(parameter);
+        generator.dispose();
 
+        this.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchDown(event, x, y, pointer, button);
@@ -36,7 +47,6 @@ public class Button extends Image{
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 super.touchUp(event, x, y, pointer, button);
                 self.setDrawable(new TextureRegionDrawable(new TextureRegion(backgroundUp)));
-
             }
 
             @Override
@@ -47,7 +57,6 @@ public class Button extends Image{
                 }else{
                     self.setDrawable(new TextureRegionDrawable(new TextureRegion(backgroundDown)));
                 }
-
             }
         });
 
@@ -60,4 +69,29 @@ public class Button extends Image{
                 && y >= getImageY()
                 && y < getImageHeight()+getImageY() ? this : null;
     }
+
+    @Override
+    public void draw (Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        BitmapFont.TextBounds bounds =  btnFont.getBounds(btnText);
+
+        btnFont.setColor(175f / 255f, 175f / 255f, 175f / 255f, 1);
+        btnFont.draw(batch, btnText, this.getX(Align.center) - bounds.width / 2,
+                this.getY(Align.center) - 6 + bounds.height/2);
+
+        btnFont.setColor(1,1,1,1);
+        btnFont.draw(batch, btnText, this.getX(Align.center) - bounds.width/2,
+                this.getY(Align.center)+bounds.height/2);
+    }
+
+    @Override
+    public void setBounds (float x, float y, float width, float height) {
+        super.setBounds(x, y, width, height);
+        float scaleX = width / 960;
+        float scaleY = height / 540;
+
+        if(btnFont != null)
+            btnFont.setScale( 9*scaleX*scaleY );
+    }
+
 }
