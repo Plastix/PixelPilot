@@ -11,13 +11,18 @@ public class Backdrop extends Group {
 
     private int tilesX;
     private int tilesY;
+    private int scale;
     private BackdropTheme theme;
 
     public Backdrop(int tilesX, int tilesY, int scale, BackdropTheme theme) {
         this.tilesX = tilesX;
         this.tilesY = tilesY;
+        this.scale = scale;
         this.theme = theme;
+        addBackgroundTexture();
+    }
 
+    private void addBackgroundTexture(){
         Image backdrop = new Image(new Texture(renderTexture(), false));
         backdrop.setScale(scale);
         setWidth(backdrop.getWidth());

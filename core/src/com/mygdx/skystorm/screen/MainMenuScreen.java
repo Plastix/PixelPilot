@@ -2,7 +2,6 @@ package com.mygdx.skystorm.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -39,7 +38,6 @@ public class MainMenuScreen implements Screen {
     Button optionsButton;
     Image logo, text1, text2;
     Backdrop background;
-    Color backgroundColor;
     final SkyStorm game;
     OrthographicCamera camera;
     Stage stage;
@@ -50,8 +48,7 @@ public class MainMenuScreen implements Screen {
         camera.setToOrtho(false);
         ScreenViewport view = new ScreenViewport(camera);
         stage = new Stage(view);
-//        backgroundColor = IslandTheme.new Color(0.3f, 0.66f, 0.9f, 1)
-        background = new Backdrop(240, 135, 4, new IslandTheme());
+        background = new Backdrop(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/4, 4, new IslandTheme());
 
         stage.addActor(background);
 
