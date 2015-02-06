@@ -3,9 +3,11 @@
     reloadTimeSeconds: 0.5
     lifespanSeconds: 2
     spritePath: /path/to/sprite
+    weight: 15
 
   - name: Double Shot
     damage: 20
     reloadTimeSeconds: 0.8
     lifespanSeconds: 2
     spritePath: /path/to/sprite
+    weight: 30

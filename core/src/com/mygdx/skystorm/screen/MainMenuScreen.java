@@ -25,18 +25,15 @@ import com.mygdx.skystorm.world.background.theme.BackdropTheme;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
-public class MainMenuScreen implements Screen {
+public class MainMenuScreen extends ActionScene {
     Button playButton;
     Button planesButton;
     Button optionsButton;
     Image logo, text1, text2;
     Backdrop background;
-    final SkyStorm game;
-    OrthographicCamera camera;
-    Stage stage;
 
     public MainMenuScreen(SkyStorm game) {
-        this.game = game;
+        super(game);
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
         ScreenViewport view = new ScreenViewport(camera);
@@ -217,45 +214,11 @@ public class MainMenuScreen implements Screen {
                 ));
     }
 
-
-    @Override
-    public void show() {
-
-    }
-
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(139f / 255f, 166f / 255f, 177f / 255f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        super.render(delta);
         stage.act(delta);
         stage.draw();
-
     }
 
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
-        camera.setToOrtho(false);
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
-    }
 }

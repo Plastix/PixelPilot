@@ -6,12 +6,13 @@ public class WeaponDefinition {
     public int damage;
     public float reloadTimeSeconds;
     public float lifespanSeconds;
+    public float weight;
     public String spritePath;
 
     @Override
     public String toString(){
-        return String.format("name: %s, damage: %s, reload(s): %s, lifespan(s): %s",
-                name, damage, reloadTimeSeconds, lifespanSeconds);
+        return String.format("name: %s, damage: %s, reload(s): %s, lifespan(s): %s, weight: %s",
+                name, damage, reloadTimeSeconds, lifespanSeconds, weight);
     }
 
 }

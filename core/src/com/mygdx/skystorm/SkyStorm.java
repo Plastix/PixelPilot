@@ -13,6 +13,7 @@ public class SkyStorm extends Game {
         this.setScreen(new MainMenuScreen(this));
         ControllerFactory.registerControllers();
         YamlParser.loadAllData();
+        System.out.println(GameData.weaponDefinitions);
     }
 
     @Override
