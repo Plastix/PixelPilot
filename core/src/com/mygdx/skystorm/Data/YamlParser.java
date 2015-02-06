@@ -5,15 +5,13 @@ import com.esotericsoftware.yamlbeans.YamlConfig;
 import com.esotericsoftware.yamlbeans.YamlReader;
 import com.mygdx.skystorm.data.level.Stage;
 import com.mygdx.skystorm.data.level.Wave;
-import com.mygdx.skystorm.data.serialize.ControllerSerializer;
-import com.mygdx.skystorm.data.serialize.PlaneDefinitionSerializer;
-import com.mygdx.skystorm.data.serialize.PlanePresetSerializer;
-import com.mygdx.skystorm.data.serialize.WeaponDefinitionSerializer;
+import com.mygdx.skystorm.data.serialize.*;
 import com.mygdx.skystorm.plane.Plane;
 import com.mygdx.skystorm.plane.PlaneDefinition;
 import com.mygdx.skystorm.plane.PlanePreset;
 import com.mygdx.skystorm.plane.WeaponDefinition;
 import com.mygdx.skystorm.plane.controller.Controller;
+import com.mygdx.skystorm.world.background.theme.BackdropTheme;
 
 import java.io.File;
 import java.io.FileReader;
@@ -49,10 +47,11 @@ public class YamlParser {
         config.setScalarSerializer(Controller.class, new ControllerSerializer());
         GameData.planePresets = parseYamlToList(PRESET_YAML_PATH, PlanePreset.class, config);
     }
-
+    
     public static void parseLevels(){
         YamlConfig config = new YamlConfig();
         config.setScalarSerializer(Wave.class, new PlanePresetSerializer());
+        config.setScalarSerializer(BackdropTheme.class, new BackdropThemeSerializer());
         GameData.stages = parseYamlToList(LEVEL_YAML_PATH, Stage.class, config);
     }
 

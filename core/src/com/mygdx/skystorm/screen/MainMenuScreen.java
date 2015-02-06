@@ -19,6 +19,8 @@ import com.mygdx.skystorm.screen.ui.Button;
 import com.mygdx.skystorm.util.Utils;
 import com.mygdx.skystorm.world.Cloud;
 import com.mygdx.skystorm.world.background.Backdrop;
+import com.mygdx.skystorm.world.background.theme.BackdropFactory;
+import com.mygdx.skystorm.world.background.theme.BackdropTheme;
 import com.mygdx.skystorm.world.background.theme.IslandTheme;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
@@ -48,7 +50,9 @@ public class MainMenuScreen implements Screen {
         camera.setToOrtho(false);
         ScreenViewport view = new ScreenViewport(camera);
         stage = new Stage(view);
-        background = new Backdrop(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/4, 4, new IslandTheme());
+
+        BackdropTheme islands = BackdropFactory.build(BackdropFactory.ThemePreset.ISLANDS);
+        background = new Backdrop(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/4, 4, islands);
 
         stage.addActor(background);
 

@@ -1,5 +1,5 @@
 - name: Midway Island
-#  theme: Island
+  theme: Islands
   waves:
     - message: Ready Player One
       enemies:
