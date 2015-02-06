@@ -15,26 +15,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.skystorm.SkyStorm;
+import com.mygdx.skystorm.data.Resources;
 import com.mygdx.skystorm.screen.ui.Button;
 import com.mygdx.skystorm.util.Utils;
 import com.mygdx.skystorm.world.Cloud;
 import com.mygdx.skystorm.world.background.Backdrop;
 import com.mygdx.skystorm.world.background.theme.BackdropFactory;
 import com.mygdx.skystorm.world.background.theme.BackdropTheme;
-import com.mygdx.skystorm.world.background.theme.IslandTheme;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class MainMenuScreen implements Screen {
-    private static final String menu_logo = "menu_logo.png";
-    private static final String menu_text_pixel = "menu_txt_pixel.png";
-    private static final String menu_text_pilot = "menu_txt_pilot.png";
-    private static final String btn_play_up_img = "menu_button_play.png";
-    private static final String btn_play_down_img = "menu_button_play_down.png";
-    private static final String btn_opts_up_img = "menu_button_options.png";
-    private static final String btn_opts_down_img = "menu_button_options_down.png";
-    private static final String btn_planes_up_img = "menu_button_planes.png";
-    private static final String btn_planes_down_img = "menu_button_planes_down.png";
     Button playButton;
     Button planesButton;
     Button optionsButton;
@@ -83,9 +74,9 @@ public class MainMenuScreen implements Screen {
         // create title logo header
         Table logoTable = new Table();
 
-        logo = new Image(new Texture(menu_logo));
-        text1 = new Image(new Texture(menu_text_pixel));
-        text2 = new Image(new Texture(menu_text_pilot));
+        logo = new Image(new Texture(Resources.menu_logo));
+        text1 = new Image(new Texture(Resources.menu_text_pixel));
+        text2 = new Image(new Texture(Resources.menu_text_pilot));
 
         logo.setScaling(Scaling.fit);
         text1.setScaling(Scaling.fit);
@@ -108,8 +99,8 @@ public class MainMenuScreen implements Screen {
 
         // create the buttons
         final Button playButton = new Button("",
-                new Texture(btn_play_up_img),
-                new Texture(btn_play_down_img),
+                new Texture(Resources.btn_play_up_img),
+                new Texture(Resources.btn_play_down_img),
                 new Runnable() {
                     @Override
                     public void run() {
@@ -129,8 +120,8 @@ public class MainMenuScreen implements Screen {
         buttonTable.row();
 
         final Button planesButton = new Button("",
-                new Texture(btn_planes_up_img),
-                new Texture(btn_planes_down_img),
+                new Texture(Resources.btn_planes_up_img),
+                new Texture(Resources.btn_planes_down_img),
                 new Runnable() {
                     @Override
                     public void run() {
@@ -150,8 +141,8 @@ public class MainMenuScreen implements Screen {
         buttonTable.row();
 
         final Button optionsButton = new Button("",
-                new Texture(btn_opts_up_img),
-                new Texture(btn_opts_down_img),
+                new Texture(Resources.btn_opts_up_img),
+                new Texture(Resources.btn_opts_down_img),
                 new Runnable() {
                     @Override
                     public void run() {
