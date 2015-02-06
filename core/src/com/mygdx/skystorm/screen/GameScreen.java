@@ -7,7 +7,7 @@ import com.mygdx.skystorm.SkyStorm;
  */
 public abstract class GameScreen extends ActionScreen {
 
-    GameScreen(SkyStorm game) {
+    public GameScreen(SkyStorm game) {
         super(game);
     }
 }

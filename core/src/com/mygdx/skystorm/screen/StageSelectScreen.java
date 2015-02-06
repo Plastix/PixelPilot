@@ -7,7 +7,7 @@ import com.mygdx.skystorm.SkyStorm;
  * TODO: make this take the form of a map
  */
 public class StageSelectScreen extends ActionScreen {
-    StageSelectScreen(SkyStorm game) {
+    public StageSelectScreen(SkyStorm game) {
         super(game);
     }
 }
