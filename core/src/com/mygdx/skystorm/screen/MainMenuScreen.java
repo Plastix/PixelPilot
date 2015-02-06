@@ -109,10 +109,11 @@ public class MainMenuScreen extends ActionScreen {
         playButton.setScaling(Scaling.fit);
         buttonTable.add(playButton)
                 .space(Value.percentHeight(0.2f))
-                .minHeight(50)
+                .minSize(100, 50)
                 .padLeft(20)
                 .padRight(20)
-                .minWidth(100);
+                .maxSize(2500, 2500);
+
 
         buttonTable.row();
 
@@ -129,10 +130,11 @@ public class MainMenuScreen extends ActionScreen {
         planesButton.setScaling(Scaling.fit);
         buttonTable.add(planesButton)
                 .space(Value.percentHeight(0.2f))
-                .minHeight(50)
+                .minSize(100, 50)
+                .maxSize(2500, 2500)
                 .padLeft(20)
-                .padRight(20)
-                .minWidth(100);
+                .padRight(20);
+
 
 
         buttonTable.row();
@@ -154,8 +156,8 @@ public class MainMenuScreen extends ActionScreen {
                 .padBottom(15)
                 .padLeft(20)
                 .padRight(20)
-                .minHeight(50)
-                .minWidth(100);
+                .maxSize(2500, 2500)
+                .minSize(100, 50);
 
         table.add(buttonTable);
 
