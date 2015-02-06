@@ -2,18 +2,14 @@ package com.mygdx.skystorm.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.skystorm.SkyStorm;
 import com.mygdx.skystorm.data.Resources;
 import com.mygdx.skystorm.screen.ui.Button;
@@ -25,7 +21,14 @@ import com.mygdx.skystorm.world.background.theme.BackdropTheme;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
-public class MainMenuScreen extends ActionScene {
+/**
+ * The first menu you'll see when starting the game,
+ * Links to the following screens
+ *     - ModeSelectScreen
+ *     - OptionsScreen
+ *     - PlaneShowcaseScreen
+ */
+public class MainMenuScreen extends ActionScreen {
     Button playButton;
     Button planesButton;
     Button optionsButton;
@@ -34,16 +37,18 @@ public class MainMenuScreen extends ActionScene {
 
     public MainMenuScreen(SkyStorm game) {
         super(game);
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false);
-        ScreenViewport view = new ScreenViewport(camera);
-        stage = new Stage(view);
+        createBackground();
+        createClouds();
+        createMenuGraphics();
+    }
 
+    private void createBackground(){
         BackdropTheme islands = BackdropFactory.build(BackdropFactory.ThemePreset.ISLANDS);
         background = new Backdrop(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/4, 4, islands);
-
         stage.addActor(background);
+    }
 
+    private void createClouds(){
         for(int i = 0; i < 15; i++) {
             Cloud cloud = new Cloud(
                     Utils.randomFloat(0, Gdx.graphics.getWidth()),
@@ -55,11 +60,6 @@ public class MainMenuScreen extends ActionScene {
             cloud.addAction(forever(sequence(slideAcrossScreen, moveTo(-1000, cloud.getY()))));
             stage.addActor(cloud);
         }
-
-        Gdx.input.setInputProcessor(stage);
-
-        createMenuGraphics();
-
     }
 
     private void createMenuGraphics() {
@@ -101,7 +101,7 @@ public class MainMenuScreen extends ActionScene {
                 new Runnable() {
                     @Override
                     public void run() {
-                        slideButtonsOutAndTransitionTo(new GameScreen());
+                        slideButtonsOutAndTransitionTo(new ModeSelectScreen(game));
 
                     }
                 });
@@ -217,8 +217,6 @@ public class MainMenuScreen extends ActionScene {
     @Override
     public void render(float delta) {
         super.render(delta);
-        stage.act(delta);
-        stage.draw();
     }
 
 }
