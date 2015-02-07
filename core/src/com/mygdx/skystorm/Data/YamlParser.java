@@ -15,6 +15,8 @@ import com.mygdx.skystorm.world.background.theme.BackdropTheme;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,8 +63,8 @@ public class YamlParser {
 
     private static <T> ArrayList<T> parseYamlToList(String filePath, Class<T> type, YamlConfig config) {
         try {
-            File yamlFile = Gdx.files.internal(filePath).file();
-            YamlReader reader = new YamlReader(new FileReader(yamlFile), config);
+            Reader yamlFile = Gdx.files.internal(filePath).reader();
+            YamlReader reader = new YamlReader(yamlFile, config);
             ArrayList parsed = reader.read(ArrayList.class, type);
             return recastArray(parsed, type);
         } catch (Exception e) {
