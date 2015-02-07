@@ -11,10 +11,10 @@ public class Backdrop extends Group {
 
     private int tilesX;
     private int tilesY;
-    private int scale;
+    private float scale;
     private BackdropTheme theme;
 
-    public Backdrop(int tilesX, int tilesY, int scale, BackdropTheme theme) {
+    public Backdrop(int tilesX, int tilesY, float scale, BackdropTheme theme) {
         this.tilesX = tilesX;
         this.tilesY = tilesY;
         this.scale = scale;

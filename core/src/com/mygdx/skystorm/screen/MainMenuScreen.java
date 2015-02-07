@@ -44,7 +44,11 @@ public class MainMenuScreen extends ActionScreen {
 
     private void createBackground(){
         BackdropTheme islands = BackdropFactory.build(BackdropFactory.ThemePreset.ISLANDS);
-        background = new Backdrop(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/4, 4, islands);
+
+        float scaleX = Gdx.graphics.getWidth() / 960;
+        float scaleY = Gdx.graphics.getHeight() / 540;
+
+        background = new Backdrop((int)(Gdx.graphics.getWidth()/(4 * scaleX)), (int)(Gdx.graphics.getHeight()/(4 * scaleY)), 4 * scaleX, islands);
         stage.addActor(background);
     }
 
