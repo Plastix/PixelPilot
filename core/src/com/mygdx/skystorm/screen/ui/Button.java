@@ -89,9 +89,9 @@ public class Button extends Image{
         super.setBounds(x, y, width, height);
         float scaleX = width / 960;
         float scaleY = height / 540;
-
-        if(btnFont != null)
-            btnFont.setScale( 9*scaleX*scaleY );
+        float calculatedScale = 9*scaleX*scaleY;
+        if(btnFont != null && calculatedScale != 0 )
+            btnFont.setScale( calculatedScale );
     }
 
 }
