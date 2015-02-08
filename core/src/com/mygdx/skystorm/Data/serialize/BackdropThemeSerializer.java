@@ -16,7 +16,7 @@ public class BackdropThemeSerializer implements ScalarSerializer<BackdropTheme> 
     public BackdropTheme read(String value) throws YamlException {
         for(BackdropFactory.ThemePreset preset : BackdropFactory.ThemePreset.values()){
             if(preset.name().toLowerCase().equals(value.toLowerCase())){
-                return BackdropFactory.build(preset);
+                return BackdropFactory.buildTheme(preset);
             }
         }
         throw new YamlException("No ThemePreset with name " + value + " found!");

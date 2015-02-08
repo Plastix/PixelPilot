@@ -94,7 +94,6 @@ project(":core") {
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.esotericsoftware.yamlbeans:yamlbeans:1.09"
-
     }
 }
 

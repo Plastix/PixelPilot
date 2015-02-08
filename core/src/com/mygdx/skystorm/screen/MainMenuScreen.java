@@ -3,14 +3,16 @@ package com.mygdx.skystorm.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.mygdx.skystorm.SkyStorm;
 import com.mygdx.skystorm.data.Resources;
 import com.mygdx.skystorm.screen.ui.Button;
@@ -43,28 +45,21 @@ public class MainMenuScreen extends ActionScreen {
         createMenuGraphics();
     }
 
-    private void createBackground(){
-        BackdropTheme islands = BackdropFactory.build(BackdropFactory.ThemePreset.ISLANDS);
-
-        float scaleX = Gdx.graphics.getWidth() / 960;
-        float scaleY = Gdx.graphics.getHeight() / 540;
-
-        background = new Backdrop((int)(Gdx.graphics.getWidth()/(4 * scaleX)), (int)(Gdx.graphics.getHeight()/(4 * scaleY)), 4 * scaleX, islands);
-        stage.addActor(background);
+    private void createClouds(){
+        Group clouds = Cloud.generateClouds(15);
+        for(Actor a : clouds.getChildren()){
+            MoveToAction slideAcrossScreen = new MoveToAction();
+            slideAcrossScreen.setPosition(1000, a.getY());
+            slideAcrossScreen.setDuration(Utils.randomInt(100, 300));
+            a.addAction(forever(sequence(slideAcrossScreen, moveTo(-1000, a.getY()))));
+        }
+        stage.addActor(clouds);
     }
 
-    private void createClouds(){
-        for(int i = 0; i < 15; i++) {
-            Cloud cloud = new Cloud(
-                    Utils.randomFloat(0, Gdx.graphics.getWidth()),
-                    Utils.randomFloat(0, Gdx.graphics.getHeight()),
-                    75, 75, 5);
-            MoveToAction slideAcrossScreen = new MoveToAction();
-            slideAcrossScreen.setPosition(1000, cloud.getY());
-            slideAcrossScreen.setDuration(Utils.randomInt(50, 99));
-            cloud.addAction(forever(sequence(slideAcrossScreen, moveTo(-1000, cloud.getY()))));
-            stage.addActor(cloud);
-        }
+    private void createBackground(){
+        BackdropTheme theme = BackdropFactory.buildTheme(BackdropFactory.ThemePreset.ISLANDS);
+        background = BackdropFactory.buildBackdrop(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 4, theme);
+        stage.addActor(background);
     }
 
     private void createMenuGraphics() {

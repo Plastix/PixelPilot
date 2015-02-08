@@ -13,8 +13,14 @@ public class Plane extends Group {
         this.controller = controller;
         this.addActor(planeActor);
     }
-
-    public void update(){
+    @Override
+    public void act(float delta) {
+        super.act(delta);
         controller.control(planeActor);
+    }
+
+    @Override
+    public String toString() {
+        return "Plane with " + planeActor + " body and " + controller;
     }
 }

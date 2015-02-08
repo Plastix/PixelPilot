@@ -2,4 +2,4 @@
   speed: 10
   armor: 20
   turnSpeed: 2
-  spritePath: /path/to/sprite
+  spritePath: planes/1.png

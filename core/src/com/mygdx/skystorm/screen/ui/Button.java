@@ -14,10 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.*;
 import com.mygdx.skystorm.data.Resources;
 
-// TODO: Add support for drawing text on top of button
+// TODO: Ensure BitmapFont.dispose() is called when it is no longer needed (to prevent mem leaks)
 public class Button extends Image{
-    BitmapFont btnFont;
-    String btnText;
+    // consider making this a cached resource (static)
+    private BitmapFont btnFont;
+    private String btnText;
 
     public Button(final String text, final Texture backgroundUp, final Texture backgroundDown, final Runnable callback){
         super(backgroundUp);
@@ -25,7 +26,7 @@ public class Button extends Image{
         btnText = text;
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Resources.menu_font));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = (int)( 136 * Gdx.graphics.getDensity() ); // how to scale this?
+        parameter.size = (int) (136 * Gdx.graphics.getDensity()); // how to scale this?
         btnFont = generator.generateFont(parameter);
         generator.dispose();
 
@@ -93,5 +94,8 @@ public class Button extends Image{
         if(btnFont != null && calculatedScale != 0 )
             btnFont.setScale( calculatedScale );
     }
+
+
+
 
 }
