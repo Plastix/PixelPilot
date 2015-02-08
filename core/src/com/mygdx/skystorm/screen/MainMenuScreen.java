@@ -97,7 +97,7 @@ public class MainMenuScreen extends ActionScreen {
         table.row();
 
         Table buttonTable = new Table();
-        buttonTable.setDebug(true);
+
         // create the buttons
         final Button playButton = new Button("Play",
                 new Texture(Resources.menu_button),
@@ -105,6 +105,7 @@ public class MainMenuScreen extends ActionScreen {
                 new Runnable() {
                     @Override
                     public void run() {
+                        System.out.println("Transitioning to the modeselect screen");
                         slideButtonsOutAndTransitionTo(new ModeSelectScreen(game));
 
                     }
@@ -114,10 +115,8 @@ public class MainMenuScreen extends ActionScreen {
         buttonTable.add(playButton)
                 .space(Value.percentHeight(0.2f))
                 .minSize(100, 50)
-                .padLeft(20)
-                .padRight(20)
-                .expandY()
-                .maxSize(2500, 2500);
+                .pad(0, 20, 0, 20)
+                .expandY();
 
         buttonTable.row();
 
@@ -135,10 +134,8 @@ public class MainMenuScreen extends ActionScreen {
         buttonTable.add(planesButton)
                 .space(Value.percentHeight(0.2f))
                 .minSize(100, 50)
-                .maxSize(2500, 2500)
-                .padLeft(20)
-                .expandY()
-                .padRight(20);
+                .pad(0, 20, 0, 20)
+                .expandY();
 
         buttonTable.row();
         table.layout();
@@ -156,12 +153,9 @@ public class MainMenuScreen extends ActionScreen {
         optionsButton.setScaling(Scaling.fit);
         buttonTable.add(optionsButton)
                 .space(Value.percentHeight(0.2f))
-                .padBottom(15)
-                .padLeft(20)
-                .padRight(20)
-                .expandY()
-                .maxSize(2500, 2500)
-                .minSize(100, 50);
+                .pad(0, 20, 15, 20)
+                .minSize(100, 50)
+                .expandY();
 
         table.add(buttonTable).fillY().expandY();
 
