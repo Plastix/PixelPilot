@@ -20,7 +20,7 @@ public class GameScreen extends ActionScreen implements Listener {
 
     private World world;
     private HUD hud;
-    private GameCamera camera;
+    private TrackingCamera camera;
 
 
     @EventHandler
@@ -32,9 +32,11 @@ public class GameScreen extends ActionScreen implements Listener {
     public GameScreen(SkyStorm game) {
         super(game);
         Events.register(this);
-        camera = new GameCamera(stage.getCamera());
+        camera = new TrackingCamera();
+        stage.getViewport().setCamera(camera);
         hud = new HUD();
         world = new World(3000, 3000);
+        camera.setWorldBounds(0, 0, world.getWidth(), world.getHeight());
         BackdropTheme theme = BackdropFactory.buildTheme(BackdropFactory.ThemePreset.ISLANDS);
         Backdrop bg = BackdropFactory.buildBackdrop((int)world.getHeight(), (int)world.getWidth(), 4, theme);
         world.setBackdrop(bg);
@@ -43,15 +45,15 @@ public class GameScreen extends ActionScreen implements Listener {
 
 
         // let's spawn some planes!
-        PlaneDefinition definition = GameData.planeDefinitions.get(0);
-        WeaponDefinition weapon = GameData.weaponDefinitions.get(0);
-        Plane planeToSpawn = PlaneFactory.build(definition, weapon, new PlayerController());
+        PlanePreset preset = GameData.planePresets.get(0);
+        Plane planeToSpawn = PlaneFactory.build(preset, new PlayerController());
         Events.emit(new PlaneSpawnEvent(planeToSpawn));
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
+        camera.update();
     }
 
 }

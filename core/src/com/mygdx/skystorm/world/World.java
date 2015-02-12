@@ -8,6 +8,9 @@ import com.mygdx.skystorm.event.EventHandler;
 import com.mygdx.skystorm.event.Events;
 import com.mygdx.skystorm.event.events.PlaneSpawnEvent;
 import com.mygdx.skystorm.plane.Plane;
+import com.mygdx.skystorm.world.background.Backdrop;
+import com.mygdx.skystorm.world.background.theme.BackdropFactory;
+import com.mygdx.skystorm.world.background.theme.BackdropTheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,13 @@ public class World extends Group implements Listener {
         Events.register(this);
         clouds = Cloud.generateClouds(150); // static for now
         planes = new ArrayList<Plane>();
+        createBackdrop();
+    }
+
+    private void createBackdrop(){
+        BackdropTheme theme = BackdropFactory.buildTheme(BackdropFactory.ThemePreset.ISLANDS);
+        backdrop = BackdropFactory.buildBackdrop((int)getWidth(), (int)getHeight(), 4, theme);
+        this.addActor(backdrop);
     }
 
     public void setBackdrop(Actor bg){
