@@ -33,7 +33,7 @@ public class ModeSelectScreen extends ActionScreen {
                 new Runnable() {
             @Override
             public void run() {
-//                game.setScreen(new ArcadeGameScreen(game));
+                game.setScreen(new GameScreen(game));
             }
         });
         arcadeModeButton.setScaling(Scaling.fit);
@@ -45,7 +45,7 @@ public class ModeSelectScreen extends ActionScreen {
                 new Runnable() {
                     @Override
                     public void run() {
-//                game.setScreen(new ArcadeGameScreen(game));
+//                        game.setScreen(new ArcadeGameScreen(game));
                     }
                 });
         root.add(campaignModeButton);
