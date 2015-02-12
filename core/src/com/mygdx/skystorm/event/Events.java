@@ -55,15 +55,17 @@ public class Events {
     public static void emit(GameEvent event){
         Class eventType = event.getClass();
         List<MethodInfo> methodInfos = methodHandlers.get(eventType);
-        for(MethodInfo m : methodInfos) {
-            try {
-                if (m.param == null) {
-                    m.method.invoke(null);
-                } else if (m.type.equals(eventType)) {
-                    m.method.invoke(m.object, event);
+        if(methodInfos != null) {
+            for (MethodInfo m : methodInfos) {
+                try {
+                    if (m.param == null) {
+                        m.method.invoke(null);
+                    } else if (m.type.equals(eventType)) {
+                        m.method.invoke(m.object, event);
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
             }
         }
     }
