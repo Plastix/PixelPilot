@@ -7,19 +7,22 @@ import com.mygdx.skystorm.plane.PlaneActor;
 
 public class PlayerController extends Controller {
 
+    float turnSpeed = 1f;
+
     @Override
     public void control(PlaneActor planeBody) {
+        
         if(Gdx.input.isKeyPressed(Input.Keys.W)){
-            planeBody.velocity.add(new Vector2(0, 1));
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            planeBody.velocity.add(new Vector2(-1, 0));
+            turnSpeed += 0.2f;
         }
         if(Gdx.input.isKeyPressed(Input.Keys.S)){
-            planeBody.velocity.add(new Vector2(0, -1));
+            turnSpeed = Math.max(turnSpeed-0.2f, 1f);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.A)){
+            planeBody.turn(turnSpeed);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            planeBody.velocity.add(new Vector2(1, 0));
+            planeBody.turn(-turnSpeed);
         }
     }
 }
