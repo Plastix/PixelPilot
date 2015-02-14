@@ -13,6 +13,7 @@ The Wright brothers are super proud.
  * Use `git rebase -i HEAD~n` to rebase last `n` commits from HEAD
  * You'll need to force push to to your feature branch: `git push --force origin <feature-name>`
 4. Open PR on Github and do code review
+    * **NEVER CLICK THE SHINY GREEN BUTTON**!
 5. Make changes from code review
     * Squash changes from code review into commits
     * Rebase and force push!
