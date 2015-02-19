@@ -1,11 +1,13 @@
 package com.mygdx.skystorm.screen;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.skystorm.SkyStorm;
 import com.mygdx.skystorm.data.Resources;
-import com.mygdx.skystorm.screen.ui.Button;
+import com.mygdx.skystorm.screen.ui.ShadowTextButton;
 
 /**
  * Allows the player to select a mode for gameplay
@@ -15,7 +17,7 @@ import com.mygdx.skystorm.screen.ui.Button;
  */
 public class ModeSelectScreen extends ActionScreen {
 
-    private Button arcadeModeButton, campaignModeButton;
+    private ShadowTextButton arcadeModeButton, campaignModeButton;
 
     public ModeSelectScreen(SkyStorm game) {
         super(game);
@@ -27,29 +29,23 @@ public class ModeSelectScreen extends ActionScreen {
         Table root = new Table();
         root.setFillParent(true);
 
-        arcadeModeButton = new Button("Arcade",
-                new Texture(Resources.menu_button),
-                new Texture(Resources.menu_button_down),
-                new Runnable() {
-            @Override
-            public void run() {
-                game.setScreen(new GameScreen(game));
-            }
-        });
-        arcadeModeButton.setScaling(Scaling.fit);
-        root.add(arcadeModeButton).pad(20);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Resources.menu_font));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 150;
 
-        campaignModeButton = new Button("Campaign",
-                new Texture(Resources.menu_button),
-                new Texture(Resources.menu_button_down),
-                new Runnable() {
-                    @Override
-                    public void run() {
-//                        game.setScreen(new ArcadeGameScreen(game));
-                    }
-                });
+        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+        style.font =  generator.generateFont(parameter);
+        generator.dispose();
+        style.fontColor = new Color(0.9f, 0.92f, 0.36f,1);
+
+
+        arcadeModeButton = new ShadowTextButton("Arcade", style);
+        root.add(arcadeModeButton);
+
+        root.row().pad(20, 0, 20, 0);
+
+        campaignModeButton = new ShadowTextButton("Campaign", style);
         root.add(campaignModeButton);
-        campaignModeButton.setScaling(Scaling.fit);
         stage.addActor(root);
     }
 }

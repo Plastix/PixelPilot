@@ -1,7 +1,7 @@
 package com.mygdx.skystorm.world.background.theme;
 
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.skystorm.world.background.Backdrop;
 
 public class BackdropFactory {
@@ -26,9 +26,10 @@ public class BackdropFactory {
     }
 
     public static Backdrop buildBackdrop(int width, int height, int scale, BackdropTheme theme) {
-        float scaleX = Gdx.graphics.getWidth() / 960;
-        float scaleY = Gdx.graphics.getHeight() / 540;
-        return new Backdrop((int)(width/(scale * scaleX)), (int)(height/(scale * scaleY)), scale * scaleX, theme);
+        Backdrop backdrop = new Backdrop(width / scale, height / scale, theme);
+        backdrop.setFillParent(true);
+        backdrop.setScaling(Scaling.fill);
+        return backdrop;
     }
 
 }

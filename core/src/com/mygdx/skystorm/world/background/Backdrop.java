@@ -2,32 +2,29 @@ package com.mygdx.skystorm.world.background;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.skystorm.world.background.theme.BackdropTheme;
 
 
-public class Backdrop extends Group {
+public class Backdrop extends Image {
 
     private int tilesX;
     private int tilesY;
-    private float scale;
     private BackdropTheme theme;
 
-    public Backdrop(int tilesX, int tilesY, float scale, BackdropTheme theme) {
+    public Backdrop(int tilesX, int tilesY, BackdropTheme theme) {
         this.tilesX = tilesX;
         this.tilesY = tilesY;
-        this.scale = scale;
         this.theme = theme;
-        addBackgroundTexture();
+        setTexture();
+        setSize(getPrefWidth(), getPrefHeight());
     }
 
-    private void addBackgroundTexture(){
-        Image backdrop = new Image(new Texture(renderTexture(), false));
-        backdrop.setScale(scale);
-        setWidth(backdrop.getWidth());
-        setHeight(backdrop.getHeight());
-        this.addActor(backdrop);
+    private void setTexture(){
+        Texture backdrop = new Texture(renderTexture(), false);
+        this.setDrawable(new TextureRegionDrawable(new TextureRegion(backdrop)));
     }
 
     private Pixmap renderTexture(){
