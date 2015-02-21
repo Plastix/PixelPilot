@@ -1,11 +1,9 @@
 package com.mygdx.skystorm;
 
 import com.badlogic.gdx.Game;
-import com.mygdx.skystorm.data.GameData;
 import com.mygdx.skystorm.data.YamlParser;
 import com.mygdx.skystorm.plane.controller.ControllerFactory;
-import com.mygdx.skystorm.screen.GameScreen;
-import com.mygdx.skystorm.screen.MainMenuScreen;
+import com.mygdx.skystorm.screen.game.CampaignGameScreen;
 
 public class SkyStorm extends Game {
 
@@ -13,7 +11,7 @@ public class SkyStorm extends Game {
     public void create() {
         ControllerFactory.registerControllers();
         YamlParser.loadAllData();
-        this.setScreen(new GameScreen(this));
+        this.setScreen(new CampaignGameScreen(this));
     }
 
     @Override

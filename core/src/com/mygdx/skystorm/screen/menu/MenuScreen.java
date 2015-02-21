@@ -1,28 +1,24 @@
-package com.mygdx.skystorm.screen;
+package com.mygdx.skystorm.screen.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.skystorm.SkyStorm;
 
-public abstract class ActionScreen implements Screen {
-    protected Color backgroundColor;
-    protected final SkyStorm game;
-    protected OrthographicCamera camera;
-    protected Stage stage;
+public class MenuScreen implements Screen {
 
-    ActionScreen(SkyStorm game){
+    protected final SkyStorm game;
+    protected final Stage stage;
+
+    public MenuScreen(SkyStorm game) {
         this.game = game;
-        camera = new OrthographicCamera();
-        ExtendViewport view = new ExtendViewport(960, 540, camera);
+        ExtendViewport view = new ExtendViewport(960, 540, new OrthographicCamera());
         stage = new Stage(view);
-        Gdx.input.setInputProcessor(stage);
     }
+
     @Override
     public void show() {
 

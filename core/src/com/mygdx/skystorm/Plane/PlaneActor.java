@@ -65,4 +65,8 @@ public class PlaneActor extends Image {
     public void draw(Batch b, float parentAlpha){
         super.draw(b, parentAlpha);
     }
+
+    public Vector2 getPosition() {
+        return position;
+    }
 }

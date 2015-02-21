@@ -1,13 +1,12 @@
 package com.mygdx.skystorm.plane;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.mygdx.skystorm.plane.controller.Controller;
 
 public class Plane extends Group {
 
-    PlaneActor planeActor;
-    Controller controller;
+    private PlaneActor planeActor;
+    private Controller controller;
 
     public Plane(PlaneActor planeActor, Controller controller) {
         this.planeActor = planeActor;
@@ -26,7 +25,11 @@ public class Plane extends Group {
         return "Plane with " + planeActor + " body and " + controller;
     }
 
-    public PlaneActor getActor(){
+    public PlaneActor getPlaneActor() {
         return planeActor;
+    }
+
+    public Controller getController() {
+        return controller;
     }
 }

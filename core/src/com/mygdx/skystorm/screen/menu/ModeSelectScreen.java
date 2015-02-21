@@ -1,4 +1,4 @@
-package com.mygdx.skystorm.screen;
+package com.mygdx.skystorm.screen.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -15,7 +15,7 @@ import com.mygdx.skystorm.screen.ui.ShadowTextButton;
  *      - Campaign
  *      - Arcade
  */
-public class ModeSelectScreen extends ActionScreen {
+public class ModeSelectScreen extends MenuScreen {
 
     private ShadowTextButton arcadeModeButton, campaignModeButton;
 
@@ -33,11 +33,12 @@ public class ModeSelectScreen extends ActionScreen {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 150;
 
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+        ShadowTextButton.ShadowTextButtonStyle style = new ShadowTextButton.ShadowTextButtonStyle();
         style.font =  generator.generateFont(parameter);
         generator.dispose();
         style.fontColor = new Color(0.9f, 0.92f, 0.36f,1);
-
+        style.shadowColor = new Color(0.72f,0.74f,0.3f,1);
+        style.shadowDepth = 8;
 
         arcadeModeButton = new ShadowTextButton("Arcade", style);
         root.add(arcadeModeButton);

@@ -10,4 +10,8 @@ public class Resources {
     public static final String cloud = "cloud.png";
     public static final String settings = "wrench_icon.png";
     public static final String plane = "plane_icon.png";
+    public static final String trophy = "trophy_icon.png";
+    public static final String pause_button = "pause_button.png";
+    public static final String plane_marker = "plane_marker.png";
 }
+

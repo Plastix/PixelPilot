@@ -1,4 +1,4 @@
-package com.mygdx.skystorm.screen;
+package com.mygdx.skystorm.screen.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Interpolation;
@@ -10,6 +10,8 @@ import com.mygdx.skystorm.event.EventHandler;
 import com.mygdx.skystorm.event.Events;
 import com.mygdx.skystorm.event.Listener;
 import com.mygdx.skystorm.event.events.PlaneSpawnEvent;
+import com.mygdx.skystorm.event.events.player.PlayerSpawnEvent;
+import com.mygdx.skystorm.plane.controller.PlayerController;
 import com.mygdx.skystorm.util.Utils;
 
 public class TrackingCamera extends OrthographicCamera
@@ -110,7 +112,7 @@ public class TrackingCamera extends OrthographicCamera
     }
 
     @EventHandler
-    public void onPlaneSpawn(PlaneSpawnEvent event) {
-        track(event.getPlane().getActor());
+    public void onPlaneSpawn(PlayerSpawnEvent event) {
+        track(event.getPlane().getPlaneActor());
     }
 }

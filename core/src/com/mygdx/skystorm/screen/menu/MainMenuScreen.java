@@ -1,4 +1,4 @@
-package com.mygdx.skystorm.screen;
+package com.mygdx.skystorm.screen.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -35,7 +35,8 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
  *     - OptionsScreen
  *     - PlaneShowcaseScreen
  */
-public class MainMenuScreen extends ActionScreen {
+public class MainMenuScreen extends MenuScreen {
+
     TextButton playButton;
     ShadowImageButton planesButton;
     ShadowImageButton settings;
@@ -79,10 +80,11 @@ public class MainMenuScreen extends ActionScreen {
         FreeTypeFontGenerator.FreeTypeFontParameter logoParam = new FreeTypeFontGenerator.FreeTypeFontParameter();
         logoParam.size = 150;
 
-        Label.LabelStyle logoStyle = new Label.LabelStyle();
+        ShadowLabel.ShadowLabelStyle logoStyle = new ShadowLabel.ShadowLabelStyle();
         logoStyle.font =  generator.generateFont(logoParam);
         logoStyle.fontColor = new Color(0.75f, 0.24f, 0.25f,1);
-
+        logoStyle.shadowColor = new Color(0.44f, 0.04f, 0.04f, 1);
+        logoStyle.shadowDepth = 7;
 
         logo  = new Image(new Texture(Resources.menu_logo));
         logo.setScaling(Scaling.fit);
@@ -106,10 +108,12 @@ public class MainMenuScreen extends ActionScreen {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 250;
 
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+        ShadowTextButton.ShadowTextButtonStyle style = new ShadowTextButton.ShadowTextButtonStyle();
         style.font =  generator.generateFont(parameter);
         generator.dispose();
         style.fontColor = new Color(0.9f, 0.92f, 0.36f,1);
+        style.shadowColor = new Color(0.72f,0.74f,0.3f,1);
+        style.shadowDepth = 8;
 
         playButton = new ShadowTextButton("Play", style);
         playButton.addListener(new ChangeListener() {
@@ -123,9 +127,11 @@ public class MainMenuScreen extends ActionScreen {
 
         buttonTable.row().expand().fill();
 
-        ImageButton.ImageButtonStyle settingStyle = new ImageButton.ImageButtonStyle();
+        ShadowImageButton.ShadowImageButtonStyle settingStyle = new ShadowImageButton.ShadowImageButtonStyle();
         Texture wrench = new Texture(Resources.settings);
         settingStyle.imageUp = new TextureRegionDrawable(new TextureRegion(wrench));
+        settingStyle.shadowDepth = 7;
+        settingStyle.shadowColor = new Color(0,0,0,1);
         settings = new ShadowImageButton(settingStyle);
         settings.addListener(new ChangeListener() {
             @Override
@@ -135,9 +141,11 @@ public class MainMenuScreen extends ActionScreen {
         });
         buttonTable.add(settings).size(100, 100).left().pad(10).bottom();
 
-        ImageButton.ImageButtonStyle planesStyle = new ImageButton.ImageButtonStyle();
+        ShadowImageButton.ShadowImageButtonStyle planesStyle = new ShadowImageButton.ShadowImageButtonStyle();
         Texture planeIcon = new Texture(Resources.plane);
         planesStyle.imageUp = new TextureRegionDrawable(new TextureRegion(planeIcon));
+        planesStyle.shadowDepth = 7;
+        planesStyle.shadowColor = new Color(0,0,0,1);
         planesButton = new ShadowImageButton(planesStyle);
         planesButton.addListener(new ChangeListener() {
             @Override
