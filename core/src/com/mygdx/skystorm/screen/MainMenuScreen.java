@@ -119,6 +119,7 @@ public class MainMenuScreen extends ActionScreen {
             }
         });
         buttonTable.add(playButton).colspan(2);
+        animatePlayButton();
 
         buttonTable.row().expand().fill();
 
@@ -134,8 +135,6 @@ public class MainMenuScreen extends ActionScreen {
         });
         buttonTable.add(settings).size(100, 100).left().pad(10).bottom();
 
-
-
         ImageButton.ImageButtonStyle planesStyle = new ImageButton.ImageButtonStyle();
         Texture planeIcon = new Texture(Resources.plane);
         planesStyle.imageUp = new TextureRegionDrawable(new TextureRegion(planeIcon));
@@ -150,6 +149,16 @@ public class MainMenuScreen extends ActionScreen {
         table.add(buttonTable).expand().fill();
 
 
+    }
+
+    public void animatePlayButton(){
+        RepeatAction pulse = forever(
+                sequence(
+                        moveBy(0, 10, 0.3f, Interpolation.pow2),
+                        moveBy(0, -10, 0.3f, Interpolation.pow2)
+                ));
+        pulse.setActor(playButton);
+        stage.addAction(pulse);
     }
 
     public void slideButtonsOutAndTransitionTo(final Screen next){
