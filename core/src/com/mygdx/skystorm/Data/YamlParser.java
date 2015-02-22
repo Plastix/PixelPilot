@@ -2,6 +2,7 @@ package com.mygdx.skystorm.data;
 
 import com.badlogic.gdx.Gdx;
 import com.esotericsoftware.yamlbeans.YamlConfig;
+import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.YamlReader;
 import com.mygdx.skystorm.data.level.Stage;
 import com.mygdx.skystorm.data.level.Wave;
@@ -67,8 +68,8 @@ public class YamlParser {
             YamlReader reader = new YamlReader(yamlFile, config);
             ArrayList parsed = reader.read(ArrayList.class, type);
             return recastArray(parsed, type);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (YamlException e) {
+            System.out.println(e.getCause().getMessage());
         }
         return new ArrayList<T>();
     }
