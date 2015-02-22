@@ -6,22 +6,21 @@ import com.mygdx.pixelpilot.plane.PlaneActor;
 
 public class PlayerController extends Controller {
 
-    float turnSpeed = 1f;
+    float turnAmount = 0.5f;
 
     @Override
     public void control(PlaneActor planeBody) {
-        
         if(Gdx.input.isKeyPressed(Input.Keys.W)){
-            turnSpeed += 0.2f;
+            turnAmount = Math.min(turnAmount + 0.05f, 1f);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.S)){
-            turnSpeed = Math.max(turnSpeed-0.2f, 1f);
+            turnAmount = Math.max(turnAmount - 0.05f, 0f);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            planeBody.turn(turnSpeed);
+            planeBody.turn(turnAmount);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            planeBody.turn(-turnSpeed);
+            planeBody.turn(-turnAmount);
         }
     }
 }

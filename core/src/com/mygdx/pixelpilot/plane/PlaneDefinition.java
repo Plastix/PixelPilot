@@ -8,14 +8,14 @@ public class PlaneDefinition {
     public String name;
     public int speed;
     public int armor;
-    public int turnRadius;
+    public int minTurnRadius;
     public String spritePath;
     public Color markerColor;
 
     @Override
     public String toString(){
-        return String.format("name: %s, speed: %s, armor: %s, turnRadius: %s, spritePath: %s",
-                name, speed, armor, turnRadius, spritePath);
+        return String.format("name: %s, speed: %s, armor: %s, minTurnRadius: %s, spritePath: %s",
+                name, speed, armor, minTurnRadius, spritePath);
     }
 
 }

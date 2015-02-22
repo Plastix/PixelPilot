@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -15,7 +16,6 @@ public class PlaneActor extends Image {
 
     private Vector2 position;
     private Vector2 linearVelocity;
-
     private PlaneDefinition def;
     private Weapon weapon;
 
@@ -23,9 +23,9 @@ public class PlaneActor extends Image {
         super(new Texture(def.spritePath));
         this.position = new Vector2(200,200);
         this.def = def;
-        this.linearVelocity = new Vector2(1, 1); /* can't be zero because then scaling won't work */
-        linearVelocity.setLength(def.speed);
-        linearVelocity.setAngle(0);
+        this.linearVelocity = new Vector2(1, 1);
+        this.linearVelocity.setLength(def.speed);
+        this.linearVelocity.setAngle(0);
         this.weapon = new Weapon(weaponDefinition);
         setScale(3f, 3f);
         setOrigin(Align.center);
@@ -35,36 +35,26 @@ public class PlaneActor extends Image {
     @Override
     public void act (float delta) {
         super.act(delta);
-        position.add(linearVelocity);
+        this.position.add(linearVelocity);
         this.setPosition(position.x, position.y);
-        
-        /*Reset things back to their base values*/
-        linearVelocity.nor().scl(def.speed);
     }
 
     public void shoot() {
         Events.emit(new WeaponFireEvent(weapon), this);
     }
 
-    /* TODO: clamp linearVelocity to ensure it stays above 0*/
-    public void turn(float omega) {
+    /**
+     * Causes the plane to change its heading
+     * @param turnAmount amount to turn this frame, expects to be in range [-1, 1]
+     */
+    public void turn(float turnAmount) {
 
-        linearVelocity.scl(Math.abs(omega));
+        // based on http://aviation.stackexchange.com/a/2872
+        float minTurnRadiusAng = MathUtils.radDeg * linearVelocity.len() / def.minTurnRadius;
 
-        float speed = linearVelocity.len();
-
-        Vector2 radialAcceleration = Utils.perpendicularVector(linearVelocity, omega > 0 ? 1 : -1)
-                .scl((speed * speed) / def.turnRadius);
-        linearVelocity.add(radialAcceleration);
-
+        float turnAng = Utils.map(turnAmount, -1f, 1f, -minTurnRadiusAng, minTurnRadiusAng);
+        linearVelocity.rotate(turnAng);
         setRotation(linearVelocity.angle()-90);
-    }
-
-    ShapeRenderer shapeDebugger = new ShapeRenderer();
-
-    @Override
-    public void draw(Batch b, float parentAlpha){
-        super.draw(b, parentAlpha);
     }
 
     public Vector2 getPosition() {

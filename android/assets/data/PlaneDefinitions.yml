@@ -1,6 +1,6 @@
 - name: Basic Plane
   speed: 10
   armor: 20
-  turnRadius: 130
+  minTurnRadius: 130
   spritePath: image/planes/1.png
   markerColor: ffffffff
