@@ -25,11 +25,11 @@ public class CampaignGameScreen extends GameScreen implements Listener {
         // let's spawn some planes!
         PlanePreset preset = GameData.planePresets.get(0);
         Plane player = PlaneFactory.build(preset, new PlayerController());
-        Events.emit(new PlayerSpawnEvent(player));
+        Events.emit(new PlayerSpawnEvent(player), this);
 
         //Creae a dummy plane
         Plane dummy = PlaneFactory.build(preset);
-        Events.emit(new PlaneSpawnEvent(dummy));
+        Events.emit(new PlaneSpawnEvent(dummy), this);
 
     }
 }
