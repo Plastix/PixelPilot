@@ -51,8 +51,10 @@ public class Events {
     /**
      * Calls all registered methods which are mapped to the given event.
      * @param event The GameEvent which is to be passed to all handlers
+     * @param source The object which emitted the event
      */
-    public static void emit(GameEvent event){
+    public static void emit(GameEvent event, Object source){
+        event.setSource(source);
         Class eventType = event.getClass();
         List<MethodInfo> methodInfos = methodHandlers.get(eventType);
         if(methodInfos != null) {

@@ -47,7 +47,7 @@ public class GameScreen extends ActionScreen implements Listener {
         // let's spawn some planes!
         PlanePreset preset = GameData.planePresets.get(0);
         Plane planeToSpawn = PlaneFactory.build(preset, new PlayerController());
-        Events.emit(new PlaneSpawnEvent(planeToSpawn));
+        Events.emit(new PlaneSpawnEvent(planeToSpawn), this);
     }
 
     @Override

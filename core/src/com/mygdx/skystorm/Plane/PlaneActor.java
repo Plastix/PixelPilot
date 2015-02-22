@@ -1,18 +1,14 @@
 package com.mygdx.skystorm.plane;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.mygdx.skystorm.event.Events;
 import com.mygdx.skystorm.event.events.WeaponFireEvent;
 import com.mygdx.skystorm.util.Utils;
-
-import java.util.Scanner;
 
 public class PlaneActor extends Image {
 
@@ -46,7 +42,7 @@ public class PlaneActor extends Image {
     }
 
     public void shoot() {
-        Events.emit(new WeaponFireEvent(weapon));
+        Events.emit(new WeaponFireEvent(weapon), this);
     }
 
     /* TODO: clamp linearVelocity to ensure it stays above 0*/
