@@ -1,6 +1,7 @@
 package com.mygdx.pixelpilot.data;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.esotericsoftware.yamlbeans.YamlConfig;
 import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.YamlReader;
@@ -30,7 +31,9 @@ public class YamlParser {
     }
 
     public static void parsePlaneDefinitions() {
-        GameData.planeDefinitions = parseYamlToList(Assets.data.planes, PlaneDefinition.class);
+        YamlConfig config = new YamlConfig();
+        config.setScalarSerializer(Color.class, new ColorSerializer());
+        GameData.planeDefinitions = parseYamlToList(Assets.data.planes, PlaneDefinition.class, config);
     }
 
     public static void parsePlanePresets() {

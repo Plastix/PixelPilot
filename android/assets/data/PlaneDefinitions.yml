@@ -3,3 +3,4 @@
   armor: 20
   turnRadius: 130
   spritePath: image/planes/1.png
+  markerColor: ffffffff

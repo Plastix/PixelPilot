@@ -17,13 +17,9 @@ import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.events.PlaneSpawnEvent;
-import com.mygdx.pixelpilot.event.events.player.PlayerDeathEvent;
-import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
-import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.screen.ui.ShadowImage;
 import com.mygdx.pixelpilot.screen.ui.ShadowImageButton;
 import com.mygdx.pixelpilot.screen.ui.ShadowLabel;
-
 
 public class HUD extends Stage implements Listener {
 
@@ -33,7 +29,6 @@ public class HUD extends Stage implements Listener {
     private ShadowImage scoreIcon;
     private ShadowLabel score;
     private ShadowImageButton pauseButton;
-    private Plane player;
 
     public HUD(){
         this.setViewport(new ExtendViewport(960, 540, new OrthographicCamera()));
@@ -47,7 +42,6 @@ public class HUD extends Stage implements Listener {
 
         this.addActor(table);
     }
-
 
     private void addHUDComponents(){
 
@@ -99,18 +93,8 @@ public class HUD extends Stage implements Listener {
     }
 
     @EventHandler
-    public void onPlayerSpawn(PlayerSpawnEvent event) {
-        player = event.getPlane();
-    }
-
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event) {
-        player = null;
-    }
-
-    @EventHandler
     public void onPlaneSpawn(PlaneSpawnEvent event){
-        this.addActor(new PlaneMarker(event.getPlane(), player));
+        this.addActor(new PlaneMarker(event.getPlane()));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.mygdx.pixelpilot.plane;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -68,5 +69,9 @@ public class PlaneActor extends Image {
 
     public Vector2 getPosition() {
         return position;
+    }
+
+    public Color getMarkerColor(){
+        return def.markerColor;
     }
 }

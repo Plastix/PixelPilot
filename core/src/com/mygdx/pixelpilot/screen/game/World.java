@@ -14,6 +14,7 @@ import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.world.Cloud;
 import com.mygdx.pixelpilot.world.background.theme.BackdropFactory;
 import com.mygdx.pixelpilot.world.background.theme.BackdropTheme;
+import com.mygdx.pixelpilot.event.events.PlaneMarkerSpawnEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,11 @@ public class World extends Stage implements Listener {
     @EventHandler
     public void onPlayerSpawn(PlayerSpawnEvent event){
         addPlane(event.getPlane());
+    }
+
+    @EventHandler
+    public void onPlayerMarkerSpawn(PlaneMarkerSpawnEvent event){
+        event.getPlaneMarker().setCamera(camera);
     }
 
 
