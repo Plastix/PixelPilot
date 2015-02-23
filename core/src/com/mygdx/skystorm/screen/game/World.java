@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.skystorm.event.Listener;
 import com.mygdx.skystorm.event.EventHandler;
 import com.mygdx.skystorm.event.Events;
@@ -32,6 +33,7 @@ public class World extends Stage implements Listener {
         this.height = height;
         camera = new TrackingCamera();
         camera.setWorldBounds(0, 0, width, height);
+        this.setViewport(new ExtendViewport(960, 540));
         this.getViewport().setCamera(camera);
 
         Events.register(this);
