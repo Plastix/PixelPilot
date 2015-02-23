@@ -15,17 +15,11 @@ public class Events {
     private static class MethodInfo {
         Method method;
         Listener object;
-        Parameter param;
         Class type;
-        MethodInfo(Listener o, Method m, Parameter[] params){
+        MethodInfo(Listener o, Method m, Class t){
             method = m;
             object = o;
-            if(params.length == 1) {
-                param = params[0];
-                type = param.getType();
-            }else {
-                throw new RuntimeException("Methods marked as EventHandlers must accept exactly 1 parameter event");
-            }
+            type = t;
         }
     }
 
@@ -34,15 +28,19 @@ public class Events {
      * Adds each annotated method to the map with the eventType's class as its key.
      * @param handler the EventHandler implementation to scan
      */
-    public static void register(Listener handler){
+    public static void register(Listener handler) {
         Method[] methods = handler.getClass().getMethods();
-        for(Method method : methods) {
-            if(method.isAnnotationPresent(EventHandler.class)) {
-                Class c = method.getParameterTypes()[0];
+        for (Method method : methods) {
+            if (method.isAnnotationPresent(EventHandler.class)) {
+                Class[] classes = method.getParameterTypes();
+                if(classes.length != 1) {
+                    throw new RuntimeException("Methods marked as EventHandlers must accept exactly 1 parameter event");
+                }
+                Class c = classes[0];
                 List<MethodInfo> methodInfos = methodHandlers.get(c);
-                if(methodInfos == null)
+                if (methodInfos == null)
                     methodInfos = new ArrayList<MethodInfo>();
-                methodInfos.add(new MethodInfo(handler, method, method.getParameters()));
+                methodInfos.add(new MethodInfo(handler, method, c));
                 methodHandlers.put(c, methodInfos);
             }
         }
@@ -60,9 +58,7 @@ public class Events {
         if(methodInfos != null) {
             for (MethodInfo m : methodInfos) {
                 try {
-                    if (m.param == null) {
-                        m.method.invoke(null);
-                    } else if (m.type.equals(eventType)) {
+                    if (m.type.equals(eventType)) {
                         m.method.invoke(m.object, event);
                     }
                 } catch (Exception e) {
