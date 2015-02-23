@@ -1,5 +1,5 @@
-# PlaneGame
-A simple plane game
+# Pixel Pilot
+A top down dogfighting game with pixel graphics. Pew Pew!
 
 Such game, many flight, very plane, wow.
 The Wright brothers are super proud.

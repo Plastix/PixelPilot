@@ -2,7 +2,7 @@ sourceSets.main.java.srcDirs = ["src/"]
 sourceCompatibility = '1.7'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 ext {
-    mainClassName = "com.mygdx.skystorm.IOSLauncher"
+    mainClassName = "com.mygdx.pixelpilot.IOSLauncher"
 }
 // Extracts native libs (*.a) from the native-ios.jar and places them
 // under build/libs/ios/.
