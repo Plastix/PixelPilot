@@ -2,7 +2,6 @@ package com.mygdx.skystorm.screen.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class ShadowTextButton extends TextButton {
@@ -15,6 +14,8 @@ public class ShadowTextButton extends TextButton {
         ShadowLabel.ShadowLabelStyle labelStyle = new ShadowLabel.ShadowLabelStyle();
         labelStyle.shadowColor = style.shadowColor;
         labelStyle.shadowDepth = style.shadowDepth;
+        labelStyle.fontColor = style.fontColor;
+        labelStyle.font = style.font;
 
         ShadowLabel shadowText = new ShadowLabel(text, labelStyle);
         cell.setActor(shadowText);
