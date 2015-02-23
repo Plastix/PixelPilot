@@ -4,6 +4,7 @@ A simple plane game
 Such game, many flight, very plane, wow.
 The Wright brothers are super proud.
 
+![The Pixel Pilot mascot](http://i.imgur.com/EhxqixE.jpg)
 # PR Workflow
 
 1. Open feature branch
