@@ -18,11 +18,6 @@ import java.util.ArrayList;
 
 public class YamlParser {
 
-    private static final String WEAPONS_YAML_PATH = "config/Weapons.yml";
-    private static final String PLANE_YAML_PATH = "config/PlaneDefinitions.yml";
-    private static final String PRESET_YAML_PATH = "config/PlanePresets.yml";
-    private static final String LEVEL_YAML_PATH = "config/Levels.yml";
-
     public static void loadAllData() {
         parsePlaneWeapons();
         parsePlaneDefinitions();
@@ -31,11 +26,11 @@ public class YamlParser {
     }
 
     public static void parsePlaneWeapons() {
-        GameData.weaponDefinitions = parseYamlToList(WEAPONS_YAML_PATH, WeaponDefinition.class);
+        GameData.weaponDefinitions = parseYamlToList(Assets.data.weapons, WeaponDefinition.class);
     }
 
     public static void parsePlaneDefinitions() {
-        GameData.planeDefinitions = parseYamlToList(PLANE_YAML_PATH, PlaneDefinition.class);
+        GameData.planeDefinitions = parseYamlToList(Assets.data.planes, PlaneDefinition.class);
     }
 
     public static void parsePlanePresets() {
@@ -43,14 +38,14 @@ public class YamlParser {
         config.setScalarSerializer(PlaneDefinition.class, new PlaneDefinitionSerializer());
         config.setScalarSerializer(WeaponDefinition.class, new WeaponDefinitionSerializer());
         config.setScalarSerializer(Controller.class, new ControllerSerializer());
-        GameData.planePresets = parseYamlToList(PRESET_YAML_PATH, PlanePreset.class, config);
+        GameData.planePresets = parseYamlToList(Assets.data.presets, PlanePreset.class, config);
     }
     
     public static void parseLevels(){
         YamlConfig config = new YamlConfig();
         config.setScalarSerializer(Wave.class, new PlanePresetSerializer());
         config.setScalarSerializer(BackdropTheme.class, new BackdropThemeSerializer());
-        GameData.levels = parseYamlToList(LEVEL_YAML_PATH, Level.class, config);
+        GameData.levels = parseYamlToList(Assets.data.levels, Level.class, config);
     }
 
     private static <T> ArrayList<T> parseYamlToList(String filePath, Class<T> type) {

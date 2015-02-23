@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.pixelpilot.PixelPilot;
-import com.mygdx.pixelpilot.data.Resources;
+import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.screen.ui.ShadowImageButton;
 import com.mygdx.pixelpilot.screen.ui.ShadowLabel;
 import com.mygdx.pixelpilot.screen.ui.ShadowTextButton;
@@ -70,7 +70,7 @@ public class MainMenuScreen extends MenuScreen {
 
     private void createMenuGraphics() {
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Resources.menu_font));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Assets.font.pixel));
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
@@ -86,7 +86,7 @@ public class MainMenuScreen extends MenuScreen {
         logoStyle.shadowColor = new Color(0.44f, 0.04f, 0.04f, 1);
         logoStyle.shadowDepth = 7;
 
-        logo  = new Image(new Texture(Resources.menu_logo));
+        logo  = new Image(new Texture(Assets.image.menu_logo));
         logo.setScaling(Scaling.fit);
         text1 = new ShadowLabel("Pixel", logoStyle);
         text2 = new ShadowLabel("Pilot", logoStyle);
@@ -128,7 +128,7 @@ public class MainMenuScreen extends MenuScreen {
         buttonTable.row().expand().fill();
 
         ShadowImageButton.ShadowImageButtonStyle settingStyle = new ShadowImageButton.ShadowImageButtonStyle();
-        Texture wrench = new Texture(Resources.settings);
+        Texture wrench = new Texture(Assets.image.settings);
         settingStyle.imageUp = new TextureRegionDrawable(new TextureRegion(wrench));
         settingStyle.shadowDepth = 7;
         settingStyle.shadowColor = new Color(0,0,0,1);
@@ -142,7 +142,7 @@ public class MainMenuScreen extends MenuScreen {
         buttonTable.add(settings).size(100, 100).left().pad(10).bottom();
 
         ShadowImageButton.ShadowImageButtonStyle planesStyle = new ShadowImageButton.ShadowImageButtonStyle();
-        Texture planeIcon = new Texture(Resources.plane);
+        Texture planeIcon = new Texture(Assets.image.plane);
         planesStyle.imageUp = new TextureRegionDrawable(new TextureRegion(planeIcon));
         planesStyle.shadowDepth = 7;
         planesStyle.shadowColor = new Color(0,0,0,1);

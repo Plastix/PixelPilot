@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.pixelpilot.PixelPilot;
-import com.mygdx.pixelpilot.data.Resources;
+import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.screen.ui.ShadowTextButton;
 
 /**
@@ -28,7 +28,7 @@ public class ModeSelectScreen extends MenuScreen {
         Table root = new Table();
         root.setFillParent(true);
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Resources.menu_font));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Assets.font.pixel));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 150;
 

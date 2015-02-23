@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mygdx.pixelpilot.data.Resources;
+import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.events.player.PlayerDeathEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
@@ -32,7 +32,7 @@ public class PlaneMarker extends Image {
         this.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, Align.center);
 
         this.setOrigin(Align.center);
-        Texture arrow = new Texture(Resources.plane_marker);
+        Texture arrow = new Texture(Assets.image.plane_marker);
         this.setDrawable(new TextureRegionDrawable(new TextureRegion(arrow)));
     }
 

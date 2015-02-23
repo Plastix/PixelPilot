@@ -2,4 +2,4 @@
   speed: 10
   armor: 20
   turnRadius: 130
-  spritePath: planes/1.png
+  spritePath: image/planes/1.png

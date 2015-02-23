@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.mygdx.pixelpilot.data.Resources;
+import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.Listener;
@@ -56,17 +56,17 @@ public class HUD extends Stage implements Listener {
         imageStyle.shadowDepth = 5;
 
         livesIcon = new ShadowImage(imageStyle);
-        Texture planeIcon = new Texture(Resources.plane);
+        Texture planeIcon = new Texture(Assets.image.plane);
         livesIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(planeIcon)));
 
         scoreIcon = new ShadowImage(imageStyle);
-        Texture trophy = new Texture(Resources.trophy);
+        Texture trophy = new Texture(Assets.image.trophy);
         scoreIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(trophy)));
 
         ShadowImageButton.ShadowImageButtonStyle pauseStyle = new ShadowImageButton.ShadowImageButtonStyle();
         pauseStyle.shadowColor = new Color(0,0,0,1);
         pauseStyle.shadowDepth = 5;
-        Texture pause = new Texture(Resources.pause_button);
+        Texture pause = new Texture(Assets.image.pause_button);
         pauseStyle.imageUp = new TextureRegionDrawable(new TextureRegion(pause));
         pauseButton = new ShadowImageButton(pauseStyle);
         pauseButton.addListener(new ChangeListener() {
@@ -76,7 +76,7 @@ public class HUD extends Stage implements Listener {
             }
         });
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Resources.menu_font));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Assets.font.pixel));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 76;
 
