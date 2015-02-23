@@ -17,6 +17,7 @@ public class MenuScreen implements Screen {
         this.game = game;
         ExtendViewport view = new ExtendViewport(960, 540, new OrthographicCamera());
         stage = new Stage(view);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
