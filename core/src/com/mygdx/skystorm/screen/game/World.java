@@ -3,13 +3,13 @@ package com.mygdx.skystorm.screen.game;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.skystorm.event.Listener;
 import com.mygdx.skystorm.event.EventHandler;
 import com.mygdx.skystorm.event.Events;
 import com.mygdx.skystorm.event.events.PlaneSpawnEvent;
 import com.mygdx.skystorm.event.events.player.PlayerSpawnEvent;
 import com.mygdx.skystorm.plane.Plane;
-import com.mygdx.skystorm.plane.controller.PlayerController;
 import com.mygdx.skystorm.world.Cloud;
 import com.mygdx.skystorm.world.background.theme.BackdropFactory;
 import com.mygdx.skystorm.world.background.theme.BackdropTheme;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class World extends com.badlogic.gdx.scenes.scene2d.Stage implements Listener {
+public class World extends Stage implements Listener {
 
     private Actor backdrop;
     private Group clouds;

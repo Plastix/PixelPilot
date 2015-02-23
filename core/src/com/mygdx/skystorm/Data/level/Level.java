@@ -4,7 +4,7 @@ import com.mygdx.skystorm.world.background.theme.BackdropTheme;
 
 import java.util.List;
 
-public class Stage {
+public class Level {
 
     public String name;
     public BackdropTheme theme;

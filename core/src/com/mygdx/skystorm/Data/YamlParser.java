@@ -4,22 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.esotericsoftware.yamlbeans.YamlConfig;
 import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.YamlReader;
-import com.mygdx.skystorm.data.level.Stage;
+import com.mygdx.skystorm.data.level.Level;
 import com.mygdx.skystorm.data.level.Wave;
 import com.mygdx.skystorm.data.serialize.*;
-import com.mygdx.skystorm.plane.Plane;
 import com.mygdx.skystorm.plane.PlaneDefinition;
 import com.mygdx.skystorm.plane.PlanePreset;
 import com.mygdx.skystorm.plane.WeaponDefinition;
 import com.mygdx.skystorm.plane.controller.Controller;
 import com.mygdx.skystorm.world.background.theme.BackdropTheme;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.InputStream;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.List;
 
 public class YamlParser {
 
@@ -55,7 +50,7 @@ public class YamlParser {
         YamlConfig config = new YamlConfig();
         config.setScalarSerializer(Wave.class, new PlanePresetSerializer());
         config.setScalarSerializer(BackdropTheme.class, new BackdropThemeSerializer());
-        GameData.stages = parseYamlToList(LEVEL_YAML_PATH, Stage.class, config);
+        GameData.levels = parseYamlToList(LEVEL_YAML_PATH, Level.class, config);
     }
 
     private static <T> ArrayList<T> parseYamlToList(String filePath, Class<T> type) {
