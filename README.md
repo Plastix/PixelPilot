@@ -27,5 +27,6 @@ The Wright brothers are super proud.
         2. Fix merge conflict (if needed)
         3. `git push --force origin <feature-name>`
 7. Merge updated feature branch into Master
+    * `git checkout master`
     * `git merge <feature-branch>`
     * `git push origin master`
