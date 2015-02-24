@@ -5,6 +5,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.pixelpilot.PixelPilot;
+import com.mygdx.pixelpilot.data.GameData;
+import com.mygdx.pixelpilot.event.Events;
+import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
+import com.mygdx.pixelpilot.plane.Plane;
+import com.mygdx.pixelpilot.plane.PlaneFactory;
+import com.mygdx.pixelpilot.plane.PlanePreset;
+import com.mygdx.pixelpilot.plane.controller.PlayerController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +69,14 @@ public abstract class GameScreen implements Screen {
         }
     }
 
-    public void addStage(Stage stage){
+    protected void spawnPlayer(){
+        //TODO Eventually get the player's selected plane
+        PlanePreset preset = GameData.planePresets.get(0);
+        Plane player = PlaneFactory.build(preset, new PlayerController());
+        Events.emit(new PlayerSpawnEvent(player), this);
+    }
+
+    protected void addStage(Stage stage){
         this.stages.add(stage);
     }
 }

@@ -46,7 +46,9 @@ public class YamlParser {
     
     public static void parseLevels(){
         YamlConfig config = new YamlConfig();
-        config.setScalarSerializer(Wave.class, new PlanePresetSerializer());
+        config.setPropertyElementType(Level.class, "waves", Wave.class);
+        config.setPropertyElementType(Wave.class, "enemies", PlanePreset.class);
+        config.setScalarSerializer(PlanePreset.class, new PlanePresetSerializer());
         config.setScalarSerializer(BackdropTheme.class, new BackdropThemeSerializer());
         GameData.levels = parseYamlToList(Assets.data.levels, Level.class, config);
     }

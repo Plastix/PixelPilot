@@ -11,6 +11,7 @@ import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.PlaneSpawnEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.plane.Plane;
+import com.mygdx.pixelpilot.util.Utils;
 import com.mygdx.pixelpilot.world.Cloud;
 import com.mygdx.pixelpilot.world.background.theme.BackdropFactory;
 import com.mygdx.pixelpilot.world.background.theme.BackdropTheme;
@@ -51,21 +52,20 @@ public class World extends Stage implements Listener {
         this.addActor(backdrop);
     }
 
-    private void addPlane(Plane plane){
-        Vector2 spawnPosition = getNewSpawnPosition();
-        plane.setPosition(spawnPosition.x, spawnPosition.y);
+    private void addPlane(Plane plane, Vector2 spawnPos){
+        plane.setPosition(spawnPos.x, spawnPos.y);
         this.addActor(plane);
         planes.add(plane);
     }
 
     @EventHandler
     public void onPlaneSpawn(PlaneSpawnEvent event){
-        addPlane(event.getPlane());
+        addPlane(event.getPlane(), getNewSpawnPosition());
     }
 
     @EventHandler
     public void onPlayerSpawn(PlayerSpawnEvent event){
-        addPlane(event.getPlane());
+        addPlane(event.getPlane(), new Vector2(0,0));
     }
 
     @EventHandler
@@ -73,12 +73,11 @@ public class World extends Stage implements Listener {
         event.getPlaneMarker().setCamera(camera);
     }
 
-
     /**
      * Finds a position outside of the player's viewport at which to spawn a plane
      * @return the calculated Vector2
      */
     private Vector2 getNewSpawnPosition(){
-        return new Vector2(0,0);
+        return new Vector2(Utils.randomInt(100, 2000), Utils.randomInt(100, 2000));
     }
 }

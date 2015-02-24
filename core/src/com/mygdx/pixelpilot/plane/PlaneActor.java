@@ -21,7 +21,7 @@ public class PlaneActor extends Image {
 
     public PlaneActor(PlaneDefinition def, WeaponDefinition weaponDefinition) {
         super(new Texture(def.spritePath));
-        this.position = new Vector2(200,200);
+        this.position = new Vector2(0,0);
         this.def = def;
         this.linearVelocity = new Vector2(1, 1);
         this.linearVelocity.setLength(def.speed);
