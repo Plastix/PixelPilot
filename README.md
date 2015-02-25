@@ -4,7 +4,6 @@ A top down dogfighting game with pixel graphics. Pew Pew!
 Such game, many flight, very plane, wow.
 The Wright brothers are super proud.
 
-![The Pixel Pilot mascot](http://i.imgur.com/EhxqixE.jpg)
 # PR Workflow
 
 1. Open feature branch
