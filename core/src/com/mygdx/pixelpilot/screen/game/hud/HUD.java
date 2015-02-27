@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -17,9 +18,12 @@ import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.events.PlaneSpawnEvent;
+import com.mygdx.pixelpilot.event.events.game.WaveSpawnEvent;
 import com.mygdx.pixelpilot.screen.ui.ShadowImage;
 import com.mygdx.pixelpilot.screen.ui.ShadowImageButton;
 import com.mygdx.pixelpilot.screen.ui.ShadowLabel;
+
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class HUD extends Stage implements Listener {
 
@@ -36,7 +40,7 @@ public class HUD extends Stage implements Listener {
         Events.register(this);
 
         table = new Table();
-        table.setFillParent(true);
+         table.setFillParent(true);
         table.top().left();
         addHUDComponents();
 
@@ -90,6 +94,38 @@ public class HUD extends Stage implements Listener {
         table.add(score);
 
         table.add(pauseButton).size(50,50).right().pad(10).expandX();
+    }
+
+    @EventHandler
+    public void onWaveSpawn(WaveSpawnEvent event){
+        String message = event.getWave().message;
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Assets.font.pixel));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 100;
+        ShadowLabel.ShadowLabelStyle style = new ShadowLabel.ShadowLabelStyle();
+        style.font =  generator.generateFont(parameter);
+        generator.dispose();
+        style.fontColor = new Color(1,1,1,1);
+        style.shadowColor = new Color(0,0,0,1);
+        style.shadowDepth = 7;
+
+        final ShadowLabel label = new ShadowLabel(message, style);
+        label.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, Align.center);
+        this.addActor(label);
+
+        label.addAction(sequence(
+                delay(1),
+                fadeOut(0.35f),
+                run(new Runnable() {
+                    @Override
+                    public void run() {
+                        label.remove();
+                    }
+                })
+
+        ));
+
     }
 
     @EventHandler

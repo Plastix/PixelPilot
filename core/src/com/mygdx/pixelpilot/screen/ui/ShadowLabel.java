@@ -16,13 +16,14 @@ public class ShadowLabel extends Label {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         validate();
-        Color shadowColor = style.shadowColor;
-        shadowColor.a *= parentAlpha;
+        Color color = style.shadowColor;
+        color.a *= getColor().a;
+        color.a *= parentAlpha;
         if (getStyle().background != null) {
-            batch.setColor(shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
+            batch.setColor(color.r, color.g, color.b, color.a);
             getStyle().background.draw(batch, getX(), getY(), getWidth(), getHeight());
         }
-        getBitmapFontCache().tint(shadowColor);
+        getBitmapFontCache().tint(color);
         getBitmapFontCache().setPosition(getX(), getY() - style.shadowDepth);
         getBitmapFontCache().draw(batch);
         super.draw(batch, parentAlpha);
