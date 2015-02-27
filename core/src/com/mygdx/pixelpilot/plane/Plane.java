@@ -6,15 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.WeaponFireEvent;
 import com.mygdx.pixelpilot.plane.controller.Controller;
 import com.mygdx.pixelpilot.util.Utils;
 
-public class Plane extends Actor {
-
+public class Plane extends SteerableActor {
     private PlaneDefinition def;
     private Weapon weapon;
     private Controller controller;
@@ -22,6 +20,12 @@ public class Plane extends Actor {
     private Vector2 position;
     private Vector2 linearVelocity;
     private Sprite sprite;
+
+    private boolean tagged;
+    private float angularVel;
+    private float maxLinearAcceleration = 200;
+    private float maxAngularSpeed = 5;
+    private float maxAngularAcceleration = 10;
 
 
     public Plane(PlaneDefinition def, WeaponDefinition weaponDefinition, Controller controller) {
@@ -43,11 +47,11 @@ public class Plane extends Actor {
     @Override
     public void act (float delta) {
         super.act(delta);
-        controller.control(this);
+        this.position.set(getX(), getY());
+        this.controller.control(this);
         this.position.add(linearVelocity);
         this.sprite.setPosition(position.x, position.y);
         this.sprite.setRotation(this.getRotation());
-
         this.setPosition(position.x, position.y);
     }
 
@@ -66,17 +70,110 @@ public class Plane extends Actor {
      * @param turnAmount amount to turn this frame, expects to be in range [-1, 1]
      */
     public void turn(float turnAmount) {
-
+        float prevAngle = linearVelocity.angleRad();
         // based on http://aviation.stackexchange.com/a/2872
         float minTurnRadiusAng = MathUtils.radDeg * linearVelocity.len() / def.minTurnRadius;
 
         float turnAng = Utils.map(turnAmount, -1f, 1f, -minTurnRadiusAng, minTurnRadiusAng);
         linearVelocity.rotate(turnAng);
         setRotation(linearVelocity.angle()-90);
+        angularVel = linearVelocity.angleRad() - prevAngle;
     }
 
     public Color getMarkerColor(){
         return def.markerColor;
+    }
+
+    @Override
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    @Override
+    public float getOrientation() {
+        return linearVelocity.angleRad() - (MathUtils.degRad * 90);
+    }
+
+    @Override
+    public Vector2 getLinearVelocity() {
+        return linearVelocity;
+    }
+
+    @Override
+    public float getAngularVelocity() {
+        return angularVel;
+    }
+
+    @Override
+    public float getBoundingRadius() {
+        return (sprite.getHeight() + sprite.getWidth()) / 4f;
+    }
+
+    @Override
+    public boolean isTagged() {
+        return tagged;
+    }
+
+    @Override
+    public void setTagged(boolean tagged) {
+        this.tagged = tagged;
+    }
+
+    @Override
+    public Vector2 newVector() {
+        return new Vector2();
+    }
+
+    @Override
+    public float vectorToAngle(Vector2 vector) {
+        return (float)Math.atan2(-vector.x, vector.y);
+    }
+
+    @Override
+    public Vector2 angleToVector(Vector2 outVector, float angle) {
+        outVector.x = -(float)Math.sin(angle);
+        outVector.y = (float)Math.cos(angle);
+        return outVector;
+    }
+
+    @Override
+    public float getMaxLinearSpeed() {
+        return def.speed;
+    }
+
+    @Override
+    public void setMaxLinearSpeed(float maxLinearSpeed) {
+        // this is fixed
+    }
+
+    @Override
+    public float getMaxLinearAcceleration() {
+        return maxLinearAcceleration;
+    }
+
+    @Override
+    public void setMaxLinearAcceleration(float maxLinearAcceleration) {
+        this.maxLinearAcceleration = maxLinearAcceleration;
+    }
+
+    @Override
+    public float getMaxAngularSpeed() {
+        return maxAngularSpeed;
+    }
+
+    @Override
+    public void setMaxAngularSpeed(float maxAngularSpeed) {
+        this.maxAngularSpeed = maxAngularSpeed;
+    }
+
+    @Override
+    public float getMaxAngularAcceleration() {
+        return maxAngularAcceleration;
+    }
+
+    @Override
+    public void setMaxAngularAcceleration(float maxAngularAcceleration) {
+        this.maxAngularAcceleration = maxAngularAcceleration;
     }
 
     public Controller getController() {

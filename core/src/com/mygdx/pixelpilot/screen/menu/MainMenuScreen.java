@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
@@ -54,7 +55,7 @@ public class MainMenuScreen extends MenuScreen {
         for(Actor a : clouds.getChildren()){
             MoveToAction slideAcrossScreen = new MoveToAction();
             slideAcrossScreen.setPosition(1000, a.getY());
-            slideAcrossScreen.setDuration(Utils.randomInt(100, 300));
+            slideAcrossScreen.setDuration(MathUtils.random(100, 300));
             a.addAction(forever(sequence(slideAcrossScreen, moveTo(-1000, a.getY()))));
         }
         stage.addActor(clouds);

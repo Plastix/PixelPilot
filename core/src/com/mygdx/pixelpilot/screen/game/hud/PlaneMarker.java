@@ -50,7 +50,7 @@ public class PlaneMarker extends Image implements Listener {
                 Vector2 diff = new Vector2(targetPos).sub(cam);
                 float angle = (float) (Math.toDegrees(Math.atan2(diff.y, diff.x)));
                 this.setRotation(angle);
-                //Convert the target coordinates to screen cordinates
+                //Convert the target coordinates to screen coordinates
                 setMarkerPosition(Utils.vec3d2d(camera.project(Utils.vec2d3d(targetPos))));
                 this.setVisible(true);
             }
@@ -66,11 +66,9 @@ public class PlaneMarker extends Image implements Listener {
         float width = this.getStage().getCamera().viewportWidth;
         float height = this.getStage().getCamera().viewportHeight;
         Rectangle bounds = new Rectangle(0, 0, width - getWidth(), height - getHeight());
-        Vector2 pos = Utils.getBoundsEdgeIntersection(target, new Vector2(width / 2, height / 2), bounds);
-
-        if(pos != null){
-            this.setPosition(pos.x, pos.y);
-        }
+        Vector2 pos = new Vector2();
+        Utils.intersectLineRect(target, new Vector2(width / 2, height / 2), bounds, pos);
+        this.setPosition(pos.x, pos.y);
     }
 
     public void setCamera(Camera camera) {

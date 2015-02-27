@@ -19,7 +19,7 @@ import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.Listener;
-import com.mygdx.pixelpilot.event.events.PlaneSpawnEvent;
+import com.mygdx.pixelpilot.event.events.AISpawnEvent;
 import com.mygdx.pixelpilot.event.events.game.WaveSpawnEvent;
 import com.mygdx.pixelpilot.screen.ui.ShadowImage;
 import com.mygdx.pixelpilot.screen.ui.ShadowImageButton;
@@ -132,7 +132,7 @@ public class HUD extends Stage implements Listener {
     }
 
     @EventHandler
-    public void onPlaneSpawn(PlaneSpawnEvent event){
+    public void onPlaneSpawn(AISpawnEvent event){
         this.addActor(new PlaneMarker(event.getPlane()));
     }
 

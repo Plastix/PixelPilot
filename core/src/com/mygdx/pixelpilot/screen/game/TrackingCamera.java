@@ -1,5 +1,7 @@
 package com.mygdx.pixelpilot.screen.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
@@ -9,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.Listener;
+import com.mygdx.pixelpilot.event.events.AISpawnEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.util.Utils;
 
@@ -33,14 +36,17 @@ public class TrackingCamera extends OrthographicCamera
     @Override
     public void update() {
         super.update();
-
+        if(Gdx.input.isKeyPressed(Input.Keys.I))
+            zoom -= 0.1f;
+        else if(Gdx.input.isKeyPressed(Input.Keys.J))
+            zoom += 0.1f;
         if (target != null) {
             track();
         }
     }
 
-    public void setWorldBounds(float x, float y, float width, float height) {
-        bounds.set(x, y, width, height);
+    public void setWorldBounds(Rectangle bounds) {
+        this.bounds = bounds;
     }
 
     private void track() {
