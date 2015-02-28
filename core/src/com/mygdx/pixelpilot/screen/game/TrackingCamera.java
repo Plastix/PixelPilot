@@ -111,6 +111,6 @@ public class TrackingCamera extends OrthographicCamera
 
     @EventHandler
     public void onPlaneSpawn(PlayerSpawnEvent event) {
-        track(event.getPlane().getPlaneActor());
+        track(event.getPlane());
     }
 }

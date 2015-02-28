@@ -14,18 +14,17 @@ import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.events.player.PlayerDeathEvent;
 import com.mygdx.pixelpilot.plane.Plane;
-import com.mygdx.pixelpilot.plane.PlaneActor;
 import com.mygdx.pixelpilot.event.events.PlaneMarkerSpawnEvent;
 import com.mygdx.pixelpilot.util.Utils;
 
 
 public class PlaneMarker extends Image implements Listener {
 
-    private PlaneActor target;
+    private Plane target;
     private Camera camera;
 
     public PlaneMarker(Plane target) {
-        this.target = target.getPlaneActor();
+        this.target = target;
 
         this.setSize(30, 30);
         this.setVisible(false);
@@ -43,8 +42,7 @@ public class PlaneMarker extends Image implements Listener {
     public void act(float delta) {
         super.act(delta);
         if (camera != null) {
-            //Convert the target plane's local actor coordinates to the stage's coordinates
-            Vector2 targetPos = target.localToStageCoordinates(new Vector2(0, 0));
+            Vector2 targetPos = new Vector2(target.getX(), target.getY());
             if (isTargetVisible(targetPos)) {
                 this.setVisible(false);
             } else {
@@ -61,7 +59,7 @@ public class PlaneMarker extends Image implements Listener {
     }
 
     private boolean isTargetVisible(Vector2 pos) {
-        return camera.frustum.boundsInFrustum(pos.x, pos.y, 0, target.getImageWidth() / 2, target.getImageHeight() / 2, 0);
+        return camera.frustum.boundsInFrustum(pos.x, pos.y, 0, target.getWidth() / 2, target.getHeight() / 2, 0);
     }
 
     private void setMarkerPosition(Vector2 target){

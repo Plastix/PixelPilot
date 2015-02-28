@@ -2,14 +2,14 @@ package com.mygdx.pixelpilot.plane.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.mygdx.pixelpilot.plane.PlaneActor;
+import com.mygdx.pixelpilot.plane.Plane;
 
 public class PlayerController extends Controller {
 
     float turnAmount = 0.5f;
 
     @Override
-    public void control(PlaneActor planeBody) {
+    public void control(Plane planeBody) {
         if(Gdx.input.isKeyPressed(Input.Keys.W)){
             turnAmount = Math.min(turnAmount + 0.05f, 1f);
         }

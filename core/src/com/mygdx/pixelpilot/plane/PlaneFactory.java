@@ -13,6 +13,6 @@ public class PlaneFactory {
     }
 
     public static Plane build(PlaneDefinition planeBody, WeaponDefinition weapon, Controller controller){
-        return new Plane(new PlaneActor(planeBody, weapon), controller);
+        return new Plane(planeBody, weapon, controller);
     }
 }
