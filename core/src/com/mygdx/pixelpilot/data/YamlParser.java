@@ -40,7 +40,7 @@ public class YamlParser {
         YamlConfig config = new YamlConfig();
         config.setScalarSerializer(PlaneDefinition.class, new PlaneDefinitionSerializer());
         config.setScalarSerializer(WeaponDefinition.class, new WeaponDefinitionSerializer());
-        config.setScalarSerializer(Controller.class, new ControllerSerializer());
+        config.setScalarSerializer(Class.class, new ControllerSerializer());
         GameData.planePresets = parseYamlToList(Assets.data.presets, PlanePreset.class, config);
     }
     
