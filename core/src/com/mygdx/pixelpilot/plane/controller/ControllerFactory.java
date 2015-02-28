@@ -1,11 +1,12 @@
 package com.mygdx.pixelpilot.plane.controller;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ControllerFactory {
 
-    private static HashMap<String, Class<? extends Controller>> controllers = new HashMap<String, Class<? extends Controller>>();
+    private static List<Class<? extends Controller>> controllers = new ArrayList<Class<? extends Controller>>();
 
     public static void registerControllers(){
         ControllerFactory.register(PlayerController.class);
@@ -13,31 +14,32 @@ public class ControllerFactory {
     }
 
     private static void register(Class<? extends Controller> c){
-        String name = c.getSimpleName();
-        System.out.println("Registering Controller " + name + "...");
-        controllers.put(name, c);
+        System.out.println("Registering Controller " + c.getSimpleName() + "...");
+        controllers.add(c);
     }
 
-    public static Controller build(String controllerName) {
-        if(isValidController(controllerName)){
+    public static Controller build(Class<? extends Controller> controller) {
+        if(isValidController(controller)){
             try {
-                return controllers.get(controllerName).newInstance();
+                return controller.newInstance();
             }catch(Exception e){
                 System.out.println(e.getMessage());
-                throw new RuntimeException("Exception building controller " + controllerName);
+                throw new RuntimeException("Exception building controller " + controller);
             }
         }else{
-            throw new RuntimeException("Controller of name " + controllerName + " not found! Make sure the controller is registered and you are spelling it correctly!");
+            throw new RuntimeException("Controller of name " + controller + " not found! Make sure the controller is registered and you are spelling it correctly!");
         }
     }
 
-    public static boolean isValidController(String name){
-        return controllers.get(name) != null;
+    public static boolean isValidController(Class controller){
+        return controllers.contains(controller);
     }
 
-    public static boolean isValidAIController(String name){
-        Class controller = controllers.get(name);
-        return controller != null && controller.getSuperclass().equals(AIController.class);
+    public static boolean isValidAIController(Class controller){
+        return isValidAIController(controller) && controller.getSuperclass().equals(AIController.class);
     }
 
+    public static List<Class<? extends Controller>> getControllers() {
+        return controllers;
+    }
 }

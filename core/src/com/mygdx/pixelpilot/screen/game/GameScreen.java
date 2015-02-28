@@ -72,7 +72,7 @@ public abstract class GameScreen implements Screen {
     protected void spawnPlayer(){
         //TODO Eventually get the player's selected plane
         PlanePreset preset = GameData.planePresets.get(0);
-        Plane player = PlaneFactory.build(preset, new PlayerController());
+        Plane player = PlaneFactory.build(preset, PlayerController.class);
         Events.emit(new PlayerSpawnEvent(player), this);
     }
 
