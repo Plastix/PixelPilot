@@ -14,7 +14,7 @@ public class Cloud extends Group {
 
     public Cloud(float x, float y, float sizeX, float sizeY, int numPuffs) {
         for (int i = 0; i < numPuffs; i++) {
-            Image puff = new Image(new Texture(Assets.image.cloud));
+            Image puff = new Image(new Texture(Assets.image.pixel));
             puff.setOrigin(puff.getWidth() / 2, puff.getHeight() / 2);
             puff.setPosition(x - puff.getWidth() / 2 + MathUtils.random(-sizeX, sizeX),
                              y - puff.getHeight() / 2 + MathUtils.random(-sizeY, sizeY));

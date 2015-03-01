@@ -7,33 +7,24 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
-import com.mygdx.pixelpilot.PixelPilot;
 import com.mygdx.pixelpilot.data.Assets;
+import com.mygdx.pixelpilot.event.Events;
+import com.mygdx.pixelpilot.event.events.screen.MenuOpenEvent;
+import com.mygdx.pixelpilot.event.events.screen.ScreenChangeEvent;
+import com.mygdx.pixelpilot.screen.game.CampaignGameScreen;
 import com.mygdx.pixelpilot.screen.ui.ShadowImageButton;
-import com.mygdx.pixelpilot.effect.Cloud;
 import com.mygdx.pixelpilot.effect.background.Backdrop;
-import com.mygdx.pixelpilot.effect.background.theme.BackdropFactory;
-import com.mygdx.pixelpilot.effect.background.theme.BackdropTheme;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
-/**
- * The first menu you'll see when starting the game,
- * Links to the following screens
- *     - ModeSelectScreen
- *     - OptionsScreen
- *     - PlaneShowcaseScreen
- */
-public class MainMenuScreen extends MenuScreen {
+public class MainMenu extends Menu {
 
     TextButton playButton;
     ShadowImageButton planesButton;
@@ -42,36 +33,13 @@ public class MainMenuScreen extends MenuScreen {
     Label text1, text2;
     Backdrop background;
 
-    public MainMenuScreen(PixelPilot game) {
-        super(game);
-        createBackground();
-        createClouds();
+    public MainMenu() {
         createMenuGraphics();
-    }
-
-    private void createClouds(){
-        Group clouds = Cloud.generateClouds(15);
-        for(Actor a : clouds.getChildren()){
-            MoveToAction slideAcrossScreen = new MoveToAction();
-            slideAcrossScreen.setPosition(1000, a.getY());
-            slideAcrossScreen.setDuration(MathUtils.random(100, 300));
-            a.addAction(forever(sequence(slideAcrossScreen, moveTo(-1000, a.getY()))));
-        }
-        stage.addActor(clouds);
-    }
-
-    private void createBackground(){
-        BackdropTheme theme = BackdropFactory.buildTheme(BackdropFactory.ThemePreset.ISLANDS);
-        background = BackdropFactory.buildBackdrop(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 4, theme);
-        stage.addActor(background);
     }
 
     private void createMenuGraphics() {
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Assets.font.pixel));
-        Table table = new Table();
-        table.setFillParent(true);
-        stage.addActor(table);
         // create title logo header
         Table logoTable = new Table();
 
@@ -116,7 +84,9 @@ public class MainMenuScreen extends MenuScreen {
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                slideButtonsOutAndTransitionTo(new ModeSelectScreen(game));
+                System.out.println("Play clicked!");
+                Events.emit(new ScreenChangeEvent(new CampaignGameScreen()), this);
+//                slideButtonsOutAndTransitionTo(new CampaignGameScreen());
             }
         });
         buttonTable.add(playButton).colspan(2);
@@ -133,7 +103,8 @@ public class MainMenuScreen extends MenuScreen {
         settings.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Settings clicked!");
+                System.out.println("Options clicked!");
+                Events.emit(new MenuOpenEvent(new OptionsMenu()), this);
             }
         });
         buttonTable.add(settings).size(100, 100).left().pad(10).bottom();
@@ -153,7 +124,6 @@ public class MainMenuScreen extends MenuScreen {
         buttonTable.add(planesButton).size(100,100).right().pad(10).bottom();
         table.add(buttonTable).expand().fill();
 
-
     }
 
     public void animatePlayButton(){
@@ -163,7 +133,7 @@ public class MainMenuScreen extends MenuScreen {
                         scaleBy(-0.2f, -0.2f, 0.35f, Interpolation.pow2)
                 ));
         pulse.setActor(playButton);
-        stage.addAction(pulse);
+        this.addAction(pulse);
     }
 
     public void slideButtonsOutAndTransitionTo(final Screen next){
@@ -204,16 +174,16 @@ public class MainMenuScreen extends MenuScreen {
         moveLogo.setActor(logo);
 
         AlphaAction fadeOut = Actions.fadeOut(0.2f, Interpolation.pow2Out);
-        fadeOut.setActor(stage.getRoot());
+        fadeOut.setActor(this.getRoot());
 
-        stage.addAction(
+        this.addAction(
                 Actions.sequence(
                         Actions.parallel(movePlay, movePlanes, moveSettings, moveText1, moveText2, moveLogo),
                         fadeOut,
                         Actions.run(new Runnable() {
                             @Override
                             public void run() {
-                                game.setScreen(next);
+                                Events.emit(new ScreenChangeEvent(next), this);
                             }
                         })
                 ));

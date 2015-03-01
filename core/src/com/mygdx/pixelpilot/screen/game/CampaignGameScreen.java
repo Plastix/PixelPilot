@@ -1,6 +1,5 @@
 package com.mygdx.pixelpilot.screen.game;
 
-import com.mygdx.pixelpilot.PixelPilot;
 import com.mygdx.pixelpilot.data.GameData;
 import com.mygdx.pixelpilot.data.level.Level;
 import com.mygdx.pixelpilot.data.level.Wave;
@@ -9,29 +8,17 @@ import com.mygdx.pixelpilot.event.events.game.WaveSpawnEvent;
 import com.mygdx.pixelpilot.event.events.ai.AISpawnEvent;
 import com.mygdx.pixelpilot.plane.*;
 import com.mygdx.pixelpilot.plane.controller.AIController;
-import com.mygdx.pixelpilot.screen.game.hud.HUD;
 
 import java.util.List;
 
 public class CampaignGameScreen extends GameScreen implements Listener {
 
-    private World world;
-    private HUD hud;
     private int currentLevel;
     private int currentWave;
 
-    public CampaignGameScreen(PixelPilot game) {
-        super(game);
-
-        Events.register(this);
-
-        hud = new HUD();
-        world = new World(3000, 3000);
+    public CampaignGameScreen() {
         currentLevel = 0;
         currentWave = 0;
-
-        addStage(world);
-        addStage(hud);
 
         spawnPlayer();
 

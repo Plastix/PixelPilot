@@ -1,73 +1,68 @@
 package com.mygdx.pixelpilot.screen.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.mygdx.pixelpilot.PixelPilot;
 import com.mygdx.pixelpilot.data.GameData;
+import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
+import com.mygdx.pixelpilot.event.Listener;
+import com.mygdx.pixelpilot.event.events.game.GamePauseEvent;
+import com.mygdx.pixelpilot.event.events.game.GameResumeEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
+import com.mygdx.pixelpilot.event.events.screen.MenuOpenEvent;
 import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.plane.PlaneFactory;
 import com.mygdx.pixelpilot.plane.PlanePreset;
 import com.mygdx.pixelpilot.plane.controller.PlayerController;
+import com.mygdx.pixelpilot.screen.game.hud.HUD;
+import com.mygdx.pixelpilot.screen.menu.PauseMenu;
 
-import java.util.ArrayList;
-import java.util.List;
+public abstract class GameScreen extends ScreenAdapter implements Listener {
 
-public abstract class GameScreen implements Screen {
+    protected HUD hud;
+    protected World world;
+    private GameState state;
 
-    protected final PixelPilot game;
-    private List<Stage> stages;
+    public GameScreen(){
+        this.state = GameState.PLAYING;
 
-    public GameScreen(PixelPilot game){
-        this.game = game;
-        stages = new ArrayList<Stage>();
-    }
-    @Override
-    public void show() {
+        world = new World(3000,3000);
+        hud = new HUD();
 
+        Events.register(this);
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(139f / 255f, 166f / 255f, 177f / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        for (int i = 0, stagesSize = stages.size(); i < stagesSize; i++) {
-            Stage stage = stages.get(i);
-            stage.act(delta);
-            stage.draw();
+        if (state != GameState.PAUSED) {
+            world.act(delta);
+            hud.act(delta);
         }
+        world.draw();
+        hud.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-        for(Stage stage : stages) {
-            stage.getViewport().update(width, height, true);
-        }
+        world.getViewport().update(width, height);
+        hud.getViewport().update(width, height);
     }
 
     @Override
     public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
+        if(this.state != GameState.PAUSED) {
+            Events.emit(new MenuOpenEvent(new PauseMenu()), this);
+            Events.emit(new GamePauseEvent(), this);
+        }
     }
 
     @Override
     public void dispose() {
-        for(Stage stage : stages) {
-            stage.dispose();
-        }
+        world.dispose();
+        hud.dispose();
     }
 
     protected void spawnPlayer(){
@@ -77,7 +72,13 @@ public abstract class GameScreen implements Screen {
         Events.emit(new PlayerSpawnEvent(player), this);
     }
 
-    protected void addStage(Stage stage){
-        this.stages.add(stage);
+    @EventHandler
+    public void onPause(GamePauseEvent event){
+        this.state = GameState.PAUSED;
+    }
+
+    @EventHandler
+    public void onResume(GameResumeEvent event){
+        this.state = GameState.PLAYING;
     }
 }

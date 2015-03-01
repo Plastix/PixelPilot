@@ -2,6 +2,7 @@ package com.mygdx.pixelpilot.screen.game;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -32,19 +33,23 @@ public class World extends Stage implements Listener {
     private Actor backdrop;
     private Group clouds;
     private List<Plane> planes;
-    private TrackingCamera camera;
+    private GameCamera camera;
     private int width, height;
     private Quadtree storage;
 
     public World(int width, int height) {
+        super(new ExtendViewport(Config.NativeView.width, Config.NativeView.height));
         this.width = width;
         this.height = height;
         this.bounds = new Rectangle(0, 0, width, height);
-        this.camera = new TrackingCamera();
+        this.camera = new GameCamera();
         this.camera.setWorldBounds(bounds);
         this.setViewport(new ExtendViewport(Config.NativeView.width, Config.NativeView.height));
         this.getViewport().setCamera(camera);
+        //We need to update the viewport after giving it a new camera
+        this.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         this.storage = new Quadtree(0, 0, width, height);
+
         Events.register(this);
 //        clouds = Cloud.generateClouds(150); // static for now
         planes = new ArrayList<Plane>();

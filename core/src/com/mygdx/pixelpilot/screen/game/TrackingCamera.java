@@ -7,14 +7,10 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.mygdx.pixelpilot.event.EventHandler;
-import com.mygdx.pixelpilot.event.Events;
-import com.mygdx.pixelpilot.event.Listener;
-import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.util.Utils;
 
-public class TrackingCamera extends OrthographicCamera
-        implements Listener {
+public class TrackingCamera extends OrthographicCamera {
+
     private Actor target;
     private Rectangle worldBounds;
     private float baseTrackSpeed;
@@ -26,7 +22,6 @@ public class TrackingCamera extends OrthographicCamera
         this.worldBounds = new Rectangle();
         this.interpolator = Interpolation.linear;
         this.viewportBounds = new Rectangle();
-        Events.register(this);
     }
 
     public void track(Actor target) {
@@ -61,6 +56,7 @@ public class TrackingCamera extends OrthographicCamera
 
     private void track() {
         Vector3 currPos = position;
+
         float targetX = target.getX();
         float targetY = target.getY();
             /*
@@ -71,7 +67,7 @@ public class TrackingCamera extends OrthographicCamera
             *      otherwise it lerps as normal
             * */
 
-            /* here be dragons. */
+        /* here be dragons. */
         float borderPaddingX = viewportWidth / 3f;
         float cameraLeftEdge = position.x - viewportWidth / 2f;
         float cameraRightEdge = position.x + viewportWidth / 2f;
@@ -122,10 +118,5 @@ public class TrackingCamera extends OrthographicCamera
         } else {
             currPos.y = interpolator.apply(currPos.y, targetY, baseTrackSpeed);
         }
-    }
-
-    @EventHandler
-    public void onPlaneSpawn(PlayerSpawnEvent event) {
-        track(event.getPlane());
     }
 }
