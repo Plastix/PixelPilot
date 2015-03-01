@@ -1,11 +1,13 @@
 package com.mygdx.pixelpilot.plane;
 
-public class PlanePreset {
+import com.mygdx.pixelpilot.plane.controller.Controller;
+
+public class    PlanePreset {
 
     public String name;
     public PlaneDefinition planeDefinition;
     public WeaponDefinition weaponDefinition;
-    public Class controller;
+    public Class<? extends Controller> controller;
 
     @Override
     public String toString(){
