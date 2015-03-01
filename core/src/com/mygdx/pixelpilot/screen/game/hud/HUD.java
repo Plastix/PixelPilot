@@ -112,7 +112,7 @@ public class HUD extends Stage implements Listener {
         style.shadowDepth = 7;
 
         final ShadowLabel label = new ShadowLabel(message, style);
-        label.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, Align.center);
+        label.setPosition(Config.NativeView.width / 2, Config.NativeView.height / 2, Align.center);
         this.addActor(label);
 
         label.addAction(sequence(
