@@ -19,6 +19,7 @@ import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.events.PlaneSpawnEvent;
+import com.mygdx.pixelpilot.event.events.game.GamePauseEvent;
 import com.mygdx.pixelpilot.event.events.game.WaveSpawnEvent;
 import com.mygdx.pixelpilot.screen.ui.ShadowImage;
 import com.mygdx.pixelpilot.screen.ui.ShadowImageButton;
@@ -71,7 +72,8 @@ public class HUD extends Stage implements Listener {
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Pause Clicked!");
+                System.out.println("paused!");
+                Events.emit(new GamePauseEvent(), this);
             }
         });
 

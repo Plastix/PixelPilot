@@ -29,12 +29,12 @@ public class World extends Stage implements Listener {
     private List<Plane> planes;
     private int width, height;
 
-    private TrackingCamera camera;
+    private GameCamera camera;
 
     public World(int width, int height) {
         this.width = width;
         this.height = height;
-        camera = new TrackingCamera();
+        camera = new GameCamera();
         camera.setWorldBounds(0, 0, width, height);
         this.setViewport(new ExtendViewport(Config.NativeView.width, Config.NativeView.height));
         this.getViewport().setCamera(camera);

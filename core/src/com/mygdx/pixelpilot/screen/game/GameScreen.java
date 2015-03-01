@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.pixelpilot.PixelPilot;
 import com.mygdx.pixelpilot.data.GameData;
+import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
+import com.mygdx.pixelpilot.event.Listener;
+import com.mygdx.pixelpilot.event.events.game.GamePauseEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.plane.PlaneFactory;
@@ -16,14 +19,17 @@ import com.mygdx.pixelpilot.plane.controller.PlayerController;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class GameScreen implements Screen {
+public abstract class GameScreen implements Screen, Listener {
 
     protected final PixelPilot game;
     private List<Stage> stages;
+    private GameState state;
 
     public GameScreen(PixelPilot game){
         this.game = game;
         stages = new ArrayList<Stage>();
+        this.state = GameState.PLAYING;
+        Events.register(this);
     }
     @Override
     public void show() {
@@ -35,7 +41,9 @@ public abstract class GameScreen implements Screen {
         Gdx.gl.glClearColor(139f / 255f, 166f / 255f, 177f / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         for(Stage stage : stages) {
-            stage.act(delta);
+            if(state != GameState.PAUSED) {
+                stage.act(delta);
+            }
             stage.draw();
         }
     }
@@ -78,5 +86,10 @@ public abstract class GameScreen implements Screen {
 
     protected void addStage(Stage stage){
         this.stages.add(stage);
+    }
+
+    @EventHandler
+    public void onPause(GamePauseEvent event){
+        this.state = GameState.PAUSED;
     }
 }
