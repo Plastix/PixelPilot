@@ -19,7 +19,10 @@ import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.events.PlaneSpawnEvent;
+import com.mygdx.pixelpilot.event.events.game.GamePauseEvent;
+import com.mygdx.pixelpilot.event.events.game.GameResumeEvent;
 import com.mygdx.pixelpilot.event.events.game.WaveSpawnEvent;
+import com.mygdx.pixelpilot.screen.game.PauseOverlay;
 import com.mygdx.pixelpilot.screen.ui.ShadowImage;
 import com.mygdx.pixelpilot.screen.ui.ShadowImageButton;
 import com.mygdx.pixelpilot.screen.ui.ShadowLabel;
@@ -36,7 +39,7 @@ public class HUD extends Stage implements Listener {
     private ShadowImageButton pauseButton;
 
     public HUD(){
-        this.setViewport(new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera()));
+        super(new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera()));
         Gdx.input.setInputProcessor(this);
         Events.register(this);
 
@@ -71,7 +74,7 @@ public class HUD extends Stage implements Listener {
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Pause Clicked!");
+                Events.emit(new GamePauseEvent(), this);
             }
         });
 
@@ -133,5 +136,11 @@ public class HUD extends Stage implements Listener {
     public void onPlaneSpawn(PlaneSpawnEvent event){
         this.addActor(new PlaneMarker(event.getPlane()));
     }
+
+    @EventHandler
+    public void onResume(GameResumeEvent event){
+        Gdx.input.setInputProcessor(this);
+    }
+
 
 }

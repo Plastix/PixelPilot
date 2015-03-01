@@ -6,14 +6,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.mygdx.pixelpilot.event.EventHandler;
-import com.mygdx.pixelpilot.event.Events;
-import com.mygdx.pixelpilot.event.Listener;
-import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.util.Utils;
 
-public class TrackingCamera extends OrthographicCamera
-        implements Listener {
+public class TrackingCamera extends OrthographicCamera {
+
     private Actor target;
     private Rectangle bounds;
     private float baseTrackSpeed;
@@ -23,7 +19,6 @@ public class TrackingCamera extends OrthographicCamera
         this.baseTrackSpeed = 0.1f;
         this.bounds = new Rectangle();
         this.interpolator = Interpolation.linear;
-        Events.register(this);
     }
 
     public void track(Actor target) {
@@ -48,15 +43,15 @@ public class TrackingCamera extends OrthographicCamera
         Vector2 targetPos2D = Utils.positionVector(target);
         Vector3 targetPos = Utils.vec2d3d(targetPos2D);
 
-            /*
-            * Explanation semi-attempt:
-            *   When the camera's leading edge passes the soft border, the lerp speed
-            *      decreases as a function of the remaining distance to the hard border
-            *      This only happens if the plane is heading towards the hard border
-            *      otherwise it lerps as normal
-            * */
+        /*
+         * Explanation semi-attempt:
+         *   When the camera's leading edge passes the soft border, the lerp speed
+         *      decreases as a function of the remaining distance to the hard border
+         *      This only happens if the plane is heading towards the hard border
+         *      otherwise it lerps as normal
+         * */
 
-            /* here be dragons. */
+        /* here be dragons. */
         float borderPaddingX = viewportWidth / 3f;
         float cameraLeftEdge = position.x - viewportWidth / 2f;
         float cameraRightEdge = position.x + viewportWidth / 2f;
@@ -107,10 +102,5 @@ public class TrackingCamera extends OrthographicCamera
         } else {
             currPos.y = interpolator.apply(currPos.y, targetPos.y, baseTrackSpeed);
         }
-    }
-
-    @EventHandler
-    public void onPlaneSpawn(PlayerSpawnEvent event) {
-        track(event.getPlane());
     }
 }
