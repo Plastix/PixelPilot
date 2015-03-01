@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
@@ -35,7 +36,7 @@ public class World extends Stage implements Listener {
         this.height = height;
         camera = new TrackingCamera();
         camera.setWorldBounds(0, 0, width, height);
-        this.setViewport(new ExtendViewport(960, 540));
+        this.setViewport(new ExtendViewport(Config.NativeView.width, Config.NativeView.height));
         this.getViewport().setCamera(camera);
 
         Events.register(this);
@@ -65,7 +66,7 @@ public class World extends Stage implements Listener {
 
     @EventHandler
     public void onPlayerSpawn(PlayerSpawnEvent event){
-        addPlane(event.getPlane(), new Vector2(0,0));
+        addPlane(event.getPlane(), new Vector2(0, 0));
     }
 
     @EventHandler

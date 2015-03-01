@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.data.Assets;
+import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.Listener;
@@ -35,12 +36,12 @@ public class HUD extends Stage implements Listener {
     private ShadowImageButton pauseButton;
 
     public HUD(){
-        this.setViewport(new ExtendViewport(960, 540, new OrthographicCamera()));
+        this.setViewport(new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera()));
         Gdx.input.setInputProcessor(this);
         Events.register(this);
 
         table = new Table();
-         table.setFillParent(true);
+        table.setFillParent(true);
         table.top().left();
         addHUDComponents();
 

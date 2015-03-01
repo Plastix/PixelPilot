@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.PixelPilot;
+import com.mygdx.pixelpilot.data.Config;
 
 public class MenuScreen implements Screen {
 
@@ -15,7 +16,7 @@ public class MenuScreen implements Screen {
 
     public MenuScreen(PixelPilot game) {
         this.game = game;
-        ExtendViewport view = new ExtendViewport(960, 540, new OrthographicCamera());
+        ExtendViewport view = new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera());
         stage = new Stage(view);
         Gdx.input.setInputProcessor(stage);
     }
