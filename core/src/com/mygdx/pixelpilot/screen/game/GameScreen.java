@@ -10,6 +10,7 @@ import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.events.game.GamePauseEvent;
+import com.mygdx.pixelpilot.event.events.game.GameResumeEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.plane.PlaneFactory;
@@ -88,8 +89,23 @@ public abstract class GameScreen implements Screen, Listener {
         this.stages.add(stage);
     }
 
+    protected void removeState(Stage stage){
+        if(this.stages.contains(stage)){
+            stages.remove(stage);
+        }
+    }
+
     @EventHandler
     public void onPause(GamePauseEvent event){
         this.state = GameState.PAUSED;
+        PauseOverlay pause = new PauseOverlay();
+        this.addStage(pause);
+        pause.act();
+    }
+
+    @EventHandler
+    public void onResume(GameResumeEvent event){
+        this.state = GameState.PLAYING;
+        removeState(event.getStage());
     }
 }

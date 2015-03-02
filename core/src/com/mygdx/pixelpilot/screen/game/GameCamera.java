@@ -4,6 +4,7 @@ import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.events.game.GamePauseEvent;
+import com.mygdx.pixelpilot.event.events.game.GameResumeEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 
 public class GameCamera extends TrackingCamera implements Listener {
@@ -26,6 +27,11 @@ public class GameCamera extends TrackingCamera implements Listener {
     @EventHandler
     public void onPause(GamePauseEvent event){
         this.isPaused = true;
+    }
+
+    @EventHandler
+    public void onResume(GameResumeEvent event){
+        this.isPaused = false;
     }
 
     @EventHandler
