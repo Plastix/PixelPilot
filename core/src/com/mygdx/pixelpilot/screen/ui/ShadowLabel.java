@@ -3,6 +3,7 @@ package com.mygdx.pixelpilot.screen.ui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 public class ShadowLabel extends Label {
 
@@ -11,6 +12,8 @@ public class ShadowLabel extends Label {
     public ShadowLabel(CharSequence text, ShadowLabelStyle style) {
         super(text, style);
         this.style = style;
+        setSize(getPrefWidth(), getPrefHeight());
+        this.setOrigin(Align.center);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.mygdx.pixelpilot.data.YamlParser;
 import com.mygdx.pixelpilot.plane.controller.ControllerFactory;
 import com.mygdx.pixelpilot.screen.game.CampaignGameScreen;
+import com.mygdx.pixelpilot.screen.menu.MainMenuScreen;
 
 public class PixelPilot extends Game {
 

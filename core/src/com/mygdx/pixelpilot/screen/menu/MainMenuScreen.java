@@ -97,8 +97,7 @@ public class MainMenuScreen extends MenuScreen {
         table.top();
         table.add(logoTable)
                 .expandX()
-                .padTop(20)
-                .space(45);
+                .padTop(20).height(200);
 
         table.row();
 
@@ -162,8 +161,8 @@ public class MainMenuScreen extends MenuScreen {
     public void animatePlayButton(){
         RepeatAction pulse = forever(
                 sequence(
-                        moveBy(0, 10, 0.3f, Interpolation.pow2),
-                        moveBy(0, -10, 0.3f, Interpolation.pow2)
+                        scaleBy(0.2f, 0.2f, 0.35f, Interpolation.pow2),
+                        scaleBy(-0.2f, -0.2f, 0.35f, Interpolation.pow2)
                 ));
         pulse.setActor(playButton);
         stage.addAction(pulse);
