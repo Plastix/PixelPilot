@@ -1,7 +1,6 @@
 package com.mygdx.pixelpilot.world;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -15,7 +14,7 @@ public class Cloud extends Group {
 
     public Cloud(float x, float y, float sizeX, float sizeY, int numPuffs) {
         for (int i = 0; i < numPuffs; i++) {
-            Image puff = new Image(new Texture(Assets.image.cloud));
+            Image puff = new Image(new Texture(Assets.image.pixel));
             puff.setOrigin(puff.getWidth() / 2, puff.getHeight() / 2);
             puff.setPosition(x - puff.getWidth() / 2 + Utils.randomFloat(-sizeX, sizeX),
                              y - puff.getHeight() / 2 + Utils.randomFloat(-sizeY, sizeY));

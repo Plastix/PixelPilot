@@ -12,6 +12,7 @@ public class AndroidLauncher extends AndroidApplication {
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         config.useImmersiveMode = true;
         config.hideStatusBar = true;
+        config.useWakelock = true;
         initialize(new PixelPilot(), config);
     }
 }

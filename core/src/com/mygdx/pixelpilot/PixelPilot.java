@@ -14,9 +14,4 @@ public class PixelPilot extends Game {
         this.setScreen(new CampaignGameScreen(this));
     }
 
-    @Override
-    public void render() {
-        super.render();
-    }
-
 }

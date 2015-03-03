@@ -6,7 +6,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.pixelpilot.PixelPilot;
 import com.mygdx.pixelpilot.data.GameData;
+import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
+import com.mygdx.pixelpilot.event.Listener;
+import com.mygdx.pixelpilot.event.events.game.GamePauseEvent;
+import com.mygdx.pixelpilot.event.events.game.GameResumeEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.plane.PlaneFactory;
@@ -15,15 +19,21 @@ import com.mygdx.pixelpilot.plane.controller.PlayerController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
-public abstract class GameScreen implements Screen {
+public abstract class GameScreen implements Screen, Listener {
 
     protected final PixelPilot game;
-    private List<Stage> stages;
+    protected final PauseOverlay pauseOverlay;
+    private Stack<Stage> stages;
+    private GameState state;
 
     public GameScreen(PixelPilot game){
         this.game = game;
-        stages = new ArrayList<Stage>();
+        this.stages = new Stack<Stage>();
+        this.pauseOverlay = new PauseOverlay();
+        this.state = GameState.PLAYING;
+        Events.register(this);
     }
     @Override
     public void show() {
@@ -35,26 +45,33 @@ public abstract class GameScreen implements Screen {
         Gdx.gl.glClearColor(139f / 255f, 166f / 255f, 177f / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         for(Stage stage : stages) {
-            stage.act(delta);
-            stage.draw();
+            if(stage != null) {
+                if (state != GameState.PAUSED) {
+                    stage.act(delta);
+                }
+                stage.draw();
+            }
         }
     }
 
     @Override
     public void resize(int width, int height) {
         for(Stage stage : stages) {
-            stage.getViewport().update(width, height, true);
+            if(stage != null) {
+                stage.getViewport().update(width, height, true);
+            }
         }
     }
 
     @Override
     public void pause() {
-
+        if(this.state != GameState.PAUSED) {
+            Events.emit(new GamePauseEvent(), this);
+        }
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
@@ -65,7 +82,9 @@ public abstract class GameScreen implements Screen {
     @Override
     public void dispose() {
         for(Stage stage : stages) {
-            stage.dispose();
+            if(stage != null) {
+                stage.dispose();
+            }
         }
     }
 
@@ -77,6 +96,29 @@ public abstract class GameScreen implements Screen {
     }
 
     protected void addStage(Stage stage){
-        this.stages.add(stage);
+        if(stage != null) {
+            this.stages.push(stage);
+        }
+    }
+
+    protected void removeStage(Stage stage){
+        if(stage != null){
+            if(this.stages.contains(stage)){
+                this.stages.remove(stage);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPause(GamePauseEvent event){
+        this.state = GameState.PAUSED;
+        this.addStage(pauseOverlay);
+        Gdx.input.setInputProcessor(pauseOverlay);
+    }
+
+    @EventHandler
+    public void onResume(GameResumeEvent event){
+        this.state = GameState.PLAYING;
+        this.removeStage(pauseOverlay);
     }
 }
