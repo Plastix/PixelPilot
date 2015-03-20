@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -22,17 +23,16 @@ import com.mygdx.pixelpilot.event.events.PlaneSpawnEvent;
 import com.mygdx.pixelpilot.event.events.game.WaveSpawnEvent;
 import com.mygdx.pixelpilot.screen.ui.ShadowImage;
 import com.mygdx.pixelpilot.screen.ui.ShadowImageButton;
-import com.mygdx.pixelpilot.screen.ui.ShadowLabel;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class HUD extends Stage implements Listener {
 
     private Table table;
-    private ShadowLabel lives;
+    private Label lives;
     private ShadowImage livesIcon;
     private ShadowImage scoreIcon;
-    private ShadowLabel score;
+    private Label score;
     private ShadowImageButton pauseButton;
 
     public HUD(){
@@ -78,16 +78,17 @@ public class HUD extends Stage implements Listener {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Assets.font.pixel));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 76;
+        parameter.color = new Color(1,1,1,1);
+        parameter.shadowColor = new Color(0,0,0,1);
+        parameter.shadowOffsetY = 5;
 
-        ShadowLabel.ShadowLabelStyle style = new ShadowLabel.ShadowLabelStyle();
+        Label.LabelStyle style = new Label.LabelStyle();
         style.font =  generator.generateFont(parameter);
         generator.dispose();
-        style.fontColor = new Color(1,1,1,1);
-        style.shadowDepth = 5;
-        style.shadowColor = new Color(0,0,0,1);
 
-        lives = new ShadowLabel("x3", style);
-        score = new ShadowLabel("0", style);
+
+        lives = new Label("x3", style);
+        score = new Label("0", style);
 
         table.add(livesIcon).size(45,45).pad(10);
         table.add(lives);
@@ -104,14 +105,15 @@ public class HUD extends Stage implements Listener {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Assets.font.pixel));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 100;
-        ShadowLabel.ShadowLabelStyle style = new ShadowLabel.ShadowLabelStyle();
+        parameter.color = new Color(1,1,1,1);
+        parameter.shadowColor = new Color(0,0,0,1);
+        parameter.shadowOffsetY = 7;
+
+        Label.LabelStyle style = new Label.LabelStyle();
         style.font =  generator.generateFont(parameter);
         generator.dispose();
-        style.fontColor = new Color(1,1,1,1);
-        style.shadowColor = new Color(0,0,0,1);
-        style.shadowDepth = 7;
 
-        final ShadowLabel label = new ShadowLabel(message, style);
+        final Label label = new Label(message, style);
         label.setPosition(Config.NativeView.width / 2, Config.NativeView.height / 2, Align.center);
         this.addActor(label);
 

@@ -18,8 +18,6 @@ import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.pixelpilot.PixelPilot;
 import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.screen.ui.ShadowImageButton;
-import com.mygdx.pixelpilot.screen.ui.ShadowLabel;
-import com.mygdx.pixelpilot.screen.ui.ShadowTextButton;
 import com.mygdx.pixelpilot.util.Utils;
 import com.mygdx.pixelpilot.world.Cloud;
 import com.mygdx.pixelpilot.world.background.Backdrop;
@@ -41,7 +39,7 @@ public class MainMenuScreen extends MenuScreen {
     ShadowImageButton planesButton;
     ShadowImageButton settings;
     Image logo;
-    ShadowLabel text1, text2;
+    Label text1, text2;
     Backdrop background;
 
     public MainMenuScreen(PixelPilot game) {
@@ -79,17 +77,17 @@ public class MainMenuScreen extends MenuScreen {
 
         FreeTypeFontGenerator.FreeTypeFontParameter logoParam = new FreeTypeFontGenerator.FreeTypeFontParameter();
         logoParam.size = 150;
+        logoParam.color = new Color(0.75f, 0.24f, 0.25f,1);
+        logoParam.shadowColor = new Color(0.44f, 0.04f, 0.04f, 1);
+        logoParam.shadowOffsetY = 7;
 
-        ShadowLabel.ShadowLabelStyle logoStyle = new ShadowLabel.ShadowLabelStyle();
+        Label.LabelStyle logoStyle = new Label.LabelStyle();
         logoStyle.font =  generator.generateFont(logoParam);
-        logoStyle.fontColor = new Color(0.75f, 0.24f, 0.25f,1);
-        logoStyle.shadowColor = new Color(0.44f, 0.04f, 0.04f, 1);
-        logoStyle.shadowDepth = 7;
 
         logo  = new Image(new Texture(Assets.image.menu_logo));
         logo.setScaling(Scaling.fit);
-        text1 = new ShadowLabel("Pixel", logoStyle);
-        text2 = new ShadowLabel("Pilot", logoStyle);
+        text1 = new Label("Pixel", logoStyle);
+        text2 = new Label("Pilot", logoStyle);
 
         logoTable.add(text1).padRight(15).padLeft(10).fill().expand();
         logoTable.add(logo).fill().expand().prefSize(250, 250);
@@ -106,15 +104,15 @@ public class MainMenuScreen extends MenuScreen {
 
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 250;
+        parameter.color = new Color(0.9f, 0.92f, 0.36f,1);
+        parameter.shadowColor = new Color(0.72f,0.74f,0.3f,1);
+        parameter.shadowOffsetY = 8;
 
-        ShadowTextButton.ShadowTextButtonStyle style = new ShadowTextButton.ShadowTextButtonStyle();
+        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.font =  generator.generateFont(parameter);
         generator.dispose();
-        style.fontColor = new Color(0.9f, 0.92f, 0.36f,1);
-        style.shadowColor = new Color(0.72f,0.74f,0.3f,1);
-        style.shadowDepth = 8;
 
-        playButton = new ShadowTextButton("Play", style);
+        playButton = new TextButton("Play", style);
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
