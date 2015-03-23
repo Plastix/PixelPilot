@@ -12,7 +12,7 @@ public class PixelPilot extends Game {
     public void create() {
         ControllerFactory.registerControllers();
         YamlParser.loadAllData();
-        this.setScreen(new MainMenuScreen(this));
+        this.setScreen(new CampaignGameScreen(this));
     }
 
     @Override

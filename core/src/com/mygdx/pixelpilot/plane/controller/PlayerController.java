@@ -2,24 +2,51 @@ package com.mygdx.pixelpilot.plane.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
+import com.badlogic.gdx.ai.fsm.State;
+import com.badlogic.gdx.ai.fsm.StateMachine;
+import com.badlogic.gdx.ai.msg.Telegram;
+import com.badlogic.gdx.ai.steer.SteerableAdapter;
+import com.badlogic.gdx.ai.steer.SteeringAcceleration;
+import com.badlogic.gdx.ai.steer.SteeringBehavior;
+import com.badlogic.gdx.ai.steer.behaviors.Seek;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pixelpilot.plane.Plane;
+import com.mygdx.pixelpilot.screen.game.World;
 import com.mygdx.pixelpilot.util.Utils;
 
 public class PlayerController extends Controller {
 
     float turnAmount = 0.5f;
     boolean accelerometer;
+    private StateMachine<PlayerController> stateMachine;
+    private Plane plane;
+    protected SteeringBehavior<Vector2> behavior;
+    private SteeringAcceleration<Vector2> accel = new SteeringAcceleration<Vector2>(new Vector2());
+    protected Rectangle worldBounds;
+    protected World world;
+
+    public void setWorld(World world) {
+        this.world = world;
+        worldBounds = world.getBounds();
+    }
 
     public PlayerController() {
+        this.stateMachine = new DefaultStateMachine<PlayerController>(this, PlayerControllerState.FLY);
         accelerometer = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
     }
 
     @Override
     public void control(Plane planeBody) {
+        this.plane = planeBody;
+        stateMachine.update();
+    }
 
+    private void steer(){
         if(accelerometer){
             float turn = Utils.map(Gdx.input.getAccelerometerY(), -5, 5, -1, 1);
-            planeBody.turn(-turn);
+            plane.turn(-turn);
         }
 
         //Desktop Controls
@@ -30,10 +57,68 @@ public class PlayerController extends Controller {
             turnAmount = Math.max(turnAmount - 0.05f, 0f);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            planeBody.turn(turnAmount);
+            plane.turn(turnAmount);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            planeBody.turn(-turnAmount);
+            plane.turn(-turnAmount);
         }
+
+    }
+
+    private void applyBehavior() {
+        behavior.calculateSteering(accel);
+        float ang = accel.linear.angle(plane.getLinearVelocity());
+
+        if (ang < 0) {
+            plane.turn(Utils.map(ang, -15, -180, 0f, 1f));
+        } else if (ang > 0) {
+            plane.turn(Utils.map(ang, 15, 180, -0f, -1f));
+        }
+    }
+
+    private enum PlayerControllerState implements State<PlayerController> {
+        FLY() {
+            @Override
+            public void enter(final PlayerController controller) {
+            }
+            @Override
+            public void update(PlayerController controller) {
+                controller.steer();
+                if (!controller.worldBounds.contains(controller.plane.getPosition())) {
+                    controller.stateMachine.changeState(SEEK_CENTER);
+                }
+            }
+        },
+        SEEK_CENTER() {
+            @Override
+            public void enter(final PlayerController controller) {
+                controller.behavior = new Seek<Vector2>(controller.plane, new SteerableAdapter<Vector2>() {
+                    @Override
+                    public Vector2 getPosition() {
+                        return controller.worldBounds.getCenter(new Vector2());
+                    }
+                });
+            }
+
+            @Override
+            public void update(PlayerController controller) {
+                controller.applyBehavior();
+                if (controller.worldBounds.contains(controller.plane.getPosition())) {
+                    controller.stateMachine.revertToPreviousState();
+                }
+            }
+        };
+
+        @Override
+        public void exit(PlayerController entity) {
+
+        }
+
+        @Override
+        public boolean onMessage(PlayerController entity, Telegram telegram) {
+            return false;
+        }
+
+
     }
 }

@@ -18,6 +18,8 @@ import com.mygdx.pixelpilot.event.events.PlaneMarkerSpawnEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.plane.SteerableActor;
+import com.mygdx.pixelpilot.plane.controller.AIController;
+import com.mygdx.pixelpilot.plane.controller.PlayerController;
 import com.mygdx.pixelpilot.util.quadtree.QuadTree;
 import com.mygdx.pixelpilot.world.Cloud;
 import com.mygdx.pixelpilot.world.background.theme.BackdropFactory;
@@ -110,6 +112,7 @@ public class World extends Stage implements Listener {
     @EventHandler
     public void onPlayerSpawn(PlayerSpawnEvent event) {
         addPlane(event.getPlane(), getNewSpawnPosition());
+        ((PlayerController) (event.getPlane().getController())).setWorld(this);
 
     }
 
