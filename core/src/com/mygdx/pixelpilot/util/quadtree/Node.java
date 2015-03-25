@@ -21,6 +21,6 @@ abstract class Node<T> {
 
     protected abstract void insertIntoParent(T s);
 
-    public abstract Array<T> get(Rectangle box);
+    public abstract int get(Rectangle box, QuadtreeCallback cb);
 
 }

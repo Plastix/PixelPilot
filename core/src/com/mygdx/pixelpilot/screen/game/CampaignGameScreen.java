@@ -56,6 +56,24 @@ public class CampaignGameScreen extends GameScreen implements Listener {
         currentWave++;
     }
 
+    /**
+     * Spawns a wave with a given number of AI planes
+     * Intended for debug use only
+     * @param numberOfPlanes the number of planes to spawn
+     */
+    private void spawnWave(int numberOfPlanes) {
+        Level level = GameData.levels.get(currentLevel);
+        List<Wave> waves = level.waves;
+        Wave wave = waves.get(currentWave);
+        Events.emit(new WaveSpawnEvent(wave), this);
+        PlanePreset preset = wave.enemies.get(0);
+        for (int i = 0; i < numberOfPlanes; i++) {
+            Plane plane = PlaneFactory.build(preset);
+            Events.emit(new AISpawnEvent(plane), this);
+        }
+    }
+
+
 
     @EventHandler
     public void handleEnemyPlaneSpawn(AISpawnEvent event){

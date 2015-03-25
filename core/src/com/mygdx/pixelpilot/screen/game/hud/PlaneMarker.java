@@ -3,8 +3,8 @@ package com.mygdx.pixelpilot.screen.game.hud;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -22,10 +22,13 @@ public class PlaneMarker extends Image implements Listener {
 
     private Plane target;
     private Camera camera;
+    private Vector3 targetPos; // Vector3 to work with camera
+    private Vector2 markerPos;
 
     public PlaneMarker(Plane target) {
         this.target = target;
-
+        this.targetPos = new Vector3(target.getX(), target.getY(), 0);
+        this.markerPos = new Vector2();
         this.setSize(30, 30);
         this.setVisible(false);
         this.setOrigin(Align.center);
@@ -42,33 +45,32 @@ public class PlaneMarker extends Image implements Listener {
     public void act(float delta) {
         super.act(delta);
         if (camera != null) {
-            Vector2 targetPos = new Vector2(target.getX(), target.getY());
+            targetPos.set(target.getX(), target.getY(), 0);
+
             if (isTargetVisible(targetPos)) {
                 this.setVisible(false);
             } else {
-                Vector2 cam = Utils.vec3d2d(camera.position);
-                Vector2 diff = new Vector2(targetPos).sub(cam);
-                float angle = (float) (Math.toDegrees(Math.atan2(diff.y, diff.x)));
+                Vector3 cam = camera.position;
+                float angle = (float) (Math.toDegrees(Math.atan2(targetPos.y - cam.y, targetPos.x - cam.x)));
                 this.setRotation(angle);
                 //Convert the target coordinates to screen coordinates
-                setMarkerPosition(Utils.vec3d2d(camera.project(Utils.vec2d3d(targetPos))));
+                setMarkerPosition(camera.project(targetPos));
                 this.setVisible(true);
             }
         }
 
     }
 
-    private boolean isTargetVisible(Vector2 pos) {
+    private boolean isTargetVisible(Vector3 pos) {
         return camera.frustum.boundsInFrustum(pos.x, pos.y, 0, target.getWidth() / 2, target.getHeight() / 2, 0);
     }
 
-    private void setMarkerPosition(Vector2 target){
+    private void setMarkerPosition(Vector3 target){
         float width = this.getStage().getCamera().viewportWidth;
         float height = this.getStage().getCamera().viewportHeight;
-        Rectangle bounds = new Rectangle(0, 0, width - getWidth(), height - getHeight());
-        Vector2 pos = new Vector2();
-        Utils.intersectLineRect(target, new Vector2(width / 2, height / 2), bounds, pos);
-        this.setPosition(pos.x, pos.y);
+
+        Utils.intersectLineRect(markerPos, target.x, target.y, width/2, height/2, 0, 0, width - getWidth(), height - getHeight());
+        this.setPosition(markerPos.x, markerPos.y);
     }
 
     public void setCamera(Camera camera) {

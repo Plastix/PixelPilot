@@ -4,22 +4,19 @@ import com.badlogic.gdx.ai.steer.Proximity;
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.pixelpilot.plane.SteerableActor;
 import com.mygdx.pixelpilot.screen.game.World;
+import com.mygdx.pixelpilot.util.quadtree.QuadtreeCallback;
 
-public class ProximityFinder implements Proximity<Vector2> {
+public class QuadtreeProximityFinder implements Proximity<Vector2>, QuadtreeCallback {
     private World world;
     private Steerable<Vector2> owner;
     private Rectangle box;
+    private ProximityCallback<Vector2> callback;
 
-    public ProximityFinder(float radius) {
+    public QuadtreeProximityFinder(float radius) {
         box = new Rectangle();
         setRadius(radius);
-    }
-
-    public float getRadius() {
-        return box.width;
     }
 
     public void setRadius(float radius) {
@@ -44,15 +41,14 @@ public class ProximityFinder implements Proximity<Vector2> {
     public int findNeighbors(ProximityCallback<Vector2> callback) {
         if (world == null) throw new NullPointerException("world must be set in order to find neighbors");
         box.setCenter(owner.getPosition());
-        Array<SteerableActor> neighbors = world.get(box);
-        if (neighbors == null) return 0;
-        int size = 0;
-        for (SteerableActor neighbor : neighbors) {
-            if (neighbor.getPosition().dst(owner.getPosition()) > box.width) continue;
-            if (neighbor == owner) continue;
-            callback.reportNeighbor(neighbor);
-            size++;
-        }
-        return size;
+        this.callback = callback;
+        return world.get(box, this);
+    }
+
+    @Override
+    public void report(SteerableActor actor) {
+        if (actor.getPosition().dst(owner.getPosition()) > box.width) return;
+        if (actor == owner) return;
+        callback.reportNeighbor(actor);
     }
 }

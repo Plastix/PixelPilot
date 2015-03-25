@@ -13,22 +13,29 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pixelpilot.plane.Plane;
-import com.mygdx.pixelpilot.plane.controller.ai.ProximityFinder;
+import com.mygdx.pixelpilot.plane.controller.ai.PlayerProximityCallback;
+import com.mygdx.pixelpilot.plane.controller.ai.QuadtreeProximityFinder;
 import com.mygdx.pixelpilot.screen.game.World;
 import com.mygdx.pixelpilot.util.Utils;
 
+// TODO: this class is due for a major refactor
 public class BasicAIController extends AIController {
 
     private final float detectionDistance = 500;
     private final float trackingDistance = 1500;
     private Plane plane;
-    private ProximityFinder proximity;
+    private QuadtreeProximityFinder proximity;
+    private Proximity.ProximityCallback<Vector2> targetProximityCallback;
     private SteeringAcceleration<Vector2> accel = new SteeringAcceleration<Vector2>(new Vector2());
     private StateMachine<BasicAIController> stateMachine;
+    private PrioritySteering<Vector2> trackingBehavior;
+    private Wander<Vector2> wanderBehavior;
+    private Seek<Vector2> seekBehavior;
 
     public BasicAIController() {
         this.stateMachine = new DefaultStateMachine<BasicAIController>(this, BasicAIControllerState.INIT);
-        this.proximity = new ProximityFinder(detectionDistance);
+        this.proximity = new QuadtreeProximityFinder(detectionDistance);
+        this.targetProximityCallback = new PlayerProximityCallback(this);
     }
 
     @Override
@@ -59,18 +66,8 @@ public class BasicAIController extends AIController {
     }
 
     private void acquireTargetsInView() {
-        final BasicAIController self = this;
         proximity.setOwner(plane);
-        proximity.findNeighbors(new Proximity.ProximityCallback<Vector2>() {
-            @Override
-            public boolean reportNeighbor(Steerable<Vector2> neighbor) {
-                if (neighbor instanceof Plane && ((Plane) neighbor).getController() instanceof PlayerController) {
-                    self.setTarget(neighbor);
-                    return true;
-                }
-                return false;
-            }
-        });
+        proximity.findNeighbors(targetProximityCallback);
     }
 
     private enum BasicAIControllerState implements State<BasicAIController> {
@@ -92,17 +89,18 @@ public class BasicAIController extends AIController {
         TRACK_TARGET() {
             @Override
             public void enter(BasicAIController controller) {
-                Pursue<Vector2> pursueBehavior = new Pursue<Vector2>(controller.plane, controller.target);
-                pursueBehavior.setMaxPredictionTime(4);
+                if(controller.trackingBehavior == null) {
+                    controller.trackingBehavior = new PrioritySteering<Vector2>(controller.plane);
+                    Separation<Vector2> separateBehavior = new Separation<Vector2>(controller.plane, controller.proximity);
+                    separateBehavior.setDecayCoefficient(10.5f);
+                    Pursue<Vector2> pursueBehavior = new Pursue<Vector2>(controller.plane, controller.target);
+                    pursueBehavior.setMaxPredictionTime(4);
+                    controller.trackingBehavior.add(separateBehavior);
+                    controller.trackingBehavior.add(pursueBehavior);
 
+                }
                 controller.proximity.setOwner(controller.plane);
-                Separation<Vector2> separateBehavior = new Separation<Vector2>(controller.plane, controller.proximity);
-                separateBehavior.setDecayCoefficient(1.5f);
-
-                PrioritySteering<Vector2> steering = new PrioritySteering<Vector2>(controller.plane);
-                steering.add(separateBehavior);
-                steering.add(pursueBehavior);
-                controller.behavior = steering;
+                controller.behavior = controller.trackingBehavior;
             }
 
             @Override
@@ -126,11 +124,14 @@ public class BasicAIController extends AIController {
         WANDER() {
             @Override
             public void enter(BasicAIController controller) {
-                controller.behavior = new Wander<Vector2>(controller.plane).setFaceEnabled(false)
-                        .setWanderOffset(50)
-                        .setWanderOrientation(controller.plane.getOrientation())
-                        .setWanderRadius(250)
-                        .setWanderRate(MathUtils.PI / 8);
+                if(controller.wanderBehavior == null){
+                   controller.wanderBehavior = new Wander<Vector2>(controller.plane).setFaceEnabled(false)
+                            .setWanderOffset(50)
+                            .setWanderOrientation(controller.plane.getOrientation())
+                            .setWanderRadius(250)
+                            .setWanderRate(MathUtils.PI / 8);
+                }
+                controller.behavior = controller.wanderBehavior;
             }
 
             @Override
@@ -164,12 +165,16 @@ public class BasicAIController extends AIController {
         SEEK_CENTER() {
             @Override
             public void enter(final BasicAIController controller) {
-                controller.behavior = new Seek<Vector2>(controller.plane, new SteerableAdapter<Vector2>() {
-                    @Override
-                    public Vector2 getPosition() {
-                        return controller.worldBounds.getCenter(new Vector2());
-                    }
-                });
+                if(controller.seekBehavior == null){
+                    controller.seekBehavior = new Seek<Vector2>(controller.plane, new SteerableAdapter<Vector2>() {
+                        Vector2 temp = new Vector2();
+                        @Override
+                        public Vector2 getPosition() {
+                            return controller.worldBounds.getCenter(temp);
+                        }
+                    });
+                }
+                controller.behavior = controller.seekBehavior;
             }
 
             @Override

@@ -99,7 +99,6 @@ public class HUD extends Stage implements Listener {
         table.add(lives);
         table.add(scoreIcon).size(38,45).pad(10,30,10,10);
         table.add(score);
-
         table.add(pauseButton).size(50,50).right().pad(10).expandX();
     }
 

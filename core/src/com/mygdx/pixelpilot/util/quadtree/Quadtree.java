@@ -7,13 +7,14 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pixelpilot.plane.SteerableActor;
 
-public class QuadTree extends Node<SteerableActor> {
+
+public class Quadtree extends Node<SteerableActor> {
 
     Leaf root;
     Array<SteerableActor> outsiders;
     ShapeRenderer renderer;
 
-    public QuadTree(float x, float y, float w, float h) {
+    public Quadtree(float x, float y, float w, float h) {
         super(x, y, w, h);
         this.root = new Leaf(x, y, w, h, this, new LeafPool());
         this.renderer = new ShapeRenderer();
@@ -29,6 +30,7 @@ public class QuadTree extends Node<SteerableActor> {
             if (insert(s))
                 outsiders.removeIndex(i--);
         }
+
         root.update();
     }
 
@@ -38,8 +40,8 @@ public class QuadTree extends Node<SteerableActor> {
     }
 
     @Override
-    public Array<SteerableActor> get(Rectangle box) {
-        return root.get(box);
+    public int get(Rectangle box, QuadtreeCallback cb) {
+        return root.get(box, cb);
     }
 
     @Override

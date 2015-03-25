@@ -20,72 +20,34 @@ public class Utils {
                 .nor();
     }
 
-    /**
-     * Returns a Vector2 corresponding to the position of the given actor
-     * @param target The actor to create a position vector from
-     * @return A Vector2 containing the x and y coordinates of the actor
-     */
-    public static Vector2 positionVector(Actor target) {
-        return new Vector2(target.getX(), target.getY());
-    }
-
-    public static Vector2 vec3d2d(Vector3 vec3) {
-        return new Vector2(vec3.x, vec3.y);
-    }
-
-    public static Vector3 vec2d3d(Vector2 vec2) {
-        return new Vector3(vec2.x, vec2.y, 0);
-    }
-
     public static float map(float val, float inMin, float inMax, float outMin, float outMax){
         return ((val - inMin)/(inMax - inMin)) * (outMax - outMin) + outMin;
     }
 
-    public static boolean intersectLineRect(Vector2 target, Vector2 origin, Rectangle bounds, Vector2 intersectionPoint) {
-        return intersectLineRect(target, origin, bounds, intersectionPoint, null);
-    }
+    /**
+     * Finds the intersection point between a line and a rectangle
+     * @param vec The intersection point will be stored here if it exists, otherwise this will be null
+     * @param targetX The x position of the first point on the line
+     * @param targetY The y position of the first point on the line
+     * @param originX The x position of the second point on the line
+     * @param originY The y position of the second point on the line
+     * @param rectX The x position of the rectangle
+     * @param rectY The y position of the rectangle
+     * @param rectW The width of the rectangle
+     * @param rectH The height of the rectangle
+     * @return true if there is an intersection point, otherwise false
+     */
+    public static boolean intersectLineRect(Vector2 vec, float targetX, float targetY, float originX, float originY, float rectX, float rectY, float rectW, float rectH) {
 
-    public static boolean intersectLineRect(Vector2 target, Vector2 origin, Rectangle bounds, Vector2 intersectionPoint, Vector2 normal) {
-        Vector2 topLeft = new Vector2(bounds.getX(), bounds.getY() + bounds.getHeight());
-        Vector2 topRight = new Vector2(bounds.getX() + bounds.getWidth(), bounds.getY() + bounds.getHeight());
-        Vector2 bottomLeft = new Vector2(bounds.getX(), bounds.getY());
-        Vector2 bottomRight = new Vector2(bounds.getX() + bounds.getWidth(), bounds.getY());
-
-        // Check intersection with the top edge.
-        if (Intersector.intersectSegments(topLeft, topRight, origin, target, intersectionPoint)) {
-            if(normal != null) normal.set(calculateNormal(origin, intersectionPoint, topLeft, topRight));
-            return true;
-        }
-        // Check intersection with the left edge.
-        else if (Intersector.intersectSegments(topLeft, bottomLeft, origin, target, intersectionPoint)) {
-            if(normal != null) normal.set(calculateNormal(origin, intersectionPoint, topLeft, bottomLeft));
-            return true;
-        }
-        // Check intersection with the right edge.
-        else if (Intersector.intersectSegments(topRight, bottomRight, origin, target, intersectionPoint)) {
-            if(normal != null) normal.set(calculateNormal(origin, intersectionPoint, topRight, bottomRight));
-            return true;
-        }
-        // Check intersection with the bottom edge.
-        else if (Intersector.intersectSegments(bottomLeft, bottomRight, origin, target, intersectionPoint)) {
-            if(normal != null) normal.set(calculateNormal(origin, intersectionPoint, bottomLeft, bottomRight));
-            return true;
-        }
-
-        return false;
-    }
-
-    public static Vector2 calculateNormal(Vector2 origin, Vector2 intersectionPoint, Vector2 linePoint1, Vector2 linePoint2) {
-        int side = Intersector.pointLineSide(linePoint1, linePoint2, origin);
-        float dx = linePoint2.x - linePoint1.x;
-        float dy = linePoint2.y - linePoint1.y;
-        if(side > 0) {
-            return new Vector2(-dy, dx);
-        } else if(side < 0) {
-            return new Vector2(dy, -dx);
-        } else {
-            return intersectionPoint;
-        }
+        return
+                // Check intersection with the top edge.
+                Intersector.intersectSegments(rectX, rectY+rectH, rectX + rectW, rectY + rectH, originX, originY, targetX, targetY, vec)
+                // Check intersection with the left edge.
+                || Intersector.intersectSegments(rectX, rectY+rectH, rectX, rectY, originX, originY, targetX, targetY, vec)
+                // Check intersection with the right edge.
+                || Intersector.intersectSegments(rectX + rectW, rectY + rectH, rectX + rectW, rectY, originX, originY, targetX, targetY, vec)
+                // Check intersection with the bottom edge.
+                || Intersector.intersectSegments(rectX, rectY, rectX+rectW, rectY, originX, originY, targetX, targetY, vec);
     }
 
     /**

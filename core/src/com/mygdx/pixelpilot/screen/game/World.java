@@ -18,8 +18,8 @@ import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.plane.SteerableActor;
 import com.mygdx.pixelpilot.plane.controller.PlayerController;
-import com.mygdx.pixelpilot.util.quadtree.QuadTree;
-import com.mygdx.pixelpilot.world.Cloud;
+import com.mygdx.pixelpilot.util.quadtree.Quadtree;
+import com.mygdx.pixelpilot.util.quadtree.QuadtreeCallback;
 import com.mygdx.pixelpilot.world.background.theme.BackdropFactory;
 import com.mygdx.pixelpilot.world.background.theme.BackdropTheme;
 
@@ -35,7 +35,7 @@ public class World extends Stage implements Listener {
     private List<Plane> planes;
     private TrackingCamera camera;
     private int width, height;
-    private QuadTree storage;
+    private Quadtree storage;
 
     public World(int width, int height) {
         this.width = width;
@@ -45,33 +45,17 @@ public class World extends Stage implements Listener {
         this.camera.setWorldBounds(bounds);
         this.setViewport(new ExtendViewport(Config.NativeView.width, Config.NativeView.height));
         this.getViewport().setCamera(camera);
-        this.storage = new QuadTree(0, 0, width, height);
+        this.storage = new Quadtree(0, 0, width, height);
         Events.register(this);
-        clouds = Cloud.generateClouds(150); // static for now
+//        clouds = Cloud.generateClouds(150); // static for now
         planes = new ArrayList<Plane>();
         createBackdrop();
-
-//        addAction(Actions.forever(Actions.run(new Runnable() {
-//            @Override
-//            public void run() {
-//                storage.update(); // gotta be a better place to put this...
-//            }
-//        })));
     }
 
     private void createBackdrop() {
         BackdropTheme theme = BackdropFactory.buildTheme(BackdropFactory.ThemePreset.ISLANDS);
         backdrop = BackdropFactory.buildBackdrop(width, height, 4, theme);
         backdrop.setSize(width, height);
-        backdrop.setScale(4);
-        this.addActor(backdrop);
-    }
-
-    private void addPlane(Plane plane, Vector2 spawnPos) {
-        plane.setPosition(spawnPos.x, spawnPos.y);
-        this.addActor(plane);
-        storage.insert(plane);
-        planes.add(plane);
     }
 
     @Override
@@ -81,8 +65,13 @@ public class World extends Stage implements Listener {
 
     @Override
     public void draw() {
+        getBatch().begin();
+        backdrop.draw(getBatch(), 1);
+        getBatch().end();
         super.draw();
+        getRoot().setCullingArea(camera.getViewportBounds());
         storage.update(); // gotta be a better place to put this...
+        storage.draw(camera);
     }
 
     /**
@@ -98,8 +87,15 @@ public class World extends Stage implements Listener {
         return bounds;
     }
 
-    public Array<SteerableActor> get(Rectangle box) {
-        return storage.get(box);
+    public int get(Rectangle box, QuadtreeCallback cb) {
+        return storage.get(box, cb);
+    }
+
+    private void addPlane(Plane plane, Vector2 spawnPos) {
+        plane.setPosition(spawnPos.x, spawnPos.y);
+        this.addActor(plane);
+        storage.insert(plane);
+        planes.add(plane);
     }
 
     @EventHandler
@@ -111,7 +107,6 @@ public class World extends Stage implements Listener {
     public void onPlayerSpawn(PlayerSpawnEvent event) {
         addPlane(event.getPlane(), getNewSpawnPosition());
         ((PlayerController) (event.getPlane().getController())).setWorld(this);
-
     }
 
     @EventHandler

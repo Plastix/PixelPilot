@@ -26,6 +26,7 @@ public class PlayerController extends Controller {
     private SteeringAcceleration<Vector2> accel = new SteeringAcceleration<Vector2>(new Vector2());
     protected Rectangle worldBounds;
     protected World world;
+    private Seek<Vector2> seekBehavior;
 
     public void setWorld(World world) {
         this.world = world;
@@ -92,12 +93,16 @@ public class PlayerController extends Controller {
         SEEK_CENTER() {
             @Override
             public void enter(final PlayerController controller) {
-                controller.behavior = new Seek<Vector2>(controller.plane, new SteerableAdapter<Vector2>() {
-                    @Override
-                    public Vector2 getPosition() {
-                        return controller.worldBounds.getCenter(new Vector2());
-                    }
-                });
+                if(controller.seekBehavior == null) {
+                    controller.seekBehavior = new Seek<Vector2>(controller.plane, new SteerableAdapter<Vector2>() {
+                        Vector2 temp = new Vector2();
+                        @Override
+                        public Vector2 getPosition() {
+                            return controller.worldBounds.getCenter(temp);
+                        }
+                    });
+                }
+                controller.behavior = controller.seekBehavior;
             }
 
             @Override

@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.pixelpilot.event.EventHandler;
@@ -17,14 +16,16 @@ import com.mygdx.pixelpilot.util.Utils;
 public class TrackingCamera extends OrthographicCamera
         implements Listener {
     private Actor target;
-    private Rectangle bounds;
+    private Rectangle worldBounds;
     private float baseTrackSpeed;
     private Interpolation interpolator;
+    private Rectangle viewportBounds;
 
     public TrackingCamera() {
         this.baseTrackSpeed = 0.15f;
-        this.bounds = new Rectangle();
+        this.worldBounds = new Rectangle();
         this.interpolator = Interpolation.linear;
+        this.viewportBounds = new Rectangle();
         Events.register(this);
     }
 
@@ -42,17 +43,26 @@ public class TrackingCamera extends OrthographicCamera
         if (target != null) {
             track();
         }
+        viewportBounds.set(position.x-viewportWidth*zoom/2,
+                position.y-viewportHeight*zoom/2, viewportWidth*zoom, viewportHeight*zoom);
     }
 
     public void setWorldBounds(Rectangle bounds) {
-        this.bounds = bounds;
+        this.worldBounds = bounds;
+    }
+
+    public Rectangle getWorldBounds() {
+        return worldBounds;
+    }
+
+    public Rectangle getViewportBounds() {
+        return viewportBounds;
     }
 
     private void track() {
         Vector3 currPos = position;
-        Vector2 targetPos2D = Utils.positionVector(target);
-        Vector3 targetPos = Utils.vec2d3d(targetPos2D);
-
+        float targetX = target.getX();
+        float targetY = target.getY();
             /*
             * Explanation semi-attempt:
             *   When the camera's leading edge passes the soft border, the lerp speed
@@ -65,52 +75,52 @@ public class TrackingCamera extends OrthographicCamera
         float borderPaddingX = viewportWidth / 3f;
         float cameraLeftEdge = position.x - viewportWidth / 2f;
         float cameraRightEdge = position.x + viewportWidth / 2f;
-        float leftHardBorder = bounds.x;
+        float leftHardBorder = worldBounds.x;
         float leftSoftBorder = leftHardBorder + borderPaddingX;
-        float rightHardBorder = bounds.x + bounds.width;
+        float rightHardBorder = worldBounds.x + worldBounds.width;
         float rightSoftBorder = rightHardBorder - borderPaddingX;
-        if (cameraLeftEdge < leftSoftBorder && position.x > targetPos.x) {
+        if (cameraLeftEdge < leftSoftBorder && position.x > targetX) {
             float distToLeftHardBorder = cameraLeftEdge - leftHardBorder;
             float amount = Utils.map(distToLeftHardBorder, 0, leftSoftBorder - leftHardBorder, 0.002f, baseTrackSpeed);
-            currPos.x = interpolator.apply(currPos.x, targetPos.x, amount);
+            currPos.x = interpolator.apply(currPos.x, targetX, amount);
             // final safety check (can't use the variables because the corresponding camera values have changed)
             if (position.x - viewportWidth / 2f < leftHardBorder) {
-                position.x = bounds.x + viewportWidth / 2f;
+                position.x = worldBounds.x + viewportWidth / 2f;
             }
-        } else if (cameraRightEdge > rightSoftBorder && position.x < targetPos.x) {
+        } else if (cameraRightEdge > rightSoftBorder && position.x < targetX) {
             float distToRightHardBorder = rightHardBorder - cameraRightEdge;
             float amount = Utils.map(distToRightHardBorder, 0, rightHardBorder - rightSoftBorder, 0.002f, baseTrackSpeed);
-            currPos.x = interpolator.apply(currPos.x, targetPos.x, amount);
+            currPos.x = interpolator.apply(currPos.x, targetX, amount);
             if (position.x + viewportWidth / 2f > rightHardBorder) {
-                position.x = bounds.x + bounds.width - viewportWidth / 2f;
+                position.x = worldBounds.x + worldBounds.width - viewportWidth / 2f;
             }
         } else { // normal movement
-            currPos.x = interpolator.apply(currPos.x, targetPos.x, baseTrackSpeed);
+            currPos.x = interpolator.apply(currPos.x, targetX, baseTrackSpeed);
         }
 
         float borderPaddingY = viewportHeight / 3.5f;
         float cameraBottomEdge = position.y - viewportHeight / 2f;
         float cameraTopEdge = position.y + viewportHeight / 2f;
-        float bottomHardBorder = bounds.y;
+        float bottomHardBorder = worldBounds.y;
         float bottomSoftBorder = bottomHardBorder + borderPaddingY;
-        float topHardBorder = bounds.y + bounds.height;
+        float topHardBorder = worldBounds.y + worldBounds.height;
         float topSoftBorder = topHardBorder - borderPaddingY;
-        if (cameraBottomEdge < bottomSoftBorder && position.y > targetPos.y) {
+        if (cameraBottomEdge < bottomSoftBorder && position.y > targetY) {
             float distToBottomHardBorder = cameraBottomEdge - bottomHardBorder;
             float amount = Utils.map(distToBottomHardBorder, 0, bottomSoftBorder - bottomHardBorder, 0.002f, baseTrackSpeed);
-            currPos.y = interpolator.apply(currPos.y, targetPos.y, amount);
+            currPos.y = interpolator.apply(currPos.y, targetY, amount);
             if (position.y - viewportHeight / 2f < bottomHardBorder) {
-                position.y = bounds.y + viewportHeight / 2f;
+                position.y = worldBounds.y + viewportHeight / 2f;
             }
-        } else if (cameraTopEdge > topSoftBorder && position.y < targetPos.y) {
+        } else if (cameraTopEdge > topSoftBorder && position.y < targetY) {
             float distToTopHardBorder = topHardBorder - cameraTopEdge;
             float amount = Utils.map(distToTopHardBorder, 0, topHardBorder - topSoftBorder, 0.002f, baseTrackSpeed);
-            currPos.y = interpolator.apply(currPos.y, targetPos.y, amount);
+            currPos.y = interpolator.apply(currPos.y, targetY, amount);
             if (position.y + viewportHeight / 2f > topHardBorder) {
-                position.y = bounds.y + bounds.height - viewportHeight / 2f;
+                position.y = worldBounds.y + worldBounds.height - viewportHeight / 2f;
             }
         } else {
-            currPos.y = interpolator.apply(currPos.y, targetPos.y, baseTrackSpeed);
+            currPos.y = interpolator.apply(currPos.y, targetY, baseTrackSpeed);
         }
     }
 

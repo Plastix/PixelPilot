@@ -6,12 +6,13 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pixelpilot.plane.SteerableActor;
+import com.mygdx.pixelpilot.util.pools.ArrayPool;
 
 class Leaf extends Node<SteerableActor> {
     final int CAPACITY = 2;
     final int MINSIZE = 150; // in pixels
     Array<Leaf> children = new Array<Leaf>(4);
-
+    public static ArrayPool<SteerableActor> arrayPool = ArrayPool.steerableActorArrayPool;
     Array<SteerableActor> data = new Array<SteerableActor>(false, CAPACITY);
     Node<SteerableActor> parent;
     LeafPool pool;
@@ -105,31 +106,45 @@ class Leaf extends Node<SteerableActor> {
         parent.insertIntoParent(s);
     }
 
+    /**
+     * Gets all the actors inside the given rectangle
+     * @param box The rectangle specifying which actors in the tree should be selected
+     * @param cb The callback method to call for each actor
+     * @return The number of actors found
+     */
     @Override
-    public Array<SteerableActor> get(Rectangle box) {
-        Array<SteerableActor> pointsInBox = new Array<SteerableActor>();
-
+    public int get(Rectangle box, QuadtreeCallback cb) {
+        int count = 0;
         if (!box.overlaps(bounds)) {
-            return pointsInBox;
+            return count;
         }
 
-        pointsInBox.addAll(withinBox(data, box));
+        // todo: remove this alloc...
+        Array<SteerableActor> found = withinBox(data, box);
+        for (SteerableActor t : found) {
+            cb.report(t);
+            count++;
+        }
+        arrayPool.free(found);
 
         if (!hasChildNodes)
-            return pointsInBox;
+            return count;
 
         for (Leaf c : children) {
-            pointsInBox.addAll(c.get(box));
+            count += c.get(box, cb);
         }
 
-        return pointsInBox;
+        return count;
     }
 
+    // todo: remove array
     private Array<SteerableActor> getAllData() {
-        Array<SteerableActor> allData = new Array<SteerableActor>();
+        Array<SteerableActor> allData = arrayPool.obtain();
         for (Leaf child : children) {
             if (child.hasChildNodes) {
-                allData.addAll(child.getAllData());
+                Array<SteerableActor> childData = child.getAllData();
+                allData.addAll(childData);
+                arrayPool.free(childData);
             } else {
                 allData.addAll(child.data);
             }
@@ -138,7 +153,7 @@ class Leaf extends Node<SteerableActor> {
     }
 
     private Array<SteerableActor> withinBox(Array<SteerableActor> arr, Rectangle box) {
-        Array<SteerableActor> objectsInRadius = new Array<SteerableActor>();
+        Array<SteerableActor> objectsInRadius = arrayPool.obtain();
         for (SteerableActor t : arr) {
             if (box.contains(t.getX(), t.getY())) {
                 objectsInRadius.add(t);
@@ -148,7 +163,10 @@ class Leaf extends Node<SteerableActor> {
     }
 
     private int countDataPoints(Array<Leaf> nodes) {
-        return getAllData().size;
+        Array<SteerableActor> allDat = getAllData();
+        int size = allDat.size;
+        arrayPool.free(allDat);
+        return size;
     }
 
     private boolean split() {
@@ -177,6 +195,9 @@ class Leaf extends Node<SteerableActor> {
                     break;
                 }
             }
+            // this can happen without the actor being inserted
+            // results in the actor escaping the tree
+            // note: it's not the only leak. Need to find the others.
             data.removeIndex(i--);
         }
     }
