@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -34,11 +35,15 @@ public class HUD extends Stage implements Listener {
     private ShadowImage scoreIcon;
     private Label score;
     private ShadowImageButton pauseButton;
+    private Group marker;
 
     public HUD(){
         this.setViewport(new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera()));
         Gdx.input.setInputProcessor(this);
         Events.register(this);
+
+        marker = new Group();
+        this.addActor(marker);
 
         table = new Table();
         table.setFillParent(true);
@@ -133,7 +138,7 @@ public class HUD extends Stage implements Listener {
 
     @EventHandler
     public void onPlaneSpawn(AISpawnEvent event){
-        this.addActor(new PlaneMarker(event.getPlane()));
+        this.marker.addActor(new PlaneMarker(event.getPlane()));
     }
 
 }
