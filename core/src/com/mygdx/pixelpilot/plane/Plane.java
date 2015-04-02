@@ -20,6 +20,7 @@ public class Plane extends SteerableActor {
     private Vector2 position;
     private Vector2 linearVelocity;
     private Sprite sprite;
+    private Sprite shadow;
 
     private boolean tagged;
     private float angularVel;
@@ -30,6 +31,7 @@ public class Plane extends SteerableActor {
 
     public Plane(PlaneDefinition def, WeaponDefinition weaponDefinition, Controller controller) {
         this.position = new Vector2(0,0);
+        this.controller = controller;
         this.def = def;
         this.linearVelocity = new Vector2(1, 1);
         this.linearVelocity.setLength(def.speed);
@@ -39,7 +41,9 @@ public class Plane extends SteerableActor {
         this.sprite.setScale(3.5f, 3.5f);
         this.sprite.setRotation(-90);
         this.setSize(sprite.getWidth(), sprite.getHeight());
-        this.controller = controller;
+        this.shadow = new Sprite(sprite);
+        this.shadow.setColor(new Color(0,0,0,0.6f));
+        this.shadow.setScale(1.5f, 1.5f);
         setOrigin(Align.center);
         setRotation(-90);
     }
@@ -50,14 +54,17 @@ public class Plane extends SteerableActor {
         this.position.set(getX(), getY());
         this.controller.control(this);
         this.position.add(linearVelocity);
-        this.sprite.setPosition(position.x, position.y);
+        this.sprite.setPosition(position.x - sprite.getWidth() / 2, position.y - sprite.getHeight() / 2);
+        this.shadow.setPosition(position.x - shadow.getWidth() / 2, position.y - 20 - shadow.getHeight() / 2);
         this.sprite.setRotation(this.getRotation());
+        this.shadow.setRotation(this.getRotation());
         this.setPosition(position.x, position.y);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        shadow.draw(batch, parentAlpha);
         sprite.draw(batch, parentAlpha);
     }
 
