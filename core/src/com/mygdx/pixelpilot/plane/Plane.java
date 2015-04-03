@@ -42,7 +42,7 @@ public class Plane extends SteerableActor {
         this.sprite.setRotation(-90);
         this.setSize(sprite.getWidth(), sprite.getHeight());
         this.shadow = new Sprite(sprite);
-        this.shadow.setColor(new Color(0,0,0,0.6f));
+        this.shadow.setColor(new Color(0,0,0,0.2f));
         this.shadow.setScale(1.5f, 1.5f);
         setOrigin(Align.center);
         setRotation(-90);
