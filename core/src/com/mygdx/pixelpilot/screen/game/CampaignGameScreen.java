@@ -6,7 +6,7 @@ import com.mygdx.pixelpilot.data.level.Level;
 import com.mygdx.pixelpilot.data.level.Wave;
 import com.mygdx.pixelpilot.event.*;
 import com.mygdx.pixelpilot.event.events.game.WaveSpawnEvent;
-import com.mygdx.pixelpilot.event.events.AISpawnEvent;
+import com.mygdx.pixelpilot.event.events.ai.AISpawnEvent;
 import com.mygdx.pixelpilot.plane.*;
 import com.mygdx.pixelpilot.plane.controller.AIController;
 import com.mygdx.pixelpilot.screen.game.hud.HUD;

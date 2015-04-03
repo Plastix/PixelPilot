@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.Listener;
-import com.mygdx.pixelpilot.event.events.AISpawnEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.util.Utils;
 
@@ -23,7 +22,7 @@ public class TrackingCamera extends OrthographicCamera
     private Interpolation interpolator;
 
     public TrackingCamera() {
-        this.baseTrackSpeed = 0.1f;
+        this.baseTrackSpeed = 0.15f;
         this.bounds = new Rectangle();
         this.interpolator = Interpolation.linear;
         Events.register(this);
