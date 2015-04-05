@@ -12,6 +12,7 @@ import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.Listener;
+import com.mygdx.pixelpilot.event.events.ai.AIDeathEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerDeathEvent;
 import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.event.events.PlaneMarkerSpawnEvent;
@@ -32,6 +33,7 @@ public class PlaneMarker extends Image implements Listener {
         this.setSize(30, 30);
         this.setVisible(false);
         this.setOrigin(Align.center);
+        Events.register(this);
 
         Texture marker = new Texture(Assets.image.plane_marker);
         TextureRegionDrawable drawable = new TextureRegionDrawable(new TextureRegion(marker));
@@ -78,7 +80,10 @@ public class PlaneMarker extends Image implements Listener {
     }
 
     @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event) {
-        this.remove();
+    public void onAIDeath(AIDeathEvent event) {
+        if(event.getPlane().equals(this.target)) {
+            this.target = null;
+            this.remove();
+        }
     }
 }

@@ -5,13 +5,15 @@ import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.steer.Proximity;
-import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.steer.SteerableAdapter;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
 import com.badlogic.gdx.ai.steer.behaviors.*;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.mygdx.pixelpilot.event.Events;
+import com.mygdx.pixelpilot.event.events.ai.AIDeathEvent;
 import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.plane.controller.ai.PlayerProximityCallback;
 import com.mygdx.pixelpilot.plane.controller.ai.QuadtreeProximityFinder;
@@ -31,6 +33,7 @@ public class BasicAIController extends AIController {
     private PrioritySteering<Vector2> trackingBehavior;
     private Wander<Vector2> wanderBehavior;
     private Seek<Vector2> seekBehavior;
+    private int spiralDirection;
 
     public BasicAIController() {
         this.stateMachine = new DefaultStateMachine<BasicAIController>(this, BasicAIControllerState.INIT);
@@ -184,12 +187,54 @@ public class BasicAIController extends AIController {
                     controller.stateMachine.revertToPreviousState();
                 }
             }
+        },
+        /**
+         * When the Plane dies animate the death.
+         * Plane spirals and shrinks in size
+         * TODO: Better animation! (and particles)
+         */
+        DEATH_SPIRAL(){
+            @Override
+            public void enter(final BasicAIController controller) {
+                super.enter(controller);
+
+                if(Math.random() < 0.5f){
+                    controller.spiralDirection = 1;
+                }else{
+                    controller.spiralDirection = -1;
+                }
+
+                controller.plane.addAction(
+
+                        Actions.sequence(
+                                Actions.scaleTo(0, 0, 2),
+                                Actions.run(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Events.emit(new AIDeathEvent(controller.plane), this);
+                                    }
+                                })
+                        ));
+
+            }
+
+            @Override
+            public void update(BasicAIController controller) {
+                super.update(controller);
+                controller.plane.turn(controller.spiralDirection);
+            }
+
         };
 
         @Override
         public void update(BasicAIController controller) {
-            if (!controller.worldBounds.contains(controller.plane.getPosition())) {
-                controller.stateMachine.changeState(SEEK_CENTER);
+            if(!controller.stateMachine.isInState(DEATH_SPIRAL)) {
+                if (!controller.worldBounds.contains(controller.plane.getPosition())) {
+                    controller.stateMachine.changeState(SEEK_CENTER);
+                }
+                if (controller.plane.isDead()) {
+                    controller.stateMachine.changeState(DEATH_SPIRAL);
+                }
             }
         }
 

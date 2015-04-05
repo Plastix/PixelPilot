@@ -73,8 +73,6 @@ public class CampaignGameScreen extends GameScreen implements Listener {
         }
     }
 
-
-
     @EventHandler
     public void handleEnemyPlaneSpawn(AISpawnEvent event){
         ((AIController)event.getPlane().getController()).setWorld(world);

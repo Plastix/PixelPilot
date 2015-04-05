@@ -13,13 +13,17 @@ import com.mygdx.pixelpilot.plane.controller.Controller;
 import com.mygdx.pixelpilot.util.Utils;
 
 public class Plane extends SteerableActor {
+
     private PlaneDefinition def;
     private Weapon weapon;
     private Controller controller;
     private Sprite sprite;
     private Sprite shadow;
 
+    private int health;
+
     public Plane(final PlaneDefinition def, WeaponDefinition weaponDefinition, Controller controller) {
+
         this.controller = controller;
         this.def = def;
         this.weapon = new Weapon(weaponDefinition);
@@ -39,13 +43,17 @@ public class Plane extends SteerableActor {
         sprite.setRotation(-90);
 
         this.shadow = new Sprite(sprite);
-        shadow.setColor(new Color(0,0,0,0.1f));
+        shadow.setColor(new Color(0, 0, 0, 0.1f));
         shadow.setScale(1.5f, 1.5f);
 
         setSize(sprite.getWidth(), sprite.getHeight());
+        this.setScale(sprite.getScaleX(), sprite.getScaleY());
+        sizeChanged();
 
         setOrigin(Align.center);
         setRotation(-90);
+
+        health = 100;
     }
 
     @Override
@@ -65,6 +73,18 @@ public class Plane extends SteerableActor {
 
         // keep the actor's position in sync with the position vector
         this.setPosition(positionVector.x, positionVector.y);
+    }
+
+    /**
+     * Scale the plane sprite and shadow when scaling the actor
+     * Needed for scene2d actions!
+     */
+    @Override
+    public void setScale(float scaleX, float scaleY) {
+        super.setScale(scaleX, scaleY);
+        this.sprite.setScale(scaleX, scaleY);
+        //This is a really hacky fix so scaleTo actions set the right size of the shadow
+        this.shadow.setScale(scaleX - 1.5f, scaleY - 1.5f);
     }
 
     @Override
@@ -87,6 +107,10 @@ public class Plane extends SteerableActor {
         linearVelocity.rotate(turnAng);
         setRotation(linearVelocity.angle() - 90);
         angularVel = linearVelocity.angleRad() - prevAngle;
+    }
+
+    public boolean isDead(){
+        return health < 0;
     }
 
     public void shoot() {

@@ -11,6 +11,7 @@ import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
+import com.mygdx.pixelpilot.event.events.ai.AIDeathEvent;
 import com.mygdx.pixelpilot.event.events.ai.AISpawnEvent;
 import com.mygdx.pixelpilot.event.events.PlaneMarkerSpawnEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
@@ -110,6 +111,15 @@ public class World extends Stage implements Listener {
     @EventHandler
     public void onPlayerMarkerSpawn(PlaneMarkerSpawnEvent event) {
         event.getPlaneMarker().setCamera(camera);
+    }
+
+    @EventHandler
+    public void onAIDeath(AIDeathEvent event){
+        //TODO Remove from quadtree
+        Plane plane = event.getPlane();
+        storage.remove(plane);
+        planes.remove(plane);
+        plane.remove();
     }
 
 }
