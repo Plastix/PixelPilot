@@ -16,34 +16,34 @@ public class Plane extends SteerableActor {
     private PlaneDefinition def;
     private Weapon weapon;
     private Controller controller;
-
-    private Vector2 position;
-    private Vector2 linearVelocity;
     private Sprite sprite;
     private Sprite shadow;
 
-    private boolean tagged;
-    private float angularVel;
-    private float maxLinearAcceleration = 200;
-    private float maxAngularSpeed = 5;
-    private float maxAngularAcceleration = 10;
-
-
-    public Plane(PlaneDefinition def, WeaponDefinition weaponDefinition, Controller controller) {
-        this.position = new Vector2(0,0);
+    public Plane(final PlaneDefinition def, WeaponDefinition weaponDefinition, Controller controller) {
         this.controller = controller;
         this.def = def;
-        this.linearVelocity = new Vector2(1, 1);
-        this.linearVelocity.setLength(def.speed);
-        this.linearVelocity.setAngle(0);
         this.weapon = new Weapon(weaponDefinition);
+
+        setMaxLinearAcceleration(200);
+        setMaxAngularSpeed(5);
+        setMaxAngularAcceleration(10);
+
+        this.positionVector = new Vector2(0,0);
+
+        this.linearVelocity = new Vector2(1, 1);
+        linearVelocity.setLength(def.speed);
+        linearVelocity.setAngle(0);
+
         this.sprite = new Sprite(new Texture(def.spritePath));
-        this.sprite.setScale(3.5f, 3.5f);
-        this.sprite.setRotation(-90);
-        this.setSize(sprite.getWidth(), sprite.getHeight());
+        sprite.setScale(3.5f, 3.5f);
+        sprite.setRotation(-90);
+
         this.shadow = new Sprite(sprite);
-        this.shadow.setColor(new Color(0,0,0,0.1f));
-        this.shadow.setScale(1.5f, 1.5f);
+        shadow.setColor(new Color(0,0,0,0.1f));
+        shadow.setScale(1.5f, 1.5f);
+
+        setSize(sprite.getWidth(), sprite.getHeight());
+
         setOrigin(Align.center);
         setRotation(-90);
     }
@@ -51,14 +51,20 @@ public class Plane extends SteerableActor {
     @Override
     public void act (float delta) {
         super.act(delta);
-        this.position.set(getX(), getY());
+
+        // keep the position vector in sync with the actor's position
+        // (in case someone calls actor.setPosition)
+        this.positionVector.set(getX(), getY());
+
         this.controller.control(this);
-        this.position.add(linearVelocity);
-        this.sprite.setPosition(position.x - sprite.getWidth() / 2, position.y - sprite.getHeight() / 2);
-        this.shadow.setPosition(position.x - shadow.getWidth() / 2, position.y - 20 - shadow.getHeight() / 2);
+        this.positionVector.add(linearVelocity);
+        this.sprite.setPosition(positionVector.x - sprite.getWidth() / 2, positionVector.y - sprite.getHeight() / 2);
+        this.shadow.setPosition(positionVector.x - shadow.getWidth() / 2, positionVector.y - 20 - shadow.getHeight() / 2);
         this.sprite.setRotation(this.getRotation());
         this.shadow.setRotation(this.getRotation());
-        this.setPosition(position.x, position.y);
+
+        // keep the actor's position in sync with the position vector
+        this.setPosition(positionVector.x, positionVector.y);
     }
 
     @Override
@@ -66,10 +72,6 @@ public class Plane extends SteerableActor {
         super.draw(batch, parentAlpha);
         shadow.draw(batch, parentAlpha);
         sprite.draw(batch, parentAlpha);
-    }
-
-    public void shoot() {
-        Events.emit(new WeaponFireEvent(weapon), this);
     }
 
     /**
@@ -83,32 +85,20 @@ public class Plane extends SteerableActor {
 
         float turnAng = Utils.map(turnAmount, -1f, 1f, -minTurnRadiusAng, minTurnRadiusAng);
         linearVelocity.rotate(turnAng);
-        setRotation(linearVelocity.angle()-90);
+        setRotation(linearVelocity.angle() - 90);
         angularVel = linearVelocity.angleRad() - prevAngle;
+    }
+
+    public void shoot() {
+        Events.emit(new WeaponFireEvent(weapon), this);
     }
 
     public Color getMarkerColor(){
         return def.markerColor;
     }
 
-    @Override
-    public Vector2 getPosition() {
-        return position;
-    }
-
-    @Override
-    public float getOrientation() {
-        return linearVelocity.angleRad() - (MathUtils.degRad * 90);
-    }
-
-    @Override
-    public Vector2 getLinearVelocity() {
-        return linearVelocity;
-    }
-
-    @Override
-    public float getAngularVelocity() {
-        return angularVel;
+    public Controller getController() {
+        return controller;
     }
 
     @Override
@@ -117,74 +107,8 @@ public class Plane extends SteerableActor {
     }
 
     @Override
-    public boolean isTagged() {
-        return tagged;
-    }
-
-    @Override
-    public void setTagged(boolean tagged) {
-        this.tagged = tagged;
-    }
-
-    @Override
-    public Vector2 newVector() {
-        return new Vector2();
-    }
-
-    @Override
-    public float vectorToAngle(Vector2 vector) {
-        return (float)Math.atan2(-vector.x, vector.y);
-    }
-
-    @Override
-    public Vector2 angleToVector(Vector2 outVector, float angle) {
-        outVector.x = -(float)Math.sin(angle);
-        outVector.y = (float)Math.cos(angle);
-        return outVector;
-    }
-
-    @Override
     public float getMaxLinearSpeed() {
         return def.speed;
-    }
-
-    @Override
-    public void setMaxLinearSpeed(float maxLinearSpeed) {
-        // this is fixed
-    }
-
-    @Override
-    public float getMaxLinearAcceleration() {
-        return maxLinearAcceleration;
-    }
-
-    @Override
-    public void setMaxLinearAcceleration(float maxLinearAcceleration) {
-        this.maxLinearAcceleration = maxLinearAcceleration;
-    }
-
-    @Override
-    public float getMaxAngularSpeed() {
-        return maxAngularSpeed;
-    }
-
-    @Override
-    public void setMaxAngularSpeed(float maxAngularSpeed) {
-        this.maxAngularSpeed = maxAngularSpeed;
-    }
-
-    @Override
-    public float getMaxAngularAcceleration() {
-        return maxAngularAcceleration;
-    }
-
-    @Override
-    public void setMaxAngularAcceleration(float maxAngularAcceleration) {
-        this.maxAngularAcceleration = maxAngularAcceleration;
-    }
-
-    public Controller getController() {
-        return controller;
     }
 
     @Override
