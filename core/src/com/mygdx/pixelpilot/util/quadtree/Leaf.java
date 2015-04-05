@@ -192,13 +192,10 @@ class Leaf extends Node<SteerableActor> {
             for (Leaf n : children) {
                 if (n.bounds.contains(c.getX(), c.getY())) {
                     n.insert(c);
+                    data.removeIndex(i--);
                     break;
                 }
             }
-            // this can happen without the actor being inserted
-            // results in the actor escaping the tree
-            // note: it's not the only leak. Need to find the others.
-            data.removeIndex(i--);
         }
     }
 

@@ -57,6 +57,10 @@ public class Quadtree extends Node<SteerableActor> {
         renderer.setProjectionMatrix(cam.combined);
         renderer.begin(ShapeRenderer.ShapeType.Line);
         root.draw(renderer);
+        renderer.setColor(0,0,0,1);
+        for (SteerableActor outsider : outsiders) {
+            renderer.circle(outsider.getX(), outsider.getY(), 50);
+        }
         renderer.end();
     }
 
