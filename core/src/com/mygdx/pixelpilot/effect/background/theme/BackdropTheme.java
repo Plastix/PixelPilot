@@ -1,4 +1,4 @@
-package com.mygdx.pixelpilot.world.background.theme;
+package com.mygdx.pixelpilot.effect.background.theme;
 
 import com.badlogic.gdx.graphics.Pixmap;
 

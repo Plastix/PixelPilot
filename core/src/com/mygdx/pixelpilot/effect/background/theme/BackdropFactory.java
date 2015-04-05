@@ -1,8 +1,8 @@
-package com.mygdx.pixelpilot.world.background.theme;
+package com.mygdx.pixelpilot.effect.background.theme;
 
 
 import com.badlogic.gdx.utils.Scaling;
-import com.mygdx.pixelpilot.world.background.Backdrop;
+import com.mygdx.pixelpilot.effect.background.Backdrop;
 
 public class BackdropFactory {
 

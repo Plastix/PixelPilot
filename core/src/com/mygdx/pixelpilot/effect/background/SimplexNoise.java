@@ -1,4 +1,4 @@
-package com.mygdx.pixelpilot.world.background;
+package com.mygdx.pixelpilot.effect.background;
 
 
 //Implementation of simplex noise from http://staffwww.itn.liu.se/~stegu/simplexnoise/SimplexNoise.java

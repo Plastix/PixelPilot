@@ -1,6 +1,6 @@
 package com.mygdx.pixelpilot.data.level;
 
-import com.mygdx.pixelpilot.world.background.theme.BackdropTheme;
+import com.mygdx.pixelpilot.effect.background.theme.BackdropTheme;
 
 import java.util.List;
 

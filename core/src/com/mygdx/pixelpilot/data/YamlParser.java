@@ -11,8 +11,7 @@ import com.mygdx.pixelpilot.data.serialize.*;
 import com.mygdx.pixelpilot.plane.PlaneDefinition;
 import com.mygdx.pixelpilot.plane.PlanePreset;
 import com.mygdx.pixelpilot.plane.WeaponDefinition;
-import com.mygdx.pixelpilot.plane.controller.Controller;
-import com.mygdx.pixelpilot.world.background.theme.BackdropTheme;
+import com.mygdx.pixelpilot.effect.background.theme.BackdropTheme;
 
 import java.io.Reader;
 import java.util.ArrayList;

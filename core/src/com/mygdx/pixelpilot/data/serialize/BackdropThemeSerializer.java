@@ -2,8 +2,8 @@ package com.mygdx.pixelpilot.data.serialize;
 
 import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.scalar.ScalarSerializer;
-import com.mygdx.pixelpilot.world.background.theme.BackdropFactory;
-import com.mygdx.pixelpilot.world.background.theme.BackdropTheme;
+import com.mygdx.pixelpilot.effect.background.theme.BackdropFactory;
+import com.mygdx.pixelpilot.effect.background.theme.BackdropTheme;
 
 public class BackdropThemeSerializer implements ScalarSerializer<BackdropTheme> {
 

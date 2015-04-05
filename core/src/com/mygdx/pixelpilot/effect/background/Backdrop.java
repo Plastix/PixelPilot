@@ -1,11 +1,11 @@
-package com.mygdx.pixelpilot.world.background;
+package com.mygdx.pixelpilot.effect.background;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mygdx.pixelpilot.world.background.theme.BackdropTheme;
+import com.mygdx.pixelpilot.effect.background.theme.BackdropTheme;
 
 
 public class Backdrop extends Image {

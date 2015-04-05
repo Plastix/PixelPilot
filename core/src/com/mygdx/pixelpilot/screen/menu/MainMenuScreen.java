@@ -19,11 +19,10 @@ import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.pixelpilot.PixelPilot;
 import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.screen.ui.ShadowImageButton;
-import com.mygdx.pixelpilot.util.Utils;
-import com.mygdx.pixelpilot.world.Cloud;
-import com.mygdx.pixelpilot.world.background.Backdrop;
-import com.mygdx.pixelpilot.world.background.theme.BackdropFactory;
-import com.mygdx.pixelpilot.world.background.theme.BackdropTheme;
+import com.mygdx.pixelpilot.effect.Cloud;
+import com.mygdx.pixelpilot.effect.background.Backdrop;
+import com.mygdx.pixelpilot.effect.background.theme.BackdropFactory;
+import com.mygdx.pixelpilot.effect.background.theme.BackdropTheme;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 

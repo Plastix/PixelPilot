@@ -1,7 +1,7 @@
-package com.mygdx.pixelpilot.world.background.theme;
+package com.mygdx.pixelpilot.effect.background.theme;
 
 import com.badlogic.gdx.graphics.*;
-import com.mygdx.pixelpilot.world.background.SimplexNoise;
+import com.mygdx.pixelpilot.effect.background.SimplexNoise;
 
 
 public class IslandTheme implements BackdropTheme {
