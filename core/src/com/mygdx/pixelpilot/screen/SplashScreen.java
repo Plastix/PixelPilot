@@ -13,6 +13,8 @@ import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.screen.MenuOpenEvent;
 import com.mygdx.pixelpilot.event.events.screen.ScreenChangeEvent;
 import com.mygdx.pixelpilot.plane.controller.ControllerFactory;
+import com.mygdx.pixelpilot.plane.shooty.projectile.utils.ProjectileFactory;
+import com.mygdx.pixelpilot.plane.shooty.weapon.utils.WeaponFactory;
 import com.mygdx.pixelpilot.screen.menu.MainMenu;
 import com.mygdx.pixelpilot.screen.menu.MenuScreen;
 
@@ -26,6 +28,8 @@ public class SplashScreen implements Screen {
     public SplashScreen() {
         stage = new Stage(new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera()));
         ControllerFactory.registerControllers();
+        ProjectileFactory.registerProjectiles();
+        WeaponFactory.registerWeapons();
         YamlParser.loadAllData();
     }
 

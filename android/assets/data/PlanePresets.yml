@@ -1,4 +1,10 @@
 - name: Spitfire LF Mk IX
   planeDefinition: Basic Plane
-  weaponDefinition: Single Shot
+  weaponDefinitions:
+   - weapon: Single Shot Standard
+     slot: Main gun
+   - weapon: Single Shot Standard
+     slot: Left wing
+   - weapon: Single Shot Standard
+     slot: Right wing
   controller: BasicAIController

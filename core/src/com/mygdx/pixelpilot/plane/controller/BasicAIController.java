@@ -5,6 +5,7 @@ import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.steer.Proximity;
+import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.steer.SteerableAdapter;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
 import com.badlogic.gdx.ai.steer.behaviors.*;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.ai.AIDeathEvent;
 import com.mygdx.pixelpilot.plane.Plane;
+import com.mygdx.pixelpilot.plane.SteerableActor;
 import com.mygdx.pixelpilot.plane.controller.ai.PlayerProximityCallback;
 import com.mygdx.pixelpilot.plane.controller.ai.QuadtreeProximityFinder;
 import com.mygdx.pixelpilot.screen.game.World;
@@ -116,7 +118,15 @@ public class BasicAIController extends AIController {
                     controller.stateMachine.changeState(WANDER);
                 } else {
                     controller.applyBehavior();
-//                    controller.plane.shoot();
+                    Plane plane = controller.plane;
+                    Steerable<Vector2> target = controller.getTarget();
+                    float x = plane.getX() - target.getPosition().x;
+                    float y = plane.getY() - target.getPosition().y;
+                    float angle = MathUtils.atan2(y, x) * MathUtils.radDeg;
+                    angle = (angle - plane.getRotation()) + 90;
+                    if(Math.abs(angle) < 45) { // if in view then fire
+                        plane.shoot(target);
+                    }
                 }
             }
         },

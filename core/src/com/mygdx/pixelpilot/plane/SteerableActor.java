@@ -10,13 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * For use with the GDX-ai package.
  */
 public abstract class SteerableActor extends Actor implements Steerable<Vector2> {
-    protected Vector2 positionVector;
-    protected Vector2 linearVelocity;
+    protected Vector2 positionVector = new Vector2();
+    protected Vector2 linearVelocity = new Vector2();
     protected float angularVel;
-    private float maxLinearAcceleration;
-    private float maxLinearSpeed;
-    private float maxAngularAcceleration;
-    private float maxAngularSpeed;
+    private float maxLinearAcceleration = 1;
+    private float maxLinearSpeed = 1;
+    private float maxAngularAcceleration = 1;
+    private float maxAngularSpeed = 1;
     protected boolean tagged;
 
     // Steerable implementation
@@ -70,7 +70,7 @@ public abstract class SteerableActor extends Actor implements Steerable<Vector2>
     // Limiter implementation
     @Override
     public void setMaxLinearSpeed(float maxLinearSpeed) {
-
+         this.maxLinearSpeed = maxLinearSpeed;
     }
 
     @Override
@@ -106,5 +106,10 @@ public abstract class SteerableActor extends Actor implements Steerable<Vector2>
     @Override
     public void setMaxAngularAcceleration(float maxAngularAcceleration) {
         this.maxAngularAcceleration = maxAngularAcceleration;
+    }
+
+    @Override
+    public float getBoundingRadius() {
+        return  (getHeight() + getWidth()) / 4f;
     }
 }

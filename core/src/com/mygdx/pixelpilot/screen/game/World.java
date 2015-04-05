@@ -9,19 +9,22 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.data.Config;
-import com.mygdx.pixelpilot.event.Listener;
+import com.mygdx.pixelpilot.effect.background.theme.BackdropFactory;
+import com.mygdx.pixelpilot.effect.background.theme.BackdropTheme;
 import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
+import com.mygdx.pixelpilot.event.Listener;
+import com.mygdx.pixelpilot.event.events.ProjectileExpirationEvent;
+import com.mygdx.pixelpilot.event.events.WeaponFireEvent;
 import com.mygdx.pixelpilot.event.events.ai.AIDeathEvent;
 import com.mygdx.pixelpilot.event.events.ai.AISpawnEvent;
 import com.mygdx.pixelpilot.event.events.MarkerSpawnEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.plane.controller.PlayerController;
+import com.mygdx.pixelpilot.plane.shooty.projectile.projectiles.Projectile;
 import com.mygdx.pixelpilot.util.quadtree.Quadtree;
 import com.mygdx.pixelpilot.util.quadtree.QuadtreeCallback;
-import com.mygdx.pixelpilot.effect.background.theme.BackdropFactory;
-import com.mygdx.pixelpilot.effect.background.theme.BackdropTheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +39,9 @@ public class World extends Stage implements Listener {
     private GameCamera camera;
     private int width, height;
     private Quadtree storage;
+
+    private final int PLANE_LAYER = 2;
+    private final int BULLET_LAYER = 1;
 
     public World(int width, int height) {
         super(new ExtendViewport(Config.NativeView.width, Config.NativeView.height));
@@ -95,11 +101,23 @@ public class World extends Stage implements Listener {
         return storage.get(box, cb);
     }
 
+    public Quadtree getStorage() {
+        return storage;
+    }
+
     private void addPlane(Plane plane, Vector2 spawnPos) {
         plane.setPosition(spawnPos.x, spawnPos.y);
         this.addActor(plane);
+        plane.toFront();
         storage.insert(plane);
         planes.add(plane);
+    }
+
+    private void addProjectile(Projectile projectile) {
+
+        this.addActor(projectile);
+        projectile.toBack();
+        storage.insert(projectile);
     }
 
     @EventHandler
@@ -119,12 +137,23 @@ public class World extends Stage implements Listener {
     }
 
     @EventHandler
-    public void onAIDeath(AIDeathEvent event){
-        //TODO Remove from quadtree
+    public void onAIDeath(AIDeathEvent event) {
         Plane plane = event.getPlane();
         storage.remove(plane);
         planes.remove(plane);
         plane.remove();
+    }
+
+    @EventHandler
+    public void onWeaponFire(WeaponFireEvent event) {
+        addProjectile(event.getProjectile());
+    }
+
+    @EventHandler
+    public void onProjectileExpire(ProjectileExpirationEvent event) {
+        Projectile p = event.getProjectile();
+        storage.remove(p);
+        p.remove();
     }
 
 }

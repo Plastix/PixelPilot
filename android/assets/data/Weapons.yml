@@ -1,13 +1,21 @@
-  - name: Single Shot
-    damage: 10
-    reloadTimeSeconds: 0.5
-    lifespanSeconds: 2
-    spritePath: /path/to/sprite
-    weight: 15
+- name: Single Shot Standard
+  weaponType: SingleShotWeapon
+  projectileType: StandardBullet
+  reloadTime: 200
+  weight: 15
 
-  - name: Double Shot
-    damage: 20
-    reloadTimeSeconds: 0.8
-    lifespanSeconds: 2
-    spritePath: /path/to/sprite
-    weight: 30
+- name: Three Shot Standard
+  weaponType: MultiShotWeapon
+  weaponProperties:
+    numShots: 3
+  projectileType: StandardBullet
+  reloadTime: 800
+  weight: 30
+
+- name: Six Shot Standard
+  weaponType: MultiShotWeapon
+  weaponProperties:
+    numShots: 6
+  projectileType: StandardBullet
+  reloadTime: 1000
+  weight: 45

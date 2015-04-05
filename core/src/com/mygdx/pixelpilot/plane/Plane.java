@@ -1,6 +1,7 @@
 package com.mygdx.pixelpilot.plane;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -10,15 +11,18 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
-import com.mygdx.pixelpilot.event.Events;
-import com.mygdx.pixelpilot.event.events.WeaponFireEvent;
 import com.mygdx.pixelpilot.plane.controller.Controller;
+import com.mygdx.pixelpilot.plane.shooty.weapon.utils.InstalledWeaponDefinition;
+import com.mygdx.pixelpilot.plane.shooty.weapon.weapons.Weapon;
 import com.mygdx.pixelpilot.util.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Plane extends SteerableActor {
 
     private PlaneDefinition def;
-    private Weapon weapon;
+    private List<Weapon> weapons;
     private Controller controller;
     private Sprite sprite;
     private Sprite shadow;
@@ -28,15 +32,20 @@ public class Plane extends SteerableActor {
     private int health;
     private boolean isOnFire;
 
-    public Plane(final PlaneDefinition def, WeaponDefinition weaponDefinition, Controller controller) {
+    public Plane(final PlaneDefinition def, List<InstalledWeaponDefinition> weaponDefs, Controller controller) {
 
         this.controller = controller;
         this.def = def;
-        this.weapon = new Weapon(weaponDefinition);
+//        this.weapon = new MultishotWeapon(this);
 
         setMaxLinearAcceleration(200);
         setMaxAngularSpeed(5);
         setMaxAngularAcceleration(10);
+
+        this.weapons = new ArrayList<Weapon>();
+        for (InstalledWeaponDefinition weaponDef : weaponDefs) {
+            this.weapons.add(weaponDef.create(this));
+        }
 
         this.positionVector = new Vector2(0,0);
 
@@ -178,8 +187,17 @@ public class Plane extends SteerableActor {
         return health < 0;
     }
 
+    public void shoot(Steerable<Vector2> target) {
+        for (Weapon weapon : weapons) {
+            if(this.getPosition().dst(target.getPosition()) < weapon.getRange())
+                weapon.fire(target);
+        }
+    }
+
     public void shoot() {
-        Events.emit(new WeaponFireEvent(weapon), this);
+        for (Weapon weapon : weapons) {
+            weapon.fire();
+        }
     }
 
     public Color getMarkerColor(){
@@ -205,4 +223,7 @@ public class Plane extends SteerableActor {
         return "Plane with " + def + " body and " + controller;
     }
 
+    public Weapon getWeapon() {
+        return null;
+    }
 }

@@ -63,6 +63,9 @@ public class PlayerController extends Controller {
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
             plane.turn(-turnAmount);
         }
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isTouched()){
+            plane.shoot();
+        }
 
         if(Gdx.input.isKeyPressed(Input.Keys.V)){
             plane.hit();

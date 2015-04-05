@@ -25,7 +25,7 @@ public class CampaignGameScreen extends GameScreen implements Listener {
 //        Plane plane = PlaneFactory.build(GameData.planePresets.get(0));
 //        Events.emit(new AISpawnEvent(plane), this);
 
-        spawnWave();
+        spawnWave(1);
 
     }
 

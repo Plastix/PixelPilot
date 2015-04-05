@@ -2,6 +2,9 @@ package com.mygdx.pixelpilot.plane;
 
 
 import com.badlogic.gdx.graphics.Color;
+import com.mygdx.pixelpilot.plane.shooty.weapon.utils.WeaponSlot;
+
+import java.util.List;
 
 public class PlaneDefinition {
 
@@ -11,6 +14,7 @@ public class PlaneDefinition {
     public int minTurnRadius;
     public String spritePath;
     public Color markerColor;
+    public List<WeaponSlot> weaponSlots;
 
     @Override
     public String toString(){
