@@ -55,7 +55,7 @@ public abstract class Projectile<T extends Projectile> extends SteerableActor {
         setPosition(getX() + velocityX, getY() + velocityY);
         sprite.setPosition(getX(), getY());
         if (System.currentTimeMillis() - spawnTime > lifespan) {
-            Events.emit(new ProjectileExpirationEvent(this), this);
+            Events.getBus().publish(new ProjectileExpirationEvent(this));
             free(pool);
         }
     }

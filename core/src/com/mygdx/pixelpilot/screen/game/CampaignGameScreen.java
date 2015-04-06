@@ -8,15 +8,17 @@ import com.mygdx.pixelpilot.event.events.game.WaveSpawnEvent;
 import com.mygdx.pixelpilot.event.events.ai.AISpawnEvent;
 import com.mygdx.pixelpilot.plane.*;
 import com.mygdx.pixelpilot.plane.controller.AIController;
+import net.engio.mbassy.listener.Handler;
 
 import java.util.List;
 
-public class CampaignGameScreen extends GameScreen implements Listener {
+public class CampaignGameScreen extends GameScreen {
 
     private int currentLevel;
     private int currentWave;
 
     public CampaignGameScreen() {
+
         currentLevel = 0;
         currentWave = 0;
 
@@ -29,11 +31,11 @@ public class CampaignGameScreen extends GameScreen implements Listener {
         Level level = GameData.levels.get(currentLevel);
         List<Wave> waves = level.waves;
         Wave wave = waves.get(currentWave);
-        Events.emit(new WaveSpawnEvent(wave), this);
+        Events.getBus().publish(new WaveSpawnEvent(wave));
 
         for(PlanePreset preset : wave.enemies) {
             Plane plane = PlaneFactory.build(preset);
-            Events.emit(new AISpawnEvent(plane), this);
+            Events.getBus().publish(new AISpawnEvent(plane));
         }
 
         currentWave++;
@@ -48,15 +50,15 @@ public class CampaignGameScreen extends GameScreen implements Listener {
         Level level = GameData.levels.get(currentLevel);
         List<Wave> waves = level.waves;
         Wave wave = waves.get(currentWave);
-        Events.emit(new WaveSpawnEvent(wave), this);
+        Events.getBus().publish(new WaveSpawnEvent(wave));
         PlanePreset preset = wave.enemies.get(0);
         for (int i = 0; i < numberOfPlanes; i++) {
             Plane plane = PlaneFactory.build(preset);
-            Events.emit(new AISpawnEvent(plane), this);
+            Events.getBus().publish(new AISpawnEvent(plane));
         }
     }
 
-    @EventHandler
+    @Handler
     public void handleEnemyPlaneSpawn(AISpawnEvent event){
         ((AIController)event.getPlane().getController()).setWorld(world);
     }

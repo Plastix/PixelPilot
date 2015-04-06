@@ -7,7 +7,10 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.pixelpilot.event.Events;
+import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.util.Utils;
+import net.engio.mbassy.listener.Handler;
 
 public class TrackingCamera extends OrthographicCamera {
 
@@ -22,6 +25,7 @@ public class TrackingCamera extends OrthographicCamera {
         this.worldBounds = new Rectangle();
         this.interpolator = Interpolation.linear;
         this.viewportBounds = new Rectangle();
+        Events.getBus().subscribe(this);
     }
 
     public void track(Actor target) {
@@ -118,5 +122,10 @@ public class TrackingCamera extends OrthographicCamera {
         } else {
             currPos.y = interpolator.apply(currPos.y, targetY, baseTrackSpeed);
         }
+    }
+
+    @Handler
+    public void onPlaneSpawn(PlayerSpawnEvent event) {
+        track(event.getPlane());
     }
 }

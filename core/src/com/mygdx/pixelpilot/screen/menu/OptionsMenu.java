@@ -53,7 +53,7 @@ public class OptionsMenu extends Menu {
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Events.emit(new MenuCloseEvent(), this);
+                Events.getBus().publish(new MenuCloseEvent());
             }
         });
         table.add(back);

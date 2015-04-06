@@ -32,7 +32,7 @@ public abstract class Marker<T extends Actor> extends Actor {
         this.sprite.setOriginCenter();
 
         //World listens to this event and sets the Marker's camera to the world camera
-        Events.emit(new MarkerSpawnEvent(this), this);
+        Events.getBus().publish(new MarkerSpawnEvent(this));
     }
 
     protected abstract Sprite createSprite();

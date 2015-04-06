@@ -221,7 +221,7 @@ public class BasicAIController extends AIController {
                                 Actions.run(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Events.emit(new AIDeathEvent(controller.plane), this);
+                                        Events.getBus().publish(new AIDeathEvent(controller.plane));
                                     }
                                 })
                         ));

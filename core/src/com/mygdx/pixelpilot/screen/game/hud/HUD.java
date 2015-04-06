@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -17,9 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.data.Config;
-import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
-import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.events.ai.AISpawnEvent;
 import com.mygdx.pixelpilot.event.events.game.GamePauseEvent;
 import com.mygdx.pixelpilot.event.events.game.GameResumeEvent;
@@ -28,10 +25,11 @@ import com.mygdx.pixelpilot.event.events.screen.MenuOpenEvent;
 import com.mygdx.pixelpilot.screen.menu.PauseMenu;
 import com.mygdx.pixelpilot.screen.ui.ShadowImage;
 import com.mygdx.pixelpilot.screen.ui.ShadowImageButton;
+import net.engio.mbassy.listener.Handler;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
-public class HUD extends Stage implements Listener {
+public class HUD extends Stage {
 
     private Table table;
     private Label lives;
@@ -47,7 +45,7 @@ public class HUD extends Stage implements Listener {
     public HUD(){
         super(new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera()));
         Gdx.input.setInputProcessor(this);
-        Events.register(this);
+        Events.getBus().subscribe(this);
 
         table = new Table();
         table.setFillParent(true);
@@ -81,8 +79,8 @@ public class HUD extends Stage implements Listener {
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Events.emit(new MenuOpenEvent(new PauseMenu()), this);
-                Events.emit(new GamePauseEvent(), this);
+                Events.getBus().publish(new MenuOpenEvent(new PauseMenu()));
+                Events.getBus().publish(new GamePauseEvent());
             }
         });
 
@@ -108,7 +106,7 @@ public class HUD extends Stage implements Listener {
         table.add(pauseButton).size(50,50).right().pad(10).expandX();
     }
 
-    @EventHandler
+    @Handler
     public void onWaveSpawn(WaveSpawnEvent event){
         String message = event.getWave().message;
 
@@ -142,15 +140,15 @@ public class HUD extends Stage implements Listener {
 
     }
 
-    @EventHandler
+    @Handler
     public void onAISpawn(AISpawnEvent event){
         PlaneMarker marker = new PlaneMarker(event.getPlane());
         marker.setZIndex(MARKER_LAYER);
         this.addActor(marker);
     }
 
-    @EventHandler
-    public void onResume(GameResumeEvent event){
+    @Handler
+    public void onResume(GameResumeEvent event) {
         Gdx.input.setInputProcessor(this);
     }
 

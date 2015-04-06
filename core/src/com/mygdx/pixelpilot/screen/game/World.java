@@ -11,9 +11,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.effect.background.theme.BackdropFactory;
 import com.mygdx.pixelpilot.effect.background.theme.BackdropTheme;
-import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
-import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.events.ProjectileExpirationEvent;
 import com.mygdx.pixelpilot.event.events.WeaponFireEvent;
 import com.mygdx.pixelpilot.event.events.ai.AIDeathEvent;
@@ -25,12 +23,13 @@ import com.mygdx.pixelpilot.plane.controller.PlayerController;
 import com.mygdx.pixelpilot.plane.armaments.projectile.projectiles.Projectile;
 import com.mygdx.pixelpilot.util.quadtree.Quadtree;
 import com.mygdx.pixelpilot.util.quadtree.QuadtreeCallback;
+import net.engio.mbassy.listener.Handler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class World extends Stage implements Listener {
+public class World extends Stage {
 
     private final Rectangle bounds;
     private Actor backdrop;
@@ -55,8 +54,7 @@ public class World extends Stage implements Listener {
         //We need to update the viewport after giving it a new camera
         this.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         this.storage = new Quadtree(0, 0, width, height);
-
-        Events.register(this);
+        Events.getBus().subscribe(this);
 //        clouds = Cloud.generateClouds(150); // static for now
         planes = new ArrayList<Plane>();
         createBackdrop();
@@ -120,23 +118,23 @@ public class World extends Stage implements Listener {
         storage.insert(projectile);
     }
 
-    @EventHandler
+    @Handler
     public void onPlaneSpawn(AISpawnEvent event) {
         addPlane(event.getPlane(), getNewSpawnPosition());
     }
 
-    @EventHandler
+    @Handler
     public void onPlayerSpawn(PlayerSpawnEvent event) {
         addPlane(event.getPlane(), getNewSpawnPosition());
         ((PlayerController) (event.getPlane().getController())).setWorld(this);
     }
 
-    @EventHandler
+    @Handler
     public void onMarkerSpawn(MarkerSpawnEvent event) {
         event.getMarker().setCamera(camera);
     }
 
-    @EventHandler
+    @Handler
     public void onAIDeath(AIDeathEvent event) {
         Plane plane = event.getPlane();
         storage.remove(plane);
@@ -144,16 +142,15 @@ public class World extends Stage implements Listener {
         plane.remove();
     }
 
-    @EventHandler
+    @Handler
     public void onWeaponFire(WeaponFireEvent event) {
         addProjectile(event.getProjectile());
     }
 
-    @EventHandler
+    @Handler
     public void onProjectileExpire(ProjectileExpirationEvent event) {
         Projectile p = event.getProjectile();
         storage.remove(p);
         p.remove();
     }
-
 }

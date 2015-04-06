@@ -62,8 +62,8 @@ public class PauseMenu extends Menu {
         resume.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Events.emit(new MenuCloseEvent(), this);
-                Events.emit(new GameResumeEvent(), this);
+                Events.getBus().publish(new MenuCloseEvent());
+                Events.getBus().publish(new GameResumeEvent());
             }
         });
         table.add(resume).size(150, 150).right().padRight(25);
@@ -96,7 +96,7 @@ public class PauseMenu extends Menu {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("Options!");
-                Events.emit(new MenuOpenEvent(new OptionsMenu()), this);
+                Events.getBus().publish(new MenuOpenEvent(new OptionsMenu()));
             }
         });
         table.add(options).size(100, 100).right();
@@ -113,8 +113,8 @@ public class PauseMenu extends Menu {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("Menu!");
-                Events.emit(new ScreenChangeEvent(new MenuScreen()), this);
-                Events.emit(new MenuOpenEvent(new MainMenu()), this);
+                Events.getBus().publish(new ScreenChangeEvent(new MenuScreen()));
+                Events.getBus().publish(new MenuOpenEvent(new MainMenu()));
             }
         });
         table.add(menu).size(100, 100).left();

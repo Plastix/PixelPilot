@@ -83,6 +83,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.esotericsoftware.yamlbeans:yamlbeans:1.09"
+        compile "net.engio:mbassador:1.2.1"
     }
 }
 

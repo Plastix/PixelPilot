@@ -1,20 +1,19 @@
 package com.mygdx.pixelpilot.screen.game;
 
-import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
-import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.events.game.GamePauseEvent;
 import com.mygdx.pixelpilot.event.events.game.GameResumeEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
+import net.engio.mbassy.listener.Handler;
 
-public class GameCamera extends TrackingCamera implements Listener {
+public class GameCamera extends TrackingCamera {
 
     private boolean isPaused;
 
     public GameCamera() {
         super();
         isPaused = false;
-        Events.register(this);
+        Events.getBus().subscribe(this);
     }
 
     @Override
@@ -24,17 +23,17 @@ public class GameCamera extends TrackingCamera implements Listener {
         }
     }
 
-    @EventHandler
+    @Handler
     public void onPause(GamePauseEvent event){
         this.isPaused = true;
     }
 
-    @EventHandler
+    @Handler
     public void onResume(GameResumeEvent event){
         this.isPaused = false;
     }
 
-    @EventHandler
+    @Handler
     public void onPlaneSpawn(PlayerSpawnEvent event) {
         this.track(event.getPlane());
     }

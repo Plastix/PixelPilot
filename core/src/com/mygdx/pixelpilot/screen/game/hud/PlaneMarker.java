@@ -3,13 +3,12 @@ package com.mygdx.pixelpilot.screen.game.hud;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.pixelpilot.data.Assets;
-import com.mygdx.pixelpilot.event.EventHandler;
-import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.events.ai.AIDeathEvent;
 import com.mygdx.pixelpilot.plane.Plane;
+import net.engio.mbassy.listener.Handler;
 
 
-public class PlaneMarker extends Marker<Plane> implements Listener {
+public class PlaneMarker extends Marker<Plane> {
 
     public PlaneMarker(Plane target) {
         super(target);
@@ -24,7 +23,7 @@ public class PlaneMarker extends Marker<Plane> implements Listener {
         return sprite;
     }
 
-    @EventHandler
+    @Handler
     public void onAIDeath(AIDeathEvent event) {
         if(event.getPlane().equals(this.target)) {
             this.target = null;

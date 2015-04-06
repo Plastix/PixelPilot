@@ -12,9 +12,9 @@ import com.mygdx.pixelpilot.data.YamlParser;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.screen.MenuOpenEvent;
 import com.mygdx.pixelpilot.event.events.screen.ScreenChangeEvent;
+import com.mygdx.pixelpilot.plane.armaments.projectile.utils.ProjectileFactory;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponFactory;
 import com.mygdx.pixelpilot.plane.controller.ControllerFactory;
-import com.mygdx.pixelpilot.plane.shooty.projectile.utils.ProjectileFactory;
-import com.mygdx.pixelpilot.plane.shooty.weapon.utils.WeaponFactory;
 import com.mygdx.pixelpilot.screen.menu.MainMenu;
 import com.mygdx.pixelpilot.screen.menu.MenuScreen;
 
@@ -47,8 +47,8 @@ public class SplashScreen implements Screen {
 
         //If all the assets are done loading switch to the main menu
         if(Assets.update()){
-            Events.emit(new ScreenChangeEvent(new MenuScreen()), this);
-            Events.emit(new MenuOpenEvent(new MainMenu()), this);
+            Events.getBus().publish(new ScreenChangeEvent(new MenuScreen()));
+            Events.getBus().publish(new MenuOpenEvent(new MainMenu()));
         }
     }
 

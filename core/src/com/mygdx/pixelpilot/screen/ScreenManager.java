@@ -3,30 +3,29 @@ package com.mygdx.pixelpilot.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
-import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.events.screen.MenuCloseEvent;
 import com.mygdx.pixelpilot.event.events.screen.MenuOpenEvent;
 import com.mygdx.pixelpilot.event.events.screen.ScreenChangeEvent;
 import com.mygdx.pixelpilot.screen.menu.Menu;
+import net.engio.mbassy.listener.Handler;
 
 import java.util.Stack;
 
-public class ScreenManager implements Screen, Listener {
+public class ScreenManager implements Screen {
 
     private Screen currentScreen;
     private final Stack<Menu> menuStack;
 
     public ScreenManager() {
         this.menuStack = new Stack<Menu>();
-        Events.register(this);
+        Events.getBus().subscribe(this);
 
         this.currentScreen = new SplashScreen();
 //        Events.emit(new MenuOpenEvent(new MainMenu()), this);
     }
 
-    @EventHandler
+    @Handler
     public void onScreenChange(ScreenChangeEvent event){
         currentScreen.dispose();
         for(Menu menu : menuStack){
@@ -36,13 +35,13 @@ public class ScreenManager implements Screen, Listener {
         this.currentScreen = event.getNewScreen();
     }
 
-    @EventHandler
+    @Handler
     public void onMenuOpen(MenuOpenEvent event){
         this.menuStack.push(event.getMenu());
         Gdx.input.setInputProcessor(event.getMenu());
     }
 
-    @EventHandler
+    @Handler
     public void onMenuClose(MenuCloseEvent event){
         Menu closed = menuStack.pop();
         closed.dispose();

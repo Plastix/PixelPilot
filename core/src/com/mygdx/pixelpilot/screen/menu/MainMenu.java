@@ -85,7 +85,7 @@ public class MainMenu extends Menu {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("Play clicked!");
-                Events.emit(new ScreenChangeEvent(new CampaignGameScreen()), this);
+                Events.getBus().publish(new ScreenChangeEvent(new CampaignGameScreen()));
 //                slideButtonsOutAndTransitionTo(new CampaignGameScreen());
             }
         });
@@ -104,7 +104,7 @@ public class MainMenu extends Menu {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("Options clicked!");
-                Events.emit(new MenuOpenEvent(new OptionsMenu()), this);
+                Events.getBus().publish(new MenuOpenEvent(new OptionsMenu()));
             }
         });
         buttonTable.add(settings).size(100, 100).left().pad(10).bottom();
@@ -183,7 +183,7 @@ public class MainMenu extends Menu {
                         Actions.run(new Runnable() {
                             @Override
                             public void run() {
-                                Events.emit(new ScreenChangeEvent(next), this);
+                                Events.getBus().publish(new ScreenChangeEvent(next));
                             }
                         })
                 ));

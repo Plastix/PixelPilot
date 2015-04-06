@@ -41,7 +41,7 @@ public abstract class Weapon {
     protected abstract void buildAndLaunchProjectiles();
 
     protected void launch(Projectile p){
-        Events.emit(new WeaponFireEvent(p), this);
+        Events.getBus().publish(new WeaponFireEvent(p));
     }
 
     public boolean canFire() {
