@@ -13,7 +13,7 @@ import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.ai.AIDeathEvent;
 import com.mygdx.pixelpilot.event.events.ai.AISpawnEvent;
-import com.mygdx.pixelpilot.event.events.PlaneMarkerSpawnEvent;
+import com.mygdx.pixelpilot.event.events.MarkerSpawnEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.plane.controller.PlayerController;
@@ -109,8 +109,8 @@ public class World extends Stage implements Listener {
     }
 
     @EventHandler
-    public void onPlayerMarkerSpawn(PlaneMarkerSpawnEvent event) {
-        event.getPlaneMarker().setCamera(camera);
+    public void onMarkerSpawn(MarkerSpawnEvent event) {
+        event.getMarker().setCamera(camera);
     }
 
     @EventHandler

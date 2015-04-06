@@ -138,10 +138,9 @@ public class HUD extends Stage implements Listener {
     }
 
     @EventHandler
-    public void onPlaneSpawn(AISpawnEvent event){
+    public void onAISpawn(AISpawnEvent event){
         PlaneMarker marker = new PlaneMarker(event.getPlane());
         marker.setZIndex(MARKER_LAYER);
         this.addActor(marker);
     }
-
 }
