@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.1'
+        classpath 'com.android.tools.build:gradle:1.1.1'
         classpath 'org.robovm:robovm-gradle-plugin:1.0.0-beta-03'
     }
 }
@@ -17,7 +17,7 @@ allprojects {
         appName = 'Pixel Pilot'
         gdxVersion = '1.5.5'
         roboVMVersion = '1.0.0-beta-03'
-        aiVersion = '1.4.0'
+        aiVersion = '1.5.0'
     }
 
     repositories {
