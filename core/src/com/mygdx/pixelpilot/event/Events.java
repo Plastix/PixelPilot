@@ -1,8 +1,9 @@
 package com.mygdx.pixelpilot.event;
 
 import com.mygdx.pixelpilot.event.events.GameEvent;
+
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +15,11 @@ public class Events {
 
     private static class MethodInfo {
         Method method;
-        Listener object;
+        WeakReference<Listener> object;
         Class type;
         MethodInfo(Listener o, Method m, Class t){
             method = m;
-            object = o;
+            object = new WeakReference<Listener>(o);
             type = t;
         }
     }
@@ -59,7 +60,15 @@ public class Events {
             for (MethodInfo m : methodInfos) {
                 try {
                     if (m.type.equals(eventType)) {
-                        m.method.invoke(m.object, event);
+                        Listener listener = m.object.get();
+                        //Make sure our weak reference exists before invoking
+                        if(listener != null) {
+                            m.method.invoke(listener, event);
+                        }else{
+                            //If our reference is gone it means our listener got gc'd
+                            //So remove the methodInfo from the list
+                            methodInfos.remove(m);
+                        }
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
