@@ -53,6 +53,7 @@ public class Quadtree extends Node<SteerableActor> {
 
     @Override
     public void remove(SteerableActor actor) {
+        if(outsiders.removeValue(actor, true)) return;
         root.remove(actor);
     }
 
