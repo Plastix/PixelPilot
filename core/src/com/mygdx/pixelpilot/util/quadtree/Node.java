@@ -2,6 +2,7 @@ package com.mygdx.pixelpilot.util.quadtree;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.pixelpilot.plane.SteerableActor;
 
 abstract class Node<T> {
     Rectangle bounds;
@@ -23,4 +24,6 @@ abstract class Node<T> {
 
     public abstract int get(Rectangle box, QuadtreeCallback cb);
 
+    public void remove(T actor) {
+    }
 }

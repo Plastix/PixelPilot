@@ -51,6 +51,11 @@ public class Quadtree extends Node<SteerableActor> {
         outsiders.add(s);
     }
 
+    @Override
+    public void remove(SteerableActor actor) {
+        root.remove(actor);
+    }
+
     // debug
     public void draw(Camera cam) {
         Gdx.gl.glLineWidth(2);

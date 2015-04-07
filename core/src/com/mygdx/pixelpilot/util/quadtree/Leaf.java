@@ -137,6 +137,14 @@ class Leaf extends Node<SteerableActor> {
         return count;
     }
 
+    @Override
+    public void remove(SteerableActor actor) {
+        if(!data.removeValue(actor, true)){
+            for(Leaf child : children)
+                child.remove(actor);
+        }
+    }
+
     // todo: remove array
     private Array<SteerableActor> getAllData() {
         Array<SteerableActor> allData = arrayPool.obtain();
