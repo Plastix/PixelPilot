@@ -1,8 +1,11 @@
 package com.mygdx.pixelpilot.plane;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -19,8 +22,11 @@ public class Plane extends SteerableActor {
     private Controller controller;
     private Sprite sprite;
     private Sprite shadow;
+    private ParticleEffect smoke;
+    private ParticleEffect fire;
 
     private int health;
+    private boolean isOnFire;
 
     public Plane(final PlaneDefinition def, WeaponDefinition weaponDefinition, Controller controller) {
 
@@ -54,6 +60,8 @@ public class Plane extends SteerableActor {
         setRotation(-90);
 
         health = 100;
+
+        initializeParticles();
     }
 
     @Override
@@ -70,6 +78,15 @@ public class Plane extends SteerableActor {
         this.shadow.setPosition(positionVector.x - shadow.getWidth() / 2, positionVector.y - 20 - shadow.getHeight() / 2);
         this.sprite.setRotation(this.getRotation());
         this.shadow.setRotation(this.getRotation());
+
+        //Update the particle emitter
+        this.smoke.setPosition(positionVector.x, positionVector.y);
+        this.smoke.update(delta);
+
+        if(isOnFire) {
+            this.fire.setPosition(positionVector.x, positionVector.y);
+            this.fire.update(delta);
+        }
 
         // keep the actor's position in sync with the position vector
         this.setPosition(positionVector.x, positionVector.y);
@@ -92,6 +109,14 @@ public class Plane extends SteerableActor {
         super.draw(batch, parentAlpha);
         shadow.draw(batch, parentAlpha);
         sprite.draw(batch, parentAlpha);
+
+        //Draw the emitter and its particles
+        //Effects draw is overloaded but expects a delta time not a parelAlpha!
+        //Do not pass parentAlpha into smoke's draw!
+        smoke.draw(batch);
+        if(isOnFire) {
+            fire.draw(batch);
+        }
     }
 
     /**
@@ -107,6 +132,46 @@ public class Plane extends SteerableActor {
         linearVelocity.rotate(turnAng);
         setRotation(linearVelocity.angle() - 90);
         angularVel = linearVelocity.angleRad() - prevAngle;
+    }
+
+    /**
+     * No need to call effect.start() because these effects are continuous
+     */
+    private void initializeParticles(){
+        //Create the plane trail particle smoke
+        this.smoke = new ParticleEffect();
+        this.smoke.load(Gdx.files.internal("data/particle/trail"), Gdx.files.internal("image"));
+
+        //Create the fire particles
+        this.fire = new ParticleEffect();
+        this.fire.load(Gdx.files.internal("data/particle/fire"), Gdx.files.internal("image"));
+        this.isOnFire = false;
+    }
+
+    private void updateParticleTrail() {
+        ParticleEmitter emitter = this.smoke.findEmitter("trail");
+        if(emitter != null) {
+
+            //Darker smoke nearer to death
+            float chan = Utils.map(health, 0, 100, 0.2f, 1);
+            float[] colors = {chan, chan, chan};
+            emitter.getTint().setColors(colors);
+
+            //Makes the trails "puffier" nearer to death
+            emitter.getScale().setHigh(Utils.map(health, 0, 100, 5, 20), Utils.map(health, 0, 100, 35, 20));
+        }
+        if(health < 15){
+            //Render the fire particle effect in draw
+            isOnFire = true;
+        }
+    }
+
+    public void hit(){
+        //TODO simulating taking damage
+        this.health-=1;
+        if(health > 0) {
+            updateParticleTrail();
+        }
     }
 
     public boolean isDead(){

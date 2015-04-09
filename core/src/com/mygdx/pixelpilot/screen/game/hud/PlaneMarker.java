@@ -13,7 +13,6 @@ import com.mygdx.pixelpilot.event.EventHandler;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.Listener;
 import com.mygdx.pixelpilot.event.events.ai.AIDeathEvent;
-import com.mygdx.pixelpilot.event.events.player.PlayerDeathEvent;
 import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.event.events.PlaneMarkerSpawnEvent;
 import com.mygdx.pixelpilot.util.Utils;
