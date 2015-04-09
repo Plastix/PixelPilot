@@ -35,18 +35,19 @@ public class HUD extends Stage implements Listener {
     private ShadowImage scoreIcon;
     private Label score;
     private ShadowImageButton pauseButton;
-    private Group marker;
+
+    private final int MARKER_LAYER = 0;
+    private final int UI_LAYER = 1;
+    private final int LABEL_LAYER = 2;
 
     public HUD(){
         this.setViewport(new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera()));
         Gdx.input.setInputProcessor(this);
         Events.register(this);
 
-        marker = new Group();
-        this.addActor(marker);
-
         table = new Table();
         table.setFillParent(true);
+        table.setZIndex(UI_LAYER);
         table.top().left();
         addHUDComponents();
 
@@ -118,6 +119,7 @@ public class HUD extends Stage implements Listener {
         generator.dispose();
 
         final Label label = new Label(message, style);
+        label.setZIndex(LABEL_LAYER);
         label.setPosition(Config.NativeView.width / 2, Config.NativeView.height / 2, Align.center);
         this.addActor(label);
 
@@ -137,7 +139,9 @@ public class HUD extends Stage implements Listener {
 
     @EventHandler
     public void onPlaneSpawn(AISpawnEvent event){
-        this.marker.addActor(new PlaneMarker(event.getPlane()));
+        PlaneMarker marker = new PlaneMarker(event.getPlane());
+        marker.setZIndex(MARKER_LAYER);
+        this.addActor(marker);
     }
 
 }
