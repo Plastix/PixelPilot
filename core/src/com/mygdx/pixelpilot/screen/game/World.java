@@ -70,7 +70,7 @@ public class World extends Stage implements Listener {
         super.draw();
         getRoot().setCullingArea(camera.getViewportBounds());
         storage.update(); // gotta be a better place to put this...
-        storage.draw(camera);
+//        storage.draw(camera);
     }
 
     /**
