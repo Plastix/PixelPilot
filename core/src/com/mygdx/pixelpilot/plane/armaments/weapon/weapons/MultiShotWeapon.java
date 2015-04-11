@@ -1,9 +1,9 @@
-package com.mygdx.pixelpilot.plane.shooty.weapon.weapons;
+package com.mygdx.pixelpilot.plane.armaments.weapon.weapons;
 
 import com.mygdx.pixelpilot.plane.Plane;
-import com.mygdx.pixelpilot.plane.shooty.projectile.projectiles.Projectile;
-import com.mygdx.pixelpilot.plane.shooty.projectile.utils.ProjectileFactory;
-import com.mygdx.pixelpilot.plane.shooty.weapon.utils.WeaponDefinition;
+import com.mygdx.pixelpilot.plane.armaments.projectile.projectiles.Projectile;
+import com.mygdx.pixelpilot.plane.armaments.projectile.utils.ProjectileFactory;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponDefinition;
 import com.mygdx.pixelpilot.util.Utils;
 
 public class MultiShotWeapon extends Weapon {

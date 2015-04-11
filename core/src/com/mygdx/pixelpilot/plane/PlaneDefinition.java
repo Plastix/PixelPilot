@@ -2,7 +2,7 @@ package com.mygdx.pixelpilot.plane;
 
 
 import com.badlogic.gdx.graphics.Color;
-import com.mygdx.pixelpilot.plane.shooty.weapon.utils.WeaponSlot;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponSlot;
 
 import java.util.List;
 

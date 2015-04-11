@@ -1,4 +1,4 @@
-package com.mygdx.pixelpilot.plane.shooty.projectile.projectiles;
+package com.mygdx.pixelpilot.plane.armaments.projectile.projectiles;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;

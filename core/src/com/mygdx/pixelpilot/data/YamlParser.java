@@ -12,10 +12,10 @@ import com.mygdx.pixelpilot.data.serialize.*;
 import com.mygdx.pixelpilot.effect.background.theme.BackdropTheme;
 import com.mygdx.pixelpilot.plane.PlaneDefinition;
 import com.mygdx.pixelpilot.plane.PlanePreset;
-import com.mygdx.pixelpilot.plane.shooty.weapon.utils.WeaponSlot;
-import com.mygdx.pixelpilot.plane.shooty.weapon.utils.InstalledWeaponDefinition;
-import com.mygdx.pixelpilot.plane.shooty.weapon.utils.WeaponDefinition;
-import com.mygdx.pixelpilot.plane.shooty.weapon.utils.WeaponTypeContainer;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponSlot;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.InstalledWeaponDefinition;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponDefinition;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponTypeContainer;
 
 import java.io.Reader;
 import java.util.ArrayList;
@@ -76,7 +76,6 @@ public class YamlParser {
         try {
             Reader yamlFile = Gdx.files.internal(filePath).reader();
             YamlReader reader = new YamlReader(yamlFile, config);
-            System.out.println(type);
             ArrayList parsed = reader.read(ArrayList.class, type);
             return recastArray(parsed, type);
         } catch (YamlException e) {

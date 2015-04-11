@@ -1,9 +1,9 @@
-package com.mygdx.pixelpilot.plane.shooty.weapon.utils;
+package com.mygdx.pixelpilot.plane.armaments.weapon.utils;
 
 import com.mygdx.pixelpilot.plane.Plane;
-import com.mygdx.pixelpilot.plane.shooty.weapon.weapons.MultiShotWeapon;
-import com.mygdx.pixelpilot.plane.shooty.weapon.weapons.SingleShotWeapon;
-import com.mygdx.pixelpilot.plane.shooty.weapon.weapons.Weapon;
+import com.mygdx.pixelpilot.plane.armaments.weapon.weapons.MultiShotWeapon;
+import com.mygdx.pixelpilot.plane.armaments.weapon.weapons.SingleShotWeapon;
+import com.mygdx.pixelpilot.plane.armaments.weapon.weapons.Weapon;
 
 import java.util.HashMap;
 import java.util.Map;

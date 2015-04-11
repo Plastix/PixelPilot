@@ -1,7 +1,7 @@
-package com.mygdx.pixelpilot.plane.shooty.weapon.utils;
+package com.mygdx.pixelpilot.plane.armaments.weapon.utils;
 
 import com.mygdx.pixelpilot.plane.Plane;
-import com.mygdx.pixelpilot.plane.shooty.weapon.weapons.Weapon;
+import com.mygdx.pixelpilot.plane.armaments.weapon.weapons.Weapon;
 
 /**
  * A pairing of WeaponDefinition and WeaponSlot

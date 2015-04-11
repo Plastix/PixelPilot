@@ -1,8 +1,8 @@
-package com.mygdx.pixelpilot.plane.shooty.projectile.utils;
+package com.mygdx.pixelpilot.plane.armaments.projectile.utils;
 
-import com.mygdx.pixelpilot.plane.shooty.projectile.projectiles.TrackingBullet;
-import com.mygdx.pixelpilot.plane.shooty.projectile.projectiles.Projectile;
-import com.mygdx.pixelpilot.plane.shooty.projectile.projectiles.StandardBullet;
+import com.mygdx.pixelpilot.plane.armaments.projectile.projectiles.TrackingBullet;
+import com.mygdx.pixelpilot.plane.armaments.projectile.projectiles.Projectile;
+import com.mygdx.pixelpilot.plane.armaments.projectile.projectiles.StandardBullet;
 
 import java.util.HashMap;
 import java.util.Map;

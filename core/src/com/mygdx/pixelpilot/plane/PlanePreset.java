@@ -1,8 +1,8 @@
 package com.mygdx.pixelpilot.plane;
 
 import com.mygdx.pixelpilot.plane.controller.Controller;
-import com.mygdx.pixelpilot.plane.shooty.weapon.utils.WeaponSlot;
-import com.mygdx.pixelpilot.plane.shooty.weapon.utils.InstalledWeaponDefinition;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponSlot;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.InstalledWeaponDefinition;
 
 import java.util.List;
 

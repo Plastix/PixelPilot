@@ -3,7 +3,7 @@ package com.mygdx.pixelpilot.data;
 import com.mygdx.pixelpilot.data.level.Level;
 import com.mygdx.pixelpilot.plane.PlanePreset;
 import com.mygdx.pixelpilot.plane.PlaneDefinition;
-import com.mygdx.pixelpilot.plane.shooty.weapon.utils.WeaponDefinition;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponDefinition;
 
 import java.util.List;
 

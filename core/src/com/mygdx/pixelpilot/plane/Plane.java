@@ -12,8 +12,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.mygdx.pixelpilot.plane.controller.Controller;
-import com.mygdx.pixelpilot.plane.shooty.weapon.utils.InstalledWeaponDefinition;
-import com.mygdx.pixelpilot.plane.shooty.weapon.weapons.Weapon;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.InstalledWeaponDefinition;
+import com.mygdx.pixelpilot.plane.armaments.weapon.weapons.Weapon;
 import com.mygdx.pixelpilot.util.Utils;
 
 import java.util.ArrayList;
@@ -81,7 +81,10 @@ public class Plane extends SteerableActor {
         // (in case someone calls actor.setPosition)
         this.positionVector.set(getX(), getY());
 
+        float prevAngle = linearVelocity.angleRad();
         this.controller.control(this);
+        angularVel = linearVelocity.angleRad() - prevAngle;
+
         this.positionVector.add(linearVelocity);
         this.sprite.setPosition(positionVector.x - sprite.getWidth() / 2, positionVector.y - sprite.getHeight() / 2);
         this.shadow.setPosition(positionVector.x - shadow.getWidth() / 2, positionVector.y - 20 - shadow.getHeight() / 2);
@@ -133,14 +136,13 @@ public class Plane extends SteerableActor {
      * @param turnAmount amount to turn this frame, expects to be in range [-1, 1]
      */
     public void turn(float turnAmount) {
-        float prevAngle = linearVelocity.angleRad();
+
         // based on http://aviation.stackexchange.com/a/2872
         float minTurnRadiusAng = MathUtils.radDeg * linearVelocity.len() / def.minTurnRadius;
 
         float turnAng = Utils.map(turnAmount, -1f, 1f, -minTurnRadiusAng, minTurnRadiusAng);
         linearVelocity.rotate(turnAng);
         setRotation(linearVelocity.angle() - 90);
-        angularVel = linearVelocity.angleRad() - prevAngle;
     }
 
     /**
@@ -223,7 +225,7 @@ public class Plane extends SteerableActor {
         return "Plane with " + def + " body and " + controller;
     }
 
-    public Weapon getWeapon() {
-        return null;
+    public List<Weapon> getWeapons() {
+        return weapons;
     }
 }

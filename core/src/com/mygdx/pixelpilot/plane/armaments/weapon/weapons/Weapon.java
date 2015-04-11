@@ -1,4 +1,4 @@
-package com.mygdx.pixelpilot.plane.shooty.weapon.weapons;
+package com.mygdx.pixelpilot.plane.armaments.weapon.weapons;
 
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.math.MathUtils;
@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.WeaponFireEvent;
 import com.mygdx.pixelpilot.plane.Plane;
-import com.mygdx.pixelpilot.plane.shooty.weapon.utils.WeaponSlot;
-import com.mygdx.pixelpilot.plane.shooty.projectile.projectiles.Projectile;
-import com.mygdx.pixelpilot.plane.shooty.weapon.utils.WeaponDefinition;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponSlot;
+import com.mygdx.pixelpilot.plane.armaments.projectile.projectiles.Projectile;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponDefinition;
 
 public abstract class Weapon {
     protected Plane owner;
@@ -56,7 +56,7 @@ public abstract class Weapon {
         this.slot = slot;
     }
 
-    public float getX() {
+    protected float getX() {
         float theta = owner.getRotation();
         float px = slot.position.x;
         float py = slot.position.y;
@@ -65,13 +65,20 @@ public abstract class Weapon {
         return ox + xNew;
     }
 
-    public float getY() {
+    protected float getY() {
         float theta = owner.getRotation();
         float px = slot.position.x;
         float py = slot.position.y;
         float oy = owner.getY();
         float yNew = px * MathUtils.sinDeg(theta) + py * MathUtils.cosDeg(theta);
         return oy + yNew;
+    }
+
+    public float getRotation() {
+        float leadFactor = 6;
+        float theta = owner.getRotation();
+        theta += owner.getAngularVelocity() * MathUtils.radDeg * leadFactor;
+        return theta;
     }
 
 }

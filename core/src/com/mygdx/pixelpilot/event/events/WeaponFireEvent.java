@@ -1,6 +1,6 @@
 package com.mygdx.pixelpilot.event.events;
 
-import com.mygdx.pixelpilot.plane.shooty.projectile.projectiles.Projectile;
+import com.mygdx.pixelpilot.plane.armaments.projectile.projectiles.Projectile;
 
 public class WeaponFireEvent extends GameEvent {
     private Projectile weapon;

@@ -1,6 +1,6 @@
-package com.mygdx.pixelpilot.plane.shooty.weapon.utils;
+package com.mygdx.pixelpilot.plane.armaments.weapon.utils;
 
-import com.mygdx.pixelpilot.plane.shooty.projectile.projectiles.Projectile;
+import com.mygdx.pixelpilot.plane.armaments.projectile.projectiles.Projectile;
 
 import java.util.Map;
 

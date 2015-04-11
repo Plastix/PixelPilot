@@ -1,4 +1,4 @@
-package com.mygdx.pixelpilot.plane.shooty.weapon.utils;
+package com.mygdx.pixelpilot.plane.armaments.weapon.utils;
 
 import com.badlogic.gdx.math.Vector2;
 

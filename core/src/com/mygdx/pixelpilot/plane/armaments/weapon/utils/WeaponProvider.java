@@ -1,9 +1,9 @@
-package com.mygdx.pixelpilot.plane.shooty.weapon.utils;
+package com.mygdx.pixelpilot.plane.armaments.weapon.utils;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Pool;
 import com.mygdx.pixelpilot.plane.Plane;
-import com.mygdx.pixelpilot.plane.shooty.weapon.weapons.Weapon;
+import com.mygdx.pixelpilot.plane.armaments.weapon.weapons.Weapon;
 
 import java.util.HashMap;
 import java.util.Map;

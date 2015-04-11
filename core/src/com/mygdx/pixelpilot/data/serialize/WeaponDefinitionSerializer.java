@@ -3,7 +3,7 @@ package com.mygdx.pixelpilot.data.serialize;
 import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.scalar.ScalarSerializer;
 import com.mygdx.pixelpilot.data.GameData;
-import com.mygdx.pixelpilot.plane.shooty.weapon.utils.WeaponDefinition;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponDefinition;
 
 public class WeaponDefinitionSerializer implements ScalarSerializer<WeaponDefinition> {
 

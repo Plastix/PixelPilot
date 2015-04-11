@@ -1,7 +1,7 @@
-package com.mygdx.pixelpilot.plane.shooty.projectile.utils;
+package com.mygdx.pixelpilot.plane.armaments.projectile.utils;
 
 import com.badlogic.gdx.utils.Pool;
-import com.mygdx.pixelpilot.plane.shooty.projectile.projectiles.Projectile;
+import com.mygdx.pixelpilot.plane.armaments.projectile.projectiles.Projectile;
 
 /**
  * Manages a pool of Projectiles of type T

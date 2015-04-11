@@ -22,7 +22,7 @@ import com.mygdx.pixelpilot.event.events.MarkerSpawnEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.plane.controller.PlayerController;
-import com.mygdx.pixelpilot.plane.shooty.projectile.projectiles.Projectile;
+import com.mygdx.pixelpilot.plane.armaments.projectile.projectiles.Projectile;
 import com.mygdx.pixelpilot.util.quadtree.Quadtree;
 import com.mygdx.pixelpilot.util.quadtree.QuadtreeCallback;
 
