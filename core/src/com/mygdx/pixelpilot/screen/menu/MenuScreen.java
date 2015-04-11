@@ -43,7 +43,7 @@ public class MenuScreen extends ScreenAdapter {
 
     private void createBackground(){
         BackdropTheme theme = BackdropFactory.buildTheme(BackdropFactory.ThemePreset.ISLANDS);
-        Backdrop background = BackdropFactory.buildBackdrop(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 4, theme);
+        Backdrop background = BackdropFactory.buildBackdrop(Config.NativeView.width, Config.NativeView.height, 4, theme);
         bg.addActor(background);
     }
 
