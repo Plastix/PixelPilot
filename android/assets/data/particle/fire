@@ -2,8 +2,8 @@ fire
 - Delay -
 active: false
 - Duration - 
-lowMin: 1000.0
-lowMax: 1000.0
+lowMin: 0
+lowMax: 0
 - Count - 
 min: 0
 max: 200
@@ -18,8 +18,8 @@ scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
 - Life - 
-lowMin: 0.0
-lowMax: 0.0
+lowMin: 300.0
+lowMax: 300.0
 highMin: 300.0
 highMax: 300.0
 relative: false
