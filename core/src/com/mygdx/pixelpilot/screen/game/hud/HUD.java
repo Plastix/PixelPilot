@@ -98,7 +98,7 @@ public class HUD extends Stage implements Listener {
         generator.dispose();
 
 
-        lives = new Label("x3", style);
+        lives = new Label("3", style);
         score = new Label("0", style);
 
         table.add(livesIcon).size(45,45).pad(10);
