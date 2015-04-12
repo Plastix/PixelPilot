@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -42,7 +41,7 @@ public class HUD extends Stage {
     private final int UI_LAYER = 1;
     private final int LABEL_LAYER = 2;
 
-    public HUD(){
+    public HUD() {
         super(new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera()));
         Gdx.input.setInputProcessor(this);
         Events.getBus().subscribe(this);
@@ -56,10 +55,10 @@ public class HUD extends Stage {
         this.addActor(table);
     }
 
-    private void addHUDComponents(){
+    private void addHUDComponents() {
 
         ShadowImage.ShadowImageStyle imageStyle = new ShadowImage.ShadowImageStyle();
-        imageStyle.shadowColor = new Color(0,0,0,1);
+        imageStyle.shadowColor = new Color(0, 0, 0, 1);
         imageStyle.shadowDepth = 5;
 
         livesIcon = new ShadowImage(imageStyle);
@@ -71,7 +70,7 @@ public class HUD extends Stage {
         scoreIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(trophy)));
 
         ShadowImageButton.ShadowImageButtonStyle pauseStyle = new ShadowImageButton.ShadowImageButtonStyle();
-        pauseStyle.shadowColor = new Color(0,0,0,1);
+        pauseStyle.shadowColor = new Color(0, 0, 0, 1);
         pauseStyle.shadowDepth = 5;
         Texture pause = new Texture(Assets.image.pause_button);
         pauseStyle.imageUp = new TextureRegionDrawable(new TextureRegion(pause));
@@ -84,42 +83,24 @@ public class HUD extends Stage {
             }
         });
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Assets.font.pixel));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 76;
-        parameter.color = new Color(1,1,1,1);
-        parameter.shadowColor = new Color(0,0,0,1);
-        parameter.shadowOffsetY = 5;
-
         Label.LabelStyle style = new Label.LabelStyle();
-        style.font =  generator.generateFont(parameter);
-        generator.dispose();
-
-
+        style.font = Assets.manager.get("hud-font");
         lives = new Label("3", style);
         score = new Label("0", style);
 
-        table.add(livesIcon).size(45,45).pad(10);
+        table.add(livesIcon).size(45, 45).pad(10);
         table.add(lives);
-        table.add(scoreIcon).size(38,45).pad(10,30,10,10);
+        table.add(scoreIcon).size(38, 45).pad(10, 30, 10, 10);
         table.add(score);
-        table.add(pauseButton).size(50,50).right().pad(10).expandX();
+        table.add(pauseButton).size(50, 50).right().pad(10).expandX();
     }
 
     @Handler
     public void onWaveSpawn(WaveSpawnEvent event){
         String message = event.getWave().message;
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Assets.font.pixel));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 100;
-        parameter.color = new Color(1,1,1,1);
-        parameter.shadowColor = new Color(0,0,0,1);
-        parameter.shadowOffsetY = 7;
-
         Label.LabelStyle style = new Label.LabelStyle();
-        style.font =  generator.generateFont(parameter);
-        generator.dispose();
+        style.font = Assets.manager.get("wave-font");
 
         final Label label = new Label(message, style);
         label.setZIndex(LABEL_LAYER);

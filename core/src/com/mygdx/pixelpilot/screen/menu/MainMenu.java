@@ -5,11 +5,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -20,7 +22,6 @@ import com.mygdx.pixelpilot.event.events.screen.MenuOpenEvent;
 import com.mygdx.pixelpilot.event.events.screen.ScreenChangeEvent;
 import com.mygdx.pixelpilot.screen.game.CampaignGameScreen;
 import com.mygdx.pixelpilot.screen.ui.ShadowImageButton;
-import com.mygdx.pixelpilot.effect.background.Backdrop;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
@@ -31,28 +32,19 @@ public class MainMenu extends Menu {
     ShadowImageButton settings;
     Image logo;
     Label text1, text2;
-    Backdrop background;
 
     public MainMenu() {
         createMenuGraphics();
     }
 
     private void createMenuGraphics() {
-
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Assets.font.pixel));
         // create title logo header
         Table logoTable = new Table();
 
-        FreeTypeFontGenerator.FreeTypeFontParameter logoParam = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        logoParam.size = 150;
-        logoParam.color = new Color(0.75f, 0.24f, 0.25f,1);
-        logoParam.shadowColor = new Color(0.44f, 0.04f, 0.04f, 1);
-        logoParam.shadowOffsetY = 7;
-
         Label.LabelStyle logoStyle = new Label.LabelStyle();
-        logoStyle.font =  generator.generateFont(logoParam);
+        logoStyle.font = Assets.manager.get("logo-font");
 
-        logo  = new Image(new Texture(Assets.image.menu_logo));
+        logo = new Image(new Texture(Assets.image.menu_logo));
         logo.setScaling(Scaling.fit);
         text1 = new Label("Pixel", logoStyle);
         text2 = new Label("Pilot", logoStyle);
@@ -70,15 +62,8 @@ public class MainMenu extends Menu {
         Table buttonTable = new Table();
         buttonTable.top().center();
 
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 250;
-        parameter.color = new Color(0.9f, 0.92f, 0.36f,1);
-        parameter.shadowColor = new Color(0.72f,0.74f,0.3f,1);
-        parameter.shadowOffsetY = 8;
-
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.font =  generator.generateFont(parameter);
-        generator.dispose();
+        style.font = Assets.manager.get("play-font");
 
         playButton = new TextButton("Play", style);
         playButton.addListener(new ChangeListener() {
@@ -98,7 +83,7 @@ public class MainMenu extends Menu {
         Texture wrench = new Texture(Assets.image.settings);
         settingStyle.imageUp = new TextureRegionDrawable(new TextureRegion(wrench));
         settingStyle.shadowDepth = 7;
-        settingStyle.shadowColor = new Color(0,0,0,1);
+        settingStyle.shadowColor = new Color(0, 0, 0, 1);
         settings = new ShadowImageButton(settingStyle);
         settings.addListener(new ChangeListener() {
             @Override
@@ -113,7 +98,7 @@ public class MainMenu extends Menu {
         Texture planeIcon = new Texture(Assets.image.plane);
         planesStyle.imageUp = new TextureRegionDrawable(new TextureRegion(planeIcon));
         planesStyle.shadowDepth = 7;
-        planesStyle.shadowColor = new Color(0,0,0,1);
+        planesStyle.shadowColor = new Color(0, 0, 0, 1);
         planesButton = new ShadowImageButton(planesStyle);
         planesButton.addListener(new ChangeListener() {
             @Override
@@ -121,12 +106,12 @@ public class MainMenu extends Menu {
                 System.out.println("My Planes clicked!");
             }
         });
-        buttonTable.add(planesButton).size(100,100).right().pad(10).bottom();
+        buttonTable.add(planesButton).size(100, 100).right().pad(10).bottom();
         table.add(buttonTable).expand().fill();
 
     }
 
-    public void animatePlayButton(){
+    public void animatePlayButton() {
         RepeatAction pulse = forever(
                 sequence(
                         scaleBy(0.2f, 0.2f, 0.35f, Interpolation.pow2),
@@ -136,7 +121,7 @@ public class MainMenu extends Menu {
         this.addAction(pulse);
     }
 
-    public void slideButtonsOutAndTransitionTo(final Screen next){
+    public void slideButtonsOutAndTransitionTo(final Screen next) {
         MoveToAction movePlay = new MoveToAction();
         movePlay.setDuration(0.7f);
         movePlay.setInterpolation(Interpolation.exp10);
@@ -158,7 +143,7 @@ public class MainMenu extends Menu {
         MoveToAction moveText1 = new MoveToAction();
         moveText1.setDuration(0.4f);
         moveText1.setInterpolation(Interpolation.pow2);
-        moveText1.setPosition(-text1.getWidth()*2, text1.getY());
+        moveText1.setPosition(-text1.getWidth() * 2, text1.getY());
         moveText1.setActor(text1);
 
         MoveToAction moveText2 = new MoveToAction();
