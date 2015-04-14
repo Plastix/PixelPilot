@@ -2,25 +2,50 @@ package com.mygdx.pixelpilot.effect;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.pixelpilot.data.Assets;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Cloud extends Group {
+public class Cloud extends Actor {
+
+    /**
+     * Store a list of children Sprites
+     * Because Sprites are not Scene2D actors we
+     * can't use Group
+     */
+    private List<Sprite> puffs;
 
     public Cloud(float x, float y, float sizeX, float sizeY, int numPuffs) {
+
+        this.puffs = new ArrayList<Sprite>();
+        Rectangle bounds = new Rectangle(x, y, sizeX, sizeY);
+
         for (int i = 0; i < numPuffs; i++) {
-            Image puff = new Image(new Texture(Assets.image.pixel));
+            Sprite puff = new Sprite(new Texture(Assets.image.pixel));
             puff.setOrigin(puff.getWidth() / 2, puff.getHeight() / 2);
             puff.setPosition(x - puff.getWidth() / 2 + MathUtils.random(-sizeX, sizeX),
-                             y - puff.getHeight() / 2 + MathUtils.random(-sizeY, sizeY));
+                    y - puff.getHeight() / 2 + MathUtils.random(-sizeY, sizeY));
             puff.setScale(MathUtils.random(0.1f * 300, 0.3f * 300));
             puff.setColor(1f, 1f, 1f, (float) (Math.random()) / 2f);
-            this.addActor(puff);
+            this.puffs.add(puff);
+            bounds.merge(puff.getBoundingRectangle());
+        }
+        //Set bounds of our "group" to the union of all of the children bounds
+        //This makes our clouds cull nicely in World
+        this.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        for(Sprite puff : puffs){
+            puff.draw(batch, parentAlpha);
         }
     }
 

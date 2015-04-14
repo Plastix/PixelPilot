@@ -4,13 +4,14 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.effect.background.theme.BackdropFactory;
 import com.mygdx.pixelpilot.effect.background.theme.BackdropTheme;
+import com.mygdx.pixelpilot.effect.Cloud;
+import com.mygdx.pixelpilot.effect.background.Backdrop;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.ProjectileExpirationEvent;
 import com.mygdx.pixelpilot.event.events.WeaponFireEvent;
@@ -32,15 +33,17 @@ import java.util.List;
 public class World extends Stage {
 
     private final Rectangle bounds;
-    private Actor backdrop;
+    private Backdrop backdrop;
     private Group clouds;
     private List<Plane> planes;
     private GameCamera camera;
     private int width, height;
     private Quadtree storage;
 
-    private final int PLANE_LAYER = 2;
-    private final int BULLET_LAYER = 1;
+    private static int BACKDROP_LAYER = 1;
+    private static int CLOUD_LAYER = 2;
+    private final int BULLET_LAYER = 3;
+    private static int PLANE_LAYER = 4;
 
     public World(int width, int height) {
         super(new ExtendViewport(Config.NativeView.width, Config.NativeView.height));
@@ -58,12 +61,22 @@ public class World extends Stage {
 //        clouds = Cloud.generateClouds(150); // static for now
         planes = new ArrayList<Plane>();
         createBackdrop();
+        createClouds();
     }
 
     private void createBackdrop() {
         BackdropTheme theme = BackdropFactory.buildTheme(BackdropFactory.ThemePreset.ISLANDS);
         backdrop = BackdropFactory.buildBackdrop(width, height, 4, theme);
         backdrop.setSize(width, height);
+        backdrop.setZIndex(BACKDROP_LAYER);
+    }
+
+    private void createClouds(){
+        for(int i = 0; i < 100; i++){
+            Cloud cloud = new Cloud((float)(Math.random() * width), (float)(Math.random() * height), 50, 50, 10);
+            cloud.setZIndex(CLOUD_LAYER);
+            this.addActor(cloud);
+        }
     }
 
     @Override
@@ -105,6 +118,7 @@ public class World extends Stage {
 
     private void addPlane(Plane plane, Vector2 spawnPos) {
         plane.setPosition(spawnPos.x, spawnPos.y);
+        plane.setZIndex(PLANE_LAYER);
         this.addActor(plane);
         plane.toFront();
         storage.insert(plane);
