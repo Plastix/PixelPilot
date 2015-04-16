@@ -11,7 +11,7 @@ public class StandardBullet extends Projectile<StandardBullet> {
         super(pool,
                 new Sprite(new Texture("image/projectiles/1.png")),
                 1500, // lifespan
-                15);  // velocity
+                15);  // speed
         setOrigin(Align.center);
     }
 

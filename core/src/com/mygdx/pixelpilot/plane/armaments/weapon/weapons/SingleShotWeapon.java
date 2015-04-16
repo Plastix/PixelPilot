@@ -13,7 +13,12 @@ public class SingleShotWeapon extends Weapon {
 
     @Override
     protected void buildAndLaunchProjectiles() {
-        Projectile projectile = ProjectileFactory.build(projectileType).set(getX(), getY(), getRotation(), owner);
+        Projectile projectile = ProjectileFactory.build(projectileType)
+                .set(getX(), getY(), getRotation(), getSpeed(), getLifespan(), owner);
         launch(projectile);
     }
+
+
+
+
 }

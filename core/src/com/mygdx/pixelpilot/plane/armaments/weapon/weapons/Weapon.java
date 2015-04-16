@@ -22,7 +22,8 @@ public abstract class Weapon {
     public Weapon(WeaponDefinition def, Plane owner) {
         this.projectileType = def.projectileType;
         this.def = def;
-        this.range = def.velocity * def.lifespanSeconds; // todo: this calculation is wrong
+        // one unit per frame, over 5 seconds at 60 fps = 60*5 = 300 units
+        this.range = def.speed * def.lifespan / 1000 * 60; // yuck
         this.reloadTime = (int)(def.reloadTime);
         this.timeOfLastShot = System.currentTimeMillis();
         this.owner = owner;
@@ -48,10 +49,6 @@ public abstract class Weapon {
         return (System.currentTimeMillis() - timeOfLastShot > reloadTime);
     }
 
-    public float getRange() {
-        return range;
-    }
-
     public void mount(WeaponSlot slot) {
         this.slot = slot;
     }
@@ -74,11 +71,23 @@ public abstract class Weapon {
         return oy + yNew;
     }
 
-    public float getRotation() {
+    protected float getRotation() {
         float leadFactor = 6;
         float theta = owner.getRotation();
         theta += owner.getAngularVelocity() * MathUtils.radDeg * leadFactor;
         return theta;
+    }
+
+    protected float getLifespan(){
+        return def.lifespan;
+    }
+
+    protected float getSpeed(){
+        return def.speed;
+    }
+
+    public float getRange() {
+        return range;
     }
 
 }

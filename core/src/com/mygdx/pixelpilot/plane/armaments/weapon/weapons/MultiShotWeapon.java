@@ -28,7 +28,8 @@ public class MultiShotWeapon extends Weapon {
         for (int i = 0; i < numShots; i++) {
             Projectile projectile = ProjectileFactory.build(projectileType)
                     .set(getX(), getY(), owner.getRotation()
-                            + Utils.map(i, 0, numShots - 1, -15, 15), owner);
+                            + Utils.map(i, 0, numShots - 1, -15, 15),
+                            getSpeed(), getLifespan(), owner);
             launch(projectile);
         }
     }

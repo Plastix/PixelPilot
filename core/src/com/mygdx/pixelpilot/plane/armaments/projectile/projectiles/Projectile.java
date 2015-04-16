@@ -1,5 +1,6 @@
 package com.mygdx.pixelpilot.plane.armaments.projectile.projectiles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
@@ -7,7 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.ProjectileExpirationEvent;
+import com.mygdx.pixelpilot.event.events.game.GamePauseEvent;
+import com.mygdx.pixelpilot.event.events.game.GameResumeEvent;
 import com.mygdx.pixelpilot.plane.SteerableActor;
+import net.engio.mbassy.listener.Handler;
 
 /**
  * The abstract projectile manages lifespan and returns
@@ -32,12 +36,14 @@ public abstract class Projectile<T extends Projectile> extends SteerableActor {
         this.spawnTime = System.currentTimeMillis();
     }
 
-    public Projectile set(float x, float y, float rotation, Actor owner) {
+    public Projectile set(float x, float y, float rotation, float speed, float lifespan, Actor owner) {
         setPosition(x - sprite.getWidth() / 2f, y - sprite.getHeight() / 2f);
         sprite.setRotation(rotation);
         sprite.setScale(2f);
         sprite.setPosition(getX(), getY());
         this.owner = owner;
+        this.speed = speed;
+        this.lifespan = lifespan;
         this.velocityX = MathUtils.cosDeg(rotation + 90) * speed;
         this.velocityY = MathUtils.sinDeg(rotation + 90) * speed;
         this.spawnTime = System.currentTimeMillis();

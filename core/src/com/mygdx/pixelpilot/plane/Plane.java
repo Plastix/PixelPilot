@@ -148,7 +148,7 @@ public class Plane extends SteerableActor {
     /**
      * No need to call effect.start() because these effects are continuous
      */
-    private void initializeParticles(){
+    private void initializeParticles() {
         //Create the plane trail particle smoke
         this.smoke = new ParticleEffect();
         this.smoke.load(Gdx.files.internal("data/particle/trail"), Gdx.files.internal("image"));
@@ -177,7 +177,7 @@ public class Plane extends SteerableActor {
         }
     }
 
-    public void hit(){
+    public void hit() {
         //TODO simulating taking damage
         this.health-=1;
         if(health > 0) {
@@ -189,9 +189,15 @@ public class Plane extends SteerableActor {
         return health < 0;
     }
 
-    public void shoot(Steerable<Vector2> target) {
+    public void shootIfInRange(Steerable<Vector2> target) {
         for (Weapon weapon : weapons) {
             if(this.getPosition().dst(target.getPosition()) < weapon.getRange())
+                weapon.fire(target);
+        }
+    }
+
+    public void shoot(Steerable<Vector2> target) {
+        for (Weapon weapon : weapons) {
                 weapon.fire(target);
         }
     }
@@ -228,4 +234,5 @@ public class Plane extends SteerableActor {
     public List<Weapon> getWeapons() {
         return weapons;
     }
+
 }

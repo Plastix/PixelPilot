@@ -1,7 +1,9 @@
 - name: Single Shot Standard
   weaponType: SingleShotWeapon
   projectileType: StandardBullet
-  reloadTime: 200
+  reloadTime: 50
+  lifespan: 1500
+  speed: 15
   weight: 15
 
 - name: Three Shot Standard
@@ -9,7 +11,9 @@
   weaponProperties:
     numShots: 3
   projectileType: StandardBullet
-  reloadTime: 800
+  reloadTime: 75
+  lifespan: 1500
+  speed: 15
   weight: 30
 
 - name: Six Shot Standard
@@ -18,4 +22,6 @@
     numShots: 6
   projectileType: StandardBullet
   reloadTime: 1000
+  lifespan: 1500
+  speed: 15
   weight: 45

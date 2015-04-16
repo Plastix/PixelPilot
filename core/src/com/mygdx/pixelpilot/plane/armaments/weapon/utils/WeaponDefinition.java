@@ -8,18 +8,18 @@ public class WeaponDefinition {
 
     public String name;
     public int damage;
-    public float velocity;
+    public float speed;
     public WeaponTypeContainer weaponType;
     public Class<? extends Projectile> projectileType;
     public Map weaponProperties;
     public float reloadTime;
-    public float lifespanSeconds;
+    public float lifespan;
     public float weight;
     public String spritePath;
 
     @Override
     public String toString() {
         return String.format("name: %s, damage: %s, reload(s): %s, lifespan(s): %s, weight: %s",
-                name, damage, reloadTime, lifespanSeconds, weight);
+                name, damage, reloadTime, lifespan, weight);
     }
 }

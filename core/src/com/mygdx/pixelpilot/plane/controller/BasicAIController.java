@@ -125,7 +125,7 @@ public class BasicAIController extends AIController {
                     float angle = MathUtils.atan2(y, x) * MathUtils.radDeg;
                     angle = (angle - plane.getRotation()) + 90;
                     if(Math.abs(angle) < 45) { // if in view then fire
-                        plane.shoot(target);
+                        plane.shootIfInRange(target);
                     }
                 }
             }
