@@ -31,6 +31,8 @@ public class SplashScreen implements Screen {
         ProjectileFactory.registerProjectiles();
         WeaponFactory.registerWeapons();
         YamlParser.loadAllData();
+        Assets.initializeManager();
+        Assets.queueAssets();
     }
 
     @Override
@@ -46,7 +48,7 @@ public class SplashScreen implements Screen {
         stage.draw();
 
         //If all the assets are done loading switch to the main menu
-        if(Assets.update()){
+        if(Assets.manager.update()){
             Events.getBus().publish(new ScreenChangeEvent(new MenuScreen()));
             Events.getBus().publish(new MenuOpenEvent(new MainMenu()));
         }
