@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.WeaponFireEvent;
 import com.mygdx.pixelpilot.plane.Plane;
-import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponSlot;
 import com.mygdx.pixelpilot.plane.armaments.projectile.projectiles.Projectile;
 import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponDefinition;
+import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponSlot;
 
 public abstract class Weapon {
     protected Plane owner;
@@ -24,7 +24,7 @@ public abstract class Weapon {
         this.def = def;
         // one unit per frame, over 5 seconds at 60 fps = 60*5 = 300 units
         this.range = def.speed * def.lifespan / 1000 * 60; // yuck
-        this.reloadTime = (int)(def.reloadTime);
+        this.reloadTime = (int) (def.reloadTime);
         this.timeOfLastShot = System.currentTimeMillis();
         this.owner = owner;
     }
@@ -41,7 +41,7 @@ public abstract class Weapon {
 
     protected abstract void buildAndLaunchProjectiles();
 
-    protected void launch(Projectile p){
+    protected void launch(Projectile p) {
         Events.getBus().publish(new WeaponFireEvent(p));
     }
 
@@ -78,11 +78,11 @@ public abstract class Weapon {
         return theta;
     }
 
-    protected float getLifespan(){
+    protected float getLifespan() {
         return def.lifespan;
     }
 
-    protected float getSpeed(){
+    protected float getSpeed() {
         return def.speed;
     }
 

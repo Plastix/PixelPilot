@@ -16,7 +16,7 @@ public class PlaneMarker extends Marker<Plane> {
 
     @Override
     protected Sprite createSprite() {
-        Texture marker = new Texture(Assets.image.plane_marker);
+        Texture marker = new Texture(Assets.Images.plane_marker);
         Sprite sprite = new Sprite(marker);
         sprite.setSize(30,30);
         sprite.setColor(this.target.getMarkerColor());

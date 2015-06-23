@@ -1,4 +1,4 @@
-package com.mygdx.pixelpilot.screen;
+package com.mygdx.pixelpilot.screen.loading;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -8,48 +8,45 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.data.Config;
-import com.mygdx.pixelpilot.data.YamlParser;
 import com.mygdx.pixelpilot.event.Events;
-import com.mygdx.pixelpilot.event.events.screen.MenuOpenEvent;
 import com.mygdx.pixelpilot.event.events.screen.ScreenChangeEvent;
-import com.mygdx.pixelpilot.plane.armaments.projectile.utils.ProjectileFactory;
-import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponFactory;
-import com.mygdx.pixelpilot.plane.controller.ControllerFactory;
-import com.mygdx.pixelpilot.screen.menu.MainMenu;
-import com.mygdx.pixelpilot.screen.menu.MenuScreen;
+import com.mygdx.pixelpilot.screen.loading.animation.LoadingAnimation;
+import com.mygdx.pixelpilot.screen.DependentBuilder;
 
 /**
- * Main loading screen of the game
+ * A LoadingScreen is responsible for loading the resources from one or more AssetPacks
  */
-public class SplashScreen implements Screen {
+public class LoadingScreen implements Screen {
 
     private Stage stage;
+    private LoadingAnimation loader;
+    private final DependentBuilder<? extends Screen> builder;
 
-    public SplashScreen() {
+    public LoadingScreen(LoadingAnimation loader, DependentBuilder<? extends Screen> builder) {
+        this.builder = builder;
         stage = new Stage(new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera()));
-        ControllerFactory.registerControllers();
-        ProjectileFactory.registerProjectiles();
-        WeaponFactory.registerWeapons();
-        YamlParser.loadAllData();
+        this.loader = null;
+        this.loader = loader;
     }
 
     @Override
     public void show() {
-
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+
+        Gdx.gl.glClearColor(0.3f, 0.66f, 0.9f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
-
-        //If all the assets are done loading switch to the main menu
-        if(Assets.update()){
-            Events.getBus().publish(new ScreenChangeEvent(new MenuScreen()));
-            Events.getBus().publish(new MenuOpenEvent(new MainMenu()));
+        if (!builder.getPacks().isEmpty() && builder.getPacks().peek().update()) {
+            builder.getPacks().pop();
+            if (builder.getPacks().isEmpty()) {
+                Events.getBus().publish(new ScreenChangeEvent(builder));
+            }
         }
+        loader.render(delta, Assets.manager.getProgress(), stage);
     }
 
     @Override

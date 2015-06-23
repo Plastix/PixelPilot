@@ -1,4 +1,4 @@
-package com.mygdx.pixelpilot.screen.game;
+package com.mygdx.pixelpilot.screen.game.camera;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

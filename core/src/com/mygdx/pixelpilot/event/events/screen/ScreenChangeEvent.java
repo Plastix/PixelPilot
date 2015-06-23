@@ -3,16 +3,17 @@ package com.mygdx.pixelpilot.event.events.screen;
 
 import com.badlogic.gdx.Screen;
 import com.mygdx.pixelpilot.event.events.GameEvent;
+import com.mygdx.pixelpilot.screen.DependentBuilder;
 
 public class ScreenChangeEvent extends GameEvent {
 
-    private Screen newScreen;
+    private DependentBuilder<? extends Screen> builder;
 
-    public ScreenChangeEvent(Screen newScreen) {
-        this.newScreen = newScreen;
+    public ScreenChangeEvent(DependentBuilder<? extends Screen> builder) {
+        this.builder = builder;
     }
 
-    public Screen getNewScreen() {
-        return newScreen;
+    public DependentBuilder<? extends Screen> getBuilder() {
+        return builder;
     }
 }

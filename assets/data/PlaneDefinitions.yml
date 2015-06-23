@@ -1,0 +1,13 @@
+- name: Basic Plane
+  speed: 10
+  armor: 20
+  minTurnRadius: 130
+  spritePath: image/planes/1.png
+  markerColor: ffffffff
+  weaponSlots:
+    - name: Main gun
+      position: 0, 30
+    - name: Left wing
+      position: -20, 22
+    - name: Right wing
+      position: 20, 22

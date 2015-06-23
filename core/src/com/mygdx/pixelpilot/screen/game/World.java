@@ -1,26 +1,29 @@
 package com.mygdx.pixelpilot.screen.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.data.Config;
+import com.mygdx.pixelpilot.effect.background.Backdrop;
 import com.mygdx.pixelpilot.effect.background.theme.BackdropFactory;
 import com.mygdx.pixelpilot.effect.background.theme.BackdropTheme;
 import com.mygdx.pixelpilot.event.Events;
+import com.mygdx.pixelpilot.event.events.MarkerSpawnEvent;
 import com.mygdx.pixelpilot.event.events.ProjectileExpirationEvent;
 import com.mygdx.pixelpilot.event.events.WeaponFireEvent;
 import com.mygdx.pixelpilot.event.events.ai.AIDeathEvent;
 import com.mygdx.pixelpilot.event.events.ai.AISpawnEvent;
-import com.mygdx.pixelpilot.event.events.MarkerSpawnEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import com.mygdx.pixelpilot.plane.Plane;
-import com.mygdx.pixelpilot.plane.controller.PlayerController;
 import com.mygdx.pixelpilot.plane.armaments.projectile.projectiles.Projectile;
+import com.mygdx.pixelpilot.plane.controller.PlayerController;
+import com.mygdx.pixelpilot.screen.game.camera.GameCamera;
 import com.mygdx.pixelpilot.util.quadtree.Quadtree;
 import com.mygdx.pixelpilot.util.quadtree.QuadtreeCallback;
 import net.engio.mbassy.listener.Handler;
@@ -58,11 +61,12 @@ public class World extends Stage {
 //        clouds = Cloud.generateClouds(150); // static for now
         planes = new ArrayList<Plane>();
         createBackdrop();
+
+
     }
 
     private void createBackdrop() {
-        BackdropTheme theme = BackdropFactory.buildTheme(BackdropFactory.ThemePreset.ISLANDS);
-        backdrop = BackdropFactory.buildBackdrop(width, height, 4, theme);
+        backdrop = Assets.manager.get("backdrop", Backdrop.class);
         backdrop.setSize(width, height);
     }
 

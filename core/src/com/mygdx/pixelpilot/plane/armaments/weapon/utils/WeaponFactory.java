@@ -14,7 +14,7 @@ public class WeaponFactory {
     private static Map<Class<? extends Weapon>, WeaponProvider> providerMap
             = new HashMap<Class<? extends Weapon>, WeaponProvider>();
 
-    public static void registerWeapons(){
+    public static void registerWeapons() {
         providerMap.put(SingleShotWeapon.class, new WeaponProvider<SingleShotWeapon>() {
             @Override
             public SingleShotWeapon create(Plane owner, WeaponDefinition def) {
@@ -31,7 +31,7 @@ public class WeaponFactory {
     }
 
     public static Weapon build(Plane owner, WeaponDefinition def) {
-        if(isValid(def.weaponType.type)) {
+        if (isValid(def.weaponType.type)) {
             return providerMap.get(def.weaponType.type).obtain(owner, def);
         } else {
             throw new RuntimeException("No weapon found ["

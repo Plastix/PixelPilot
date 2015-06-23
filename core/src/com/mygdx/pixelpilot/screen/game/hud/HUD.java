@@ -4,15 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.data.Config;
@@ -42,7 +42,7 @@ public class HUD extends Stage {
     private final int UI_LAYER = 1;
     private final int LABEL_LAYER = 2;
 
-    public HUD(){
+    public HUD() {
         super(new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera()));
         Gdx.input.setInputProcessor(this);
         Events.getBus().subscribe(this);
@@ -56,71 +56,52 @@ public class HUD extends Stage {
         this.addActor(table);
     }
 
-    private void addHUDComponents(){
+    private void addHUDComponents() {
 
         ShadowImage.ShadowImageStyle imageStyle = new ShadowImage.ShadowImageStyle();
-        imageStyle.shadowColor = new Color(0,0,0,1);
+        imageStyle.shadowColor = new Color(0, 0, 0, 1);
         imageStyle.shadowDepth = 5;
 
         livesIcon = new ShadowImage(imageStyle);
-        Texture planeIcon = new Texture(Assets.image.plane);
+        Texture planeIcon = Assets.manager.get(Assets.Images.plane, Texture.class);
         livesIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(planeIcon)));
 
         scoreIcon = new ShadowImage(imageStyle);
-        Texture trophy = new Texture(Assets.image.trophy);
+        Texture trophy = Assets.manager.get(Assets.Images.trophy, Texture.class);
         scoreIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(trophy)));
 
         ShadowImageButton.ShadowImageButtonStyle pauseStyle = new ShadowImageButton.ShadowImageButtonStyle();
-        pauseStyle.shadowColor = new Color(0,0,0,1);
+        pauseStyle.shadowColor = new Color(0, 0, 0, 1);
         pauseStyle.shadowDepth = 5;
-        Texture pause = new Texture(Assets.image.pause_button);
+        Texture pause = Assets.manager.get(Assets.Images.pause_button, Texture.class);
         pauseStyle.imageUp = new TextureRegionDrawable(new TextureRegion(pause));
         pauseButton = new ShadowImageButton(pauseStyle);
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Events.getBus().publish(new MenuOpenEvent(new PauseMenu()));
+                Events.getBus().publish(new MenuOpenEvent(new PauseMenu.Loader()));
                 Events.getBus().publish(new GamePauseEvent());
             }
         });
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Assets.font.pixel));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 76;
-        parameter.color = new Color(1,1,1,1);
-        parameter.shadowColor = new Color(0,0,0,1);
-        parameter.shadowOffsetY = 5;
-
         Label.LabelStyle style = new Label.LabelStyle();
-        style.font =  generator.generateFont(parameter);
-        generator.dispose();
-
+        style.font = Assets.manager.get(Assets.Fonts.hud_text, BitmapFont.class);
 
         lives = new Label("3", style);
         score = new Label("0", style);
 
-        table.add(livesIcon).size(45,45).pad(10);
+        table.add(livesIcon).size(45, 45).pad(10);
         table.add(lives);
-        table.add(scoreIcon).size(38,45).pad(10,30,10,10);
+        table.add(scoreIcon).size(38, 45).pad(10, 30, 10, 10);
         table.add(score);
-        table.add(pauseButton).size(50,50).right().pad(10).expandX();
+        table.add(pauseButton).size(50, 50).right().pad(10).expandX();
     }
 
     @Handler
-    public void onWaveSpawn(WaveSpawnEvent event){
+    public void onWaveSpawn(WaveSpawnEvent event) {
         String message = event.getWave().message;
-
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(Assets.font.pixel));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 100;
-        parameter.color = new Color(1,1,1,1);
-        parameter.shadowColor = new Color(0,0,0,1);
-        parameter.shadowOffsetY = 7;
-
         Label.LabelStyle style = new Label.LabelStyle();
-        style.font =  generator.generateFont(parameter);
-        generator.dispose();
-
+        style.font = Assets.manager.get(Assets.Fonts.wave_spawn, BitmapFont.class);
         final Label label = new Label(message, style);
         label.setZIndex(LABEL_LAYER);
         label.setPosition(Config.NativeView.width / 2, Config.NativeView.height / 2, Align.center);
@@ -135,13 +116,11 @@ public class HUD extends Stage {
                         label.remove();
                     }
                 })
-
         ));
-
     }
 
     @Handler
-    public void onAISpawn(AISpawnEvent event){
+    public void onAISpawn(AISpawnEvent event) {
         PlaneMarker marker = new PlaneMarker(event.getPlane());
         marker.setZIndex(MARKER_LAYER);
         this.addActor(marker);

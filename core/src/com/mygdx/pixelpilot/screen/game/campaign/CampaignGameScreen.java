@@ -1,13 +1,18 @@
-package com.mygdx.pixelpilot.screen.game;
+package com.mygdx.pixelpilot.screen.game.campaign;
 
 import com.mygdx.pixelpilot.data.GameData;
+import com.mygdx.pixelpilot.data.assetpack.*;
 import com.mygdx.pixelpilot.data.level.Level;
 import com.mygdx.pixelpilot.data.level.Wave;
-import com.mygdx.pixelpilot.event.*;
-import com.mygdx.pixelpilot.event.events.game.WaveSpawnEvent;
+import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.ai.AISpawnEvent;
-import com.mygdx.pixelpilot.plane.*;
+import com.mygdx.pixelpilot.event.events.game.WaveSpawnEvent;
+import com.mygdx.pixelpilot.plane.Plane;
+import com.mygdx.pixelpilot.plane.PlaneFactory;
+import com.mygdx.pixelpilot.plane.PlanePreset;
 import com.mygdx.pixelpilot.plane.controller.AIController;
+import com.mygdx.pixelpilot.screen.game.GameScreen;
+import com.mygdx.pixelpilot.screen.DependentBuilder;
 import net.engio.mbassy.listener.Handler;
 
 import java.util.List;
@@ -17,15 +22,31 @@ public class CampaignGameScreen extends GameScreen {
     private int currentLevel;
     private int currentWave;
 
-    public CampaignGameScreen() {
-
+    private CampaignGameScreen() {
         currentLevel = 0;
         currentWave = 0;
-
+        setHUD(new CampaignHUD());
         spawnPlayer();
         spawnWave(1);
+    }
+
+    public static class Loader extends DependentBuilder<CampaignGameScreen> {
+        public Loader() {
+            super(
+                    new CommonAssets(),
+                    new GameAssets(),
+                    new PauseMenuAssets(),
+                    new HUDAssets(),
+                    new OptionsMenuAssets()
+            );
+        }
+
+        public CampaignGameScreen build() {
+            return new CampaignGameScreen();
+        }
 
     }
+
 
     private void spawnWave() {
         Level level = GameData.levels.get(currentLevel);
@@ -33,7 +54,7 @@ public class CampaignGameScreen extends GameScreen {
         Wave wave = waves.get(currentWave);
         Events.getBus().publish(new WaveSpawnEvent(wave));
 
-        for(PlanePreset preset : wave.enemies) {
+        for (PlanePreset preset : wave.enemies) {
             Plane plane = PlaneFactory.build(preset);
             Events.getBus().publish(new AISpawnEvent(plane));
         }
@@ -44,6 +65,7 @@ public class CampaignGameScreen extends GameScreen {
     /**
      * Spawns a wave with a given number of AI planes
      * Intended for debug use only
+     *
      * @param numberOfPlanes the number of planes to spawn
      */
     private void spawnWave(int numberOfPlanes) {
@@ -59,7 +81,7 @@ public class CampaignGameScreen extends GameScreen {
     }
 
     @Handler
-    public void handleEnemyPlaneSpawn(AISpawnEvent event){
-        ((AIController)event.getPlane().getController()).setWorld(world);
+    public void handleEnemyPlaneSpawn(AISpawnEvent event) {
+        ((AIController) event.getPlane().getController()).setWorld(world);
     }
 }

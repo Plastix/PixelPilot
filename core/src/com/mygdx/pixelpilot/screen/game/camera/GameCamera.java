@@ -1,4 +1,4 @@
-package com.mygdx.pixelpilot.screen.game;
+package com.mygdx.pixelpilot.screen.game.camera;
 
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.game.GamePauseEvent;

@@ -14,6 +14,7 @@ public class PlaneDefinitionSerializer implements ScalarSerializer<PlaneDefiniti
 
     @Override
     public PlaneDefinition read(String value) throws YamlException {
+
         for(PlaneDefinition planeDefinition : GameData.planeDefinitions){
             if(value.equals(planeDefinition.name)){
                 return planeDefinition;

@@ -19,23 +19,31 @@ import net.engio.mbassy.listener.Handler;
 
 public abstract class GameScreen extends ScreenAdapter {
 
+    public static Object requiredResources;
     protected HUD hud;
     protected World world;
     private GameState state;
 
-    public GameScreen(){
-        this.state = GameState.PLAYING;
-
-        world = new World(3000,3000);
+    public GameScreen() {
+        world = new World(3000, 3000);
         hud = new HUD();
-
+        state = GameState.PLAYING;
         Events.getBus().subscribe(this);
+    }
+
+    protected void setWorld(World world) {
+        this.world = world;
+    }
+
+    protected void setHUD(HUD hud){
+        this.hud = hud;
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(139f / 255f, 166f / 255f, 177f / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         if (state != GameState.PAUSED) {
             world.act(delta);
             hud.act(delta);
@@ -52,8 +60,8 @@ public abstract class GameScreen extends ScreenAdapter {
 
     @Override
     public void pause() {
-        if(this.state != GameState.PAUSED) {
-            Events.getBus().publish(new MenuOpenEvent(new PauseMenu()));
+        if (this.state != GameState.PAUSED) {
+            Events.getBus().publish(new MenuOpenEvent(new PauseMenu.Loader()));
             Events.getBus().publish(new GamePauseEvent());
         }
     }
@@ -64,7 +72,7 @@ public abstract class GameScreen extends ScreenAdapter {
         hud.dispose();
     }
 
-    protected void spawnPlayer(){
+    protected void spawnPlayer() {
         //TODO Eventually get the player's selected plane
         PlanePreset preset = GameData.planePresets.get(0);
         Plane player = PlaneFactory.build(preset, PlayerController.class);
@@ -72,12 +80,12 @@ public abstract class GameScreen extends ScreenAdapter {
     }
 
     @Handler
-    public void onPause(GamePauseEvent event){
+    public void onPause(GamePauseEvent event) {
         this.state = GameState.PAUSED;
     }
 
     @Handler
-    public void onResume(GameResumeEvent event){
+    public void onResume(GameResumeEvent event) {
         this.state = GameState.PLAYING;
     }
 }

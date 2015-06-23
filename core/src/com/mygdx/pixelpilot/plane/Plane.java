@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.utils.Align;
 import com.mygdx.pixelpilot.plane.controller.Controller;
 import com.mygdx.pixelpilot.plane.armaments.weapon.utils.InstalledWeaponDefinition;
 import com.mygdx.pixelpilot.plane.armaments.weapon.weapons.Weapon;

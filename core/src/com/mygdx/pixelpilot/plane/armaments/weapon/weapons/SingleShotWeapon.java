@@ -19,6 +19,4 @@ public class SingleShotWeapon extends Weapon {
     }
 
 
-
-
 }
