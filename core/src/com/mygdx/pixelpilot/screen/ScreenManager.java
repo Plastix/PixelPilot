@@ -1,12 +1,13 @@
 package com.mygdx.pixelpilot.screen;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.screen.MenuCloseEvent;
 import com.mygdx.pixelpilot.event.events.screen.MenuOpenEvent;
 import com.mygdx.pixelpilot.event.events.screen.ScreenChangeEvent;
+import com.mygdx.pixelpilot.screen.loading.animation.BarAnimation;
+import com.mygdx.pixelpilot.screen.loading.LoadingScreen;
 import com.mygdx.pixelpilot.screen.menu.Menu;
 import net.engio.mbassy.listener.Handler;
 
@@ -18,34 +19,44 @@ public class ScreenManager implements Screen {
     private final Stack<Menu> menuStack;
 
     public ScreenManager() {
-        this.menuStack = new Stack<Menu>();
         Events.getBus().subscribe(this);
-
-        this.currentScreen = new SplashScreen();
-//        Events.emit(new MenuOpenEvent(new MainMenu()), this);
+        this.menuStack = new Stack<Menu>();
     }
 
     @Handler
-    public void onScreenChange(ScreenChangeEvent event){
-        currentScreen.dispose();
-        for(Menu menu : menuStack){
+    public void onScreenChange(ScreenChangeEvent event) {
+        if (currentScreen != null) {
+            currentScreen.dispose();
+        }
+        for (Menu menu : menuStack) {
             menu.dispose();
         }
         menuStack.clear();
-        this.currentScreen = event.getNewScreen();
+
+        // todo: bleh
+        DependentBuilder<? extends Screen> builder = event.getBuilder();
+        if (!(currentScreen instanceof LoadingScreen) && !builder.getPacks().isEmpty()) {
+            currentScreen = new LoadingScreen(builder.getAnimation(), builder);
+        } else {
+            currentScreen = builder.build();
+        }
     }
 
     @Handler
-    public void onMenuOpen(MenuOpenEvent event){
-        this.menuStack.push(event.getMenu());
-        Gdx.input.setInputProcessor(event.getMenu());
+    public void onMenuOpen(MenuOpenEvent event) {
+
+        DependentBuilder<? extends Menu> builder = event.getMenu();
+        Menu menu = builder.build();
+
+        this.menuStack.push(menu);
+        Gdx.input.setInputProcessor(menu);
     }
 
     @Handler
-    public void onMenuClose(MenuCloseEvent event){
+    public void onMenuClose(MenuCloseEvent event) {
         Menu closed = menuStack.pop();
         closed.dispose();
-        if(this.menuStack.size() != 0){
+        if (this.menuStack.size() != 0) {
             Gdx.input.setInputProcessor(menuStack.peek());
         }
     }
@@ -57,16 +68,19 @@ public class ScreenManager implements Screen {
 
     @Override
     public void render(float delta) {
+        if (currentScreen == null) return;
+
         currentScreen.render(delta);
-        if(menuStack.size() != 0){
+        if (menuStack.size() != 0 ) {
             menuStack.peek().draw();
         }
     }
 
     @Override
     public void resize(int width, int height) {
+        if (currentScreen == null) return;
         currentScreen.resize(width, height);
-        if(menuStack.size() != 0) {
+        if (menuStack.size() != 0) {
             menuStack.peek().getViewport().update(width, height, true);
         }
     }

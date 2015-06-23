@@ -1,0 +1,14 @@
+- name: Default
+  size: 16
+  color: ffffff
+  borderWidth: 0
+  borderColor: 000000
+  borderStraight: false
+  shadowOffsetX: 0
+  shadowOffsetY: 0
+  shadowColor: 000000
+  kerning: true
+  flip: false
+  genMipMaps: false
+
+

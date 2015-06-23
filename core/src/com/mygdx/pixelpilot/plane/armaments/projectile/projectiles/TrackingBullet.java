@@ -2,7 +2,7 @@ package com.mygdx.pixelpilot.plane.armaments.projectile.projectiles;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool;
 
 // todo: implement

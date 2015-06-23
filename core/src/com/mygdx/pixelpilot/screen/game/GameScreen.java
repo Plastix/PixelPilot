@@ -8,34 +8,40 @@ import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.game.GamePauseEvent;
 import com.mygdx.pixelpilot.event.events.game.GameResumeEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
-import com.mygdx.pixelpilot.event.events.screen.MenuOpenEvent;
 import com.mygdx.pixelpilot.plane.Plane;
 import com.mygdx.pixelpilot.plane.PlaneFactory;
 import com.mygdx.pixelpilot.plane.PlanePreset;
 import com.mygdx.pixelpilot.plane.controller.PlayerController;
 import com.mygdx.pixelpilot.screen.game.hud.HUD;
-import com.mygdx.pixelpilot.screen.menu.PauseMenu;
 import net.engio.mbassy.listener.Handler;
 
 public abstract class GameScreen extends ScreenAdapter {
 
+    public static Object requiredResources;
     protected HUD hud;
     protected World world;
     private GameState state;
 
-    public GameScreen(){
-        this.state = GameState.PLAYING;
-
-        world = new World(3000,3000);
+    public GameScreen() {
+        world = new World(3000, 3000);
         hud = new HUD();
-
+        state = GameState.PLAYING;
         Events.getBus().subscribe(this);
+    }
+
+    protected void setWorld(World world) {
+        this.world = world;
+    }
+
+    protected void setHUD(HUD hud){
+        this.hud = hud;
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(139f / 255f, 166f / 255f, 177f / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         if (state != GameState.PAUSED) {
             world.act(delta);
             hud.act(delta);
@@ -52,9 +58,9 @@ public abstract class GameScreen extends ScreenAdapter {
 
     @Override
     public void pause() {
-        if(this.state != GameState.PAUSED) {
-            Events.getBus().publish(new MenuOpenEvent(new PauseMenu()));
-            Events.getBus().publish(new GamePauseEvent());
+        if (this.state != GameState.PAUSED) {
+//            Events.getBus().publish(new MenuOpenEvent(PauseMenu.class));
+//            Events.getBus().publish(new GamePauseEvent());
         }
     }
 
@@ -64,7 +70,7 @@ public abstract class GameScreen extends ScreenAdapter {
         hud.dispose();
     }
 
-    protected void spawnPlayer(){
+    protected void spawnPlayer() {
         //TODO Eventually get the player's selected plane
         PlanePreset preset = GameData.planePresets.get(0);
         Plane player = PlaneFactory.build(preset, PlayerController.class);
@@ -72,12 +78,12 @@ public abstract class GameScreen extends ScreenAdapter {
     }
 
     @Handler
-    public void onPause(GamePauseEvent event){
+    public void onPause(GamePauseEvent event) {
         this.state = GameState.PAUSED;
     }
 
     @Handler
-    public void onResume(GameResumeEvent event){
+    public void onResume(GameResumeEvent event) {
         this.state = GameState.PLAYING;
     }
 }
