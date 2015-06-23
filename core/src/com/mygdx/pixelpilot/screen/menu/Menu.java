@@ -25,7 +25,7 @@ public class Menu extends Stage {
     }
 
     protected void dimBackground(){
-        Texture pixel = new Texture(Assets.image.pixel);
+        Texture pixel = new Texture(Assets.Images.pixel);
         table.setBackground(new TextureRegionDrawable(new TextureRegion(pixel)).tint(new Color(0,0,0,0.65f)));
     }
 }

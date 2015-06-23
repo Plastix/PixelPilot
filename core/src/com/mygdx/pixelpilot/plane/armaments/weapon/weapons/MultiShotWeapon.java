@@ -12,9 +12,9 @@ public class MultiShotWeapon extends Weapon {
 
     public MultiShotWeapon(Plane owner, WeaponDefinition def) {
         super(def, owner);
-        if(def.weaponProperties.containsKey("numShots")){
+        if (def.weaponProperties.containsKey("numShots")) {
             try {
-                numShots = Integer.parseInt((String)def.weaponProperties.get("numShots"));
+                numShots = Integer.parseInt((String) def.weaponProperties.get("numShots"));
             } catch (NumberFormatException e) {
                 System.out.println("Weapon property \"numShots\" must be either null or a valid integer");
                 e.printStackTrace();
@@ -28,7 +28,7 @@ public class MultiShotWeapon extends Weapon {
         for (int i = 0; i < numShots; i++) {
             Projectile projectile = ProjectileFactory.build(projectileType)
                     .set(getX(), getY(), owner.getRotation()
-                            + Utils.map(i, 0, numShots - 1, -15, 15),
+                                    + Utils.map(i, 0, numShots - 1, -15, 15),
                             getSpeed(), getLifespan(), owner);
             launch(projectile);
         }

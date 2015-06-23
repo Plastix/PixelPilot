@@ -1,0 +1,14 @@
+size: 250
+color: e5ea5bff
+#characters: PLAYplay
+borderWidth: 0
+borderColor: 000000
+borderStraight: false
+shadowOffsetX: 0
+shadowOffsetY: 8
+shadowColor: b7bc4cff
+kerning: true
+flip: false
+genMipMaps: false
+
+

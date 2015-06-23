@@ -1,0 +1,11 @@
+size: 150
+color: bf3d3fff
+borderWidth: 0
+borderColor: 000000
+borderStraight: false
+shadowOffsetX: 0
+shadowOffsetY: 7
+shadowColor: 700a0aff
+kerning: true
+flip: false
+genMipMaps: false

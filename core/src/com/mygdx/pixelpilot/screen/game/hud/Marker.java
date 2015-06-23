@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.MarkerSpawnEvent;
 import com.mygdx.pixelpilot.util.Utils;

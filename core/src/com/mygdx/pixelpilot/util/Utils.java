@@ -6,6 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import java.util.ArrayList;
+
+/**
+ * Class for random stuff that's sometimes useful
+ */
 public class Utils {
 
     /**
@@ -63,5 +68,6 @@ public class Utils {
     public static boolean pointInRect(float px, float py, float rx, float ry, float rw, float rh) {
         return (px < rx + rw && px > rx && py > ry && py < ry + rh );
     }
+
 
 }

@@ -6,7 +6,7 @@ import com.mygdx.pixelpilot.effect.background.Backdrop;
 
 public class BackdropFactory {
 
-    public static enum ThemePreset {
+    public enum ThemePreset {
         ISLANDS(IslandTheme.class);
 
         public Class<? extends BackdropTheme> themeClass;
