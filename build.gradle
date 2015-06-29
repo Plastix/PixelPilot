@@ -1,10 +1,15 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.1.1'
         classpath 'org.robovm:robovm-gradle-plugin:1.0.0-beta-03'
+
+        // lib for artemis-odb weaving.
+        // see https://github.com/junkdog/artemis-odb/wiki/Bytecode-weaving
+        classpath 'net.onedaybeard.artemis:artemis-odb-gradle-plugin:0.9.0'
     }
 }
 
@@ -18,6 +23,7 @@ allprojects {
         gdxVersion = '1.6.2'
         roboVMVersion = '1.3.0'
         aiVersion = '1.5.0'
+        artemisVersion = '0.9.0'
     }
 
     repositories {
@@ -78,14 +84,33 @@ project(":ios") {
 project(":core") {
     apply plugin: "java"
 
+    configurations {
+        provided
+    }
+
+    sourceSets {
+        // run the annotation processor compile time.
+        main { compileClasspath += [configurations.provided] }
+    }
+
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+
+        // Yaml Parser
         compile "com.esotericsoftware.yamlbeans:yamlbeans:1.09"
+
+        // Mbassador for Events
         compile "net.engio:mbassador:1.2.1"
+
+        // GDX Tools (Writing Bitmap Fonts)
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
-        compile "net.onedaybeard.artemis:artemis-odb:0.9.0"
+
+        // Artemis-odb
+        compile "net.onedaybeard.artemis:artemis-odb:$artemisVersion"
+        // Artemis-odb annotation processor (see https://github.com/junkdog/artemis-odb/wiki/EntityFactory)
+        provided "net.onedaybeard.artemis:artemis-odb-processor:$artemisVersion"
     }
 }
 

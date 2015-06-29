@@ -1,6 +1,8 @@
 package com.mygdx.pixelpilot.game.component;
 
-public class Renderable {
+import com.artemis.Component;
+
+public class Renderable extends Component {
 
     public boolean isVisible;
 
