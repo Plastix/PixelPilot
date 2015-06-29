@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class World extends Stage {
+public class OldWorld extends Stage {
 
     private final Rectangle bounds;
     private Actor backdrop;
@@ -43,7 +43,7 @@ public class World extends Stage {
     private final int PLANE_LAYER = 2;
     private final int BULLET_LAYER = 1;
 
-    public World(int width, int height) {
+    public OldWorld(int width, int height) {
         super(new ExtendViewport(Config.NativeView.width, Config.NativeView.height));
         this.width = width;
         this.height = height;

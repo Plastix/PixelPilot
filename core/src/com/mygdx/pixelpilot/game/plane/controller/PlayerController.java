@@ -13,7 +13,7 @@ import com.badlogic.gdx.ai.steer.behaviors.Seek;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pixelpilot.game.plane.Plane;
-import com.mygdx.pixelpilot.game.World;
+import com.mygdx.pixelpilot.game.OldWorld;
 import com.mygdx.pixelpilot.util.Utils;
 
 public class PlayerController extends Controller {
@@ -25,10 +25,10 @@ public class PlayerController extends Controller {
     protected SteeringBehavior<Vector2> behavior;
     private SteeringAcceleration<Vector2> accel = new SteeringAcceleration<Vector2>(new Vector2());
     protected Rectangle worldBounds;
-    protected World world;
+    protected OldWorld world;
     private Seek<Vector2> seekBehavior;
 
-    public void setWorld(World world) {
+    public void setWorld(OldWorld world) {
         this.world = world;
         worldBounds = world.getBounds();
     }

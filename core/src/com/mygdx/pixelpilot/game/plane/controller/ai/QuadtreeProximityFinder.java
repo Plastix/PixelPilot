@@ -5,11 +5,11 @@ import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pixelpilot.game.plane.SteerableActor;
-import com.mygdx.pixelpilot.game.World;
+import com.mygdx.pixelpilot.game.OldWorld;
 import com.mygdx.pixelpilot.util.quadtree.QuadtreeCallback;
 
 public class QuadtreeProximityFinder implements Proximity<Vector2>, QuadtreeCallback {
-    private World world;
+    private OldWorld world;
     private Steerable<Vector2> owner;
     private Rectangle box;
     private ProximityCallback<Vector2> callback;
@@ -23,7 +23,7 @@ public class QuadtreeProximityFinder implements Proximity<Vector2>, QuadtreeCall
         box.setSize(radius);
     }
 
-    public void setWorld(World world) {
+    public void setWorld(OldWorld world) {
         this.world = world;
     }
 

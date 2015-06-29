@@ -18,7 +18,7 @@ import com.mygdx.pixelpilot.event.events.ai.AIDeathEvent;
 import com.mygdx.pixelpilot.game.plane.Plane;
 import com.mygdx.pixelpilot.game.plane.controller.ai.PlayerProximityCallback;
 import com.mygdx.pixelpilot.game.plane.controller.ai.QuadtreeProximityFinder;
-import com.mygdx.pixelpilot.game.World;
+import com.mygdx.pixelpilot.game.OldWorld;
 import com.mygdx.pixelpilot.util.Utils;
 
 // TODO: this class is due for a major refactor
@@ -49,7 +49,7 @@ public class BasicAIController extends AIController {
     }
 
     @Override
-    public void setWorld(World world) {
+    public void setWorld(OldWorld world) {
         super.setWorld(world);
         float wallAvoidanceBuffer = 150;
         this.worldBounds = new Rectangle(
