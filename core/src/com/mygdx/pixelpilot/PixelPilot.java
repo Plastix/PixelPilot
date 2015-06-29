@@ -9,7 +9,7 @@ import com.mygdx.pixelpilot.screen.ScreenManager;
 import com.mygdx.pixelpilot.screen.menu.MainMenu;
 import com.mygdx.pixelpilot.screen.menu.MenuScreen;
 
-public class PixelPilot extends Game {
+public class PixelPilot extends Game  {
 
     FPSLogger log;
 

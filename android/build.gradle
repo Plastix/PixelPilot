@@ -1,6 +1,9 @@
 android {
     buildToolsVersion "20.0.0"
-    compileSdkVersion 22
+//    compileSdkVersion 22
+    compileSdkVersion "Amazon.com:Amazon Fire TV SDK Addon:17"
+//    buildToolsVersion "21.1.2"
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'

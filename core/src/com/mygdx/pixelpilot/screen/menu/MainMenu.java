@@ -54,6 +54,47 @@ public class MainMenu extends Menu {
         }
     }
 
+    public static final int KEYCODE_DPAD_UP = 19;
+    public static final int KEYCODE_DPAD_DOWN = 20;
+    public static final int KEYCODE_DPAD_LEFT = 21;
+    public static final int KEYCODE_DPAD_RIGHT = 22;
+    public static final int KEYCODE_DPAD_CENTER = 23;
+
+
+    public static boolean DPAD_UP = false;
+    public static boolean DPAD_DOWN = false;
+    public static boolean DPAD_LEFT = false;
+    public static boolean DPAD_RIGHT = false;
+    public static boolean DPAD_CENTER = false;
+
+
+    @Override
+    public boolean keyDown(int keycode) {
+        switch(keycode){
+            case KEYCODE_DPAD_UP:
+                DPAD_UP = true;
+                break;
+            case KEYCODE_DPAD_DOWN:
+                DPAD_DOWN = true;
+                break;
+            case KEYCODE_DPAD_LEFT:
+                DPAD_LEFT = true;
+                break;
+            case KEYCODE_DPAD_RIGHT:
+                DPAD_RIGHT = true;
+                break;
+            case KEYCODE_DPAD_CENTER:
+                DPAD_CENTER = true;
+                System.out.println("Play clicked!");
+                Events.getBus().publish(new ScreenChangeEvent(new CampaignGameScreen.Loader()));
+                break;
+            default:
+                break;
+        }
+        return false;
+    }
+
+
     private void createMenuGraphics() {
 
         // create title logo header
