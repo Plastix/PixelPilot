@@ -10,11 +10,11 @@ import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.yamlbeans.YamlConfig;
 import com.mygdx.pixelpilot.data.GameData;
 import com.mygdx.pixelpilot.data.serialize.*;
-import com.mygdx.pixelpilot.plane.PlaneDefinition;
-import com.mygdx.pixelpilot.plane.PlanePreset;
-import com.mygdx.pixelpilot.plane.armaments.weapon.utils.InstalledWeaponDefinition;
-import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponDefinition;
-import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponSlot;
+import com.mygdx.pixelpilot.game.plane.PlaneDefinition;
+import com.mygdx.pixelpilot.game.plane.PlanePreset;
+import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.InstalledWeaponDefinition;
+import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.WeaponDefinition;
+import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.WeaponSlot;
 
 import java.util.ArrayList;
 

@@ -2,7 +2,7 @@ package com.mygdx.pixelpilot.data.serialize;
 
 import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.scalar.ScalarSerializer;
-import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponSlot;
+import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.WeaponSlot;
 
 public class WeaponSlotNameSerializer implements ScalarSerializer<WeaponSlot> {
     @Override

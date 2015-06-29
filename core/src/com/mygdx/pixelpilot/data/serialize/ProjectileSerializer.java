@@ -2,8 +2,8 @@ package com.mygdx.pixelpilot.data.serialize;
 
 import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.scalar.ScalarSerializer;
-import com.mygdx.pixelpilot.plane.armaments.projectile.utils.ProjectileFactory;
-import com.mygdx.pixelpilot.plane.armaments.projectile.projectiles.Projectile;
+import com.mygdx.pixelpilot.game.plane.armaments.projectile.utils.ProjectileFactory;
+import com.mygdx.pixelpilot.game.plane.armaments.projectile.projectiles.Projectile;
 
 public class ProjectileSerializer implements ScalarSerializer<Class<? extends Projectile>> {
 

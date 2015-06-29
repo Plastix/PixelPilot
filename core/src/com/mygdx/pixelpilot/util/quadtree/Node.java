@@ -1,8 +1,6 @@
 package com.mygdx.pixelpilot.util.quadtree;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
-import com.mygdx.pixelpilot.plane.SteerableActor;
 
 abstract class Node<T> {
     Rectangle bounds;

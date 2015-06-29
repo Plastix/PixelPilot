@@ -14,7 +14,7 @@ import com.mygdx.pixelpilot.data.level.Wave;
 import com.mygdx.pixelpilot.data.serialize.BackdropThemeSerializer;
 import com.mygdx.pixelpilot.data.serialize.PlanePresetSerializer;
 import com.mygdx.pixelpilot.effect.background.theme.BackdropTheme;
-import com.mygdx.pixelpilot.plane.PlanePreset;
+import com.mygdx.pixelpilot.game.plane.PlanePreset;
 
 import java.util.ArrayList;
 

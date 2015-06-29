@@ -1,6 +1,6 @@
 package com.mygdx.pixelpilot.data.level;
 
-import com.mygdx.pixelpilot.plane.PlanePreset;
+import com.mygdx.pixelpilot.game.plane.PlanePreset;
 
 import java.util.List;
 

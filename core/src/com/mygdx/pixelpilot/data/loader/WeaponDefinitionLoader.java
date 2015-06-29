@@ -11,8 +11,8 @@ import com.esotericsoftware.yamlbeans.YamlConfig;
 import com.mygdx.pixelpilot.data.GameData;
 import com.mygdx.pixelpilot.data.serialize.ProjectileSerializer;
 import com.mygdx.pixelpilot.data.serialize.WeaponSerializer;
-import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponDefinition;
-import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponTypeContainer;
+import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.WeaponDefinition;
+import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.WeaponTypeContainer;
 
 import java.util.ArrayList;
 

@@ -15,8 +15,8 @@ import com.esotericsoftware.yamlbeans.YamlConfig;
 import com.mygdx.pixelpilot.data.GameData;
 import com.mygdx.pixelpilot.data.serialize.ColorSerializer;
 import com.mygdx.pixelpilot.data.serialize.Vector2Serializer;
-import com.mygdx.pixelpilot.plane.PlaneDefinition;
-import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponSlot;
+import com.mygdx.pixelpilot.game.plane.PlaneDefinition;
+import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.WeaponSlot;
 
 import java.util.ArrayList;
 

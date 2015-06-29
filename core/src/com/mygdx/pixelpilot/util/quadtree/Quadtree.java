@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pixelpilot.plane.SteerableActor;
+import com.mygdx.pixelpilot.game.plane.SteerableActor;
 
 
 public class Quadtree extends Node<SteerableActor> {

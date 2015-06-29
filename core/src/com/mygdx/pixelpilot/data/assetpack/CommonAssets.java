@@ -4,14 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.mygdx.pixelpilot.data.Assets;
-import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.data.GameData;
 import com.mygdx.pixelpilot.data.loader.*;
-import com.mygdx.pixelpilot.effect.background.Backdrop;
-import com.mygdx.pixelpilot.plane.PlanePreset;
-import com.mygdx.pixelpilot.plane.armaments.projectile.utils.ProjectileFactory;
-import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponFactory;
-import com.mygdx.pixelpilot.plane.controller.ControllerFactory;
+import com.mygdx.pixelpilot.game.plane.PlanePreset;
+import com.mygdx.pixelpilot.game.plane.armaments.projectile.utils.ProjectileFactory;
+import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.WeaponFactory;
+import com.mygdx.pixelpilot.game.plane.controller.ControllerFactory;
 
 public class CommonAssets extends AssetPack {
 

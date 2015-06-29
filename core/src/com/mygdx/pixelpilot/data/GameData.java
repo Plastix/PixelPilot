@@ -1,9 +1,9 @@
 package com.mygdx.pixelpilot.data;
 
 import com.mygdx.pixelpilot.data.level.Level;
-import com.mygdx.pixelpilot.plane.PlanePreset;
-import com.mygdx.pixelpilot.plane.PlaneDefinition;
-import com.mygdx.pixelpilot.plane.armaments.weapon.utils.WeaponDefinition;
+import com.mygdx.pixelpilot.game.plane.PlanePreset;
+import com.mygdx.pixelpilot.game.plane.PlaneDefinition;
+import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.WeaponDefinition;
 
 import java.util.List;
 

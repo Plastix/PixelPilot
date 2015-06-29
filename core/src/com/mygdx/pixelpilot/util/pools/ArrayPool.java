@@ -2,7 +2,7 @@ package com.mygdx.pixelpilot.util.pools;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.mygdx.pixelpilot.plane.SteerableActor;
+import com.mygdx.pixelpilot.game.plane.SteerableActor;
 
 public class ArrayPool<T> extends Pool<Array<T>> {
     public static ArrayPool<SteerableActor> steerableActorArrayPool = new ArrayPool<SteerableActor>();

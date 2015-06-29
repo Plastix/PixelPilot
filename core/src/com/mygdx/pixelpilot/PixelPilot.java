@@ -4,12 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.mygdx.pixelpilot.event.Events;
-import com.mygdx.pixelpilot.event.events.screen.MenuOpenEvent;
 import com.mygdx.pixelpilot.event.events.screen.ScreenChangeEvent;
-import com.mygdx.pixelpilot.screen.DependentBuilder;
-import com.mygdx.pixelpilot.screen.ScreenManager;
-import com.mygdx.pixelpilot.screen.menu.MainMenu;
-import com.mygdx.pixelpilot.screen.menu.MenuScreen;
+import com.mygdx.pixelpilot.game.menu.MainMenu;
+import com.mygdx.pixelpilot.game.menu.MenuScreen;
 
 public class PixelPilot extends Game {
 

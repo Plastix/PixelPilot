@@ -1,7 +1,7 @@
 package com.mygdx.pixelpilot.event.events.player;
 
 import com.mygdx.pixelpilot.event.events.PlaneEvent;
-import com.mygdx.pixelpilot.plane.Plane;
+import com.mygdx.pixelpilot.game.plane.Plane;
 
 public abstract class PlayerEvent extends PlaneEvent {
 

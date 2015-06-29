@@ -1,6 +1,6 @@
 package com.mygdx.pixelpilot.event.events;
 
-import com.mygdx.pixelpilot.screen.game.hud.Marker;
+import com.mygdx.pixelpilot.game.hud.Marker;
 
 public class MarkerSpawnEvent extends GameEvent {
 

@@ -3,7 +3,7 @@ package com.mygdx.pixelpilot.event.events.screen;
 
 import com.badlogic.gdx.Screen;
 import com.mygdx.pixelpilot.event.events.GameEvent;
-import com.mygdx.pixelpilot.screen.DependentBuilder;
+import com.mygdx.pixelpilot.DependentBuilder;
 
 public class ScreenChangeEvent extends GameEvent {
 

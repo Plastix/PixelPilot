@@ -1,6 +1,6 @@
 package com.mygdx.pixelpilot.event.events;
 
-import com.mygdx.pixelpilot.plane.Plane;
+import com.mygdx.pixelpilot.game.plane.Plane;
 
 public abstract class PlaneEvent extends GameEvent {
     private Plane plane;
