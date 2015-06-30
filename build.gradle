@@ -84,6 +84,7 @@ project(":ios") {
 project(":core") {
     apply plugin: "java"
 
+
     configurations {
         provided
     }
