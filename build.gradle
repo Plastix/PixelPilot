@@ -10,6 +10,8 @@ buildscript {
         // lib for artemis-odb weaving.
         // see https://github.com/junkdog/artemis-odb/wiki/Bytecode-weaving
         classpath 'net.onedaybeard.artemis:artemis-odb-gradle-plugin:0.9.0'
+        classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:1.12.+'
+
     }
 }
 
@@ -83,6 +85,7 @@ project(":ios") {
 
 project(":core") {
     apply plugin: "java"
+    apply plugin: 'provided-base'
 
 
     configurations {
@@ -112,6 +115,7 @@ project(":core") {
         compile "net.onedaybeard.artemis:artemis-odb:$artemisVersion"
         // Artemis-odb annotation processor (see https://github.com/junkdog/artemis-odb/wiki/EntityFactory)
         provided "net.onedaybeard.artemis:artemis-odb-processor:$artemisVersion"
+
     }
 }
 

@@ -1,8 +1,12 @@
 apply plugin: "java"
+apply plugin: "artemis"
+
 sourceCompatibility = 1.6
 sourceSets.main.java.srcDirs = ["src/"]
 project.ext.mainClassName = "com.mygdx.pixelpilot.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../android/assets");
+project.ext.weaveDir = new File("$buildDir/exploded")
+
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
@@ -10,12 +14,30 @@ task run(dependsOn: classes, type: JavaExec) {
     workingDir = project.assetsDir
     ignoreExitValue = true
 }
-task dist(type: Jar) {
+
+// todo: enable weaving on android/ios (maybe do it in core)
+// Prepare folder with all dependencies exploded.
+task explodeForWeave(type: Sync, dependsOn: classes) {
+    into project.weaveDir
     from files(sourceSets.main.output.classesDir)
     from files(sourceSets.main.output.resourcesDir)
-    from { configurations.compile.collect { zipTree(it) } }
-    from files(project.assetsDir);
+    from {configurations.compile.collect {zipTree(it)}}
+    from files(project.assetsDir)
+}
 
+// Apply weaving on dependency folder.
+weave {
+    dependsOn explodeForWeave
+    enableArtemisPlugin = true
+    enablePooledWeaving = true
+    ideFriendlyPacking = true
+    optimizeEntitySystems = true
+    classesDir = project.weaveDir
+}
+
+// artemis-odb: package directory into jar.
+task dist(type: Jar) {
+    from project.weaveDir
     manifest {
         attributes 'Main-Class': project.mainClassName
     }

@@ -20,6 +20,7 @@ public class RenderSystem extends EntityProcessingSystem {
     private ComponentMapper<Sprite2D> sprite2d;
     private ComponentMapper<Renderable> renderable;
 
+    @SuppressWarnings("unchecked")
     public RenderSystem() {
         super(
                 Aspect.getAspectForAll(
@@ -45,9 +46,8 @@ public class RenderSystem extends EntityProcessingSystem {
     @Override
     protected void process(Entity e) {
         if (renderable.get(e).isVisible) {
-            Sprite2D sprite2d = sprite2d.get(e);
+            Sprite2D sprite2d = this.sprite2d.get(e);
             sprite2d.sprite.draw(batch);
-
         }
     }
 }
