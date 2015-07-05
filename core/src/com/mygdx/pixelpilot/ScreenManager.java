@@ -6,8 +6,8 @@ import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.screen.MenuCloseEvent;
 import com.mygdx.pixelpilot.event.events.screen.MenuOpenEvent;
 import com.mygdx.pixelpilot.event.events.screen.ScreenChangeEvent;
-import com.mygdx.pixelpilot.loading.LoadingScreen;
 import com.mygdx.pixelpilot.game.menu.Menu;
+import com.mygdx.pixelpilot.loading.LoadingScreen;
 import net.engio.mbassy.listener.Handler;
 
 import java.util.Stack;
@@ -24,24 +24,20 @@ public class ScreenManager implements Screen {
 
     @Handler
     public void onScreenChange(ScreenChangeEvent event) {
-        try {
-            if (currentScreen != null) {
-                currentScreen.dispose();
-            }
-            for (Menu menu : menuStack) {
-                menu.dispose();
-            }
-            menuStack.clear();
+        if (currentScreen != null) {
+            currentScreen.dispose();
+        }
+        for (Menu menu : menuStack) {
+            menu.dispose();
+        }
+        menuStack.clear();
 
-            // todo: check if we should we show a loading screen
-            DependentBuilder<? extends Screen> builder = event.getBuilder();
-            if (!(currentScreen instanceof LoadingScreen) && !builder.getPacks().isEmpty()) {
-                currentScreen = new LoadingScreen(builder.getAnimation(), builder);
-            } else {
-                currentScreen = builder.build();
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+        // todo: check if we should we show a loading screen
+        DependentBuilder<? extends Screen> builder = event.getBuilder();
+        if (!(currentScreen instanceof LoadingScreen) && !builder.getPacks().isEmpty()) {
+            currentScreen = new LoadingScreen(builder.getAnimation(), builder);
+        } else {
+            currentScreen = builder.build();
         }
     }
 
@@ -73,7 +69,7 @@ public class ScreenManager implements Screen {
         if (currentScreen == null) return;
 
         currentScreen.render(delta);
-        if (menuStack.size() != 0 ) {
+        if (menuStack.size() != 0) {
             menuStack.peek().draw();
         }
     }

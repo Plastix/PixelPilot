@@ -45,7 +45,7 @@ public class WeaponDefinitionLoader extends AsynchronousAssetLoader<WeaponDefini
         config.setScalarSerializer(WeaponTypeContainer.class, new WeaponSerializer());
         WeaponDefinitionContainer c = new WeaponDefinitionContainer();
         c.weaponDefs = YamlLoaderUtils.parseYamlToList(fileName, WeaponDefinition.class, config);
-        // todo: fix - don't like having to GameData values manually
+        // todo: fix - don't like having to set GameData values manually
         GameData.weaponDefinitions = c.weaponDefs;
         return c;
     }

@@ -19,7 +19,8 @@ public class Events {
             config.setProperty(Properties.Handler.PublicationError, new IPublicationErrorHandler() {
                 @Override
                 public void handleError(PublicationError error) {
-                    System.out.println(error);
+                    System.err.println(error);
+                    error.getCause().printStackTrace();
                 }
             });
             config.addFeature(Feature.SyncPubSub.Default());

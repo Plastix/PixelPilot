@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.screen.ScreenChangeEvent;
+import com.mygdx.pixelpilot.game.campaign.CampaignGameScreen;
 import com.mygdx.pixelpilot.game.menu.MainMenu;
 import com.mygdx.pixelpilot.game.menu.MenuScreen;
 
@@ -15,9 +16,11 @@ public class PixelPilot extends Game {
     @Override
     public void create() {
         this.setScreen(new ScreenManager());
-        DependentBuilder<? extends Screen> dependentBuilder =
-                new MenuScreen.Builder().setMenu(new MainMenu.Builder());
-        Events.getBus().publish(new ScreenChangeEvent(dependentBuilder));
+//        DependentBuilder<? extends Screen> dependentBuilder =
+//                new MenuScreen.Builder().setMenu(new MainMenu.Builder());
+//        Events.getBus().publish(new ScreenChangeEvent(dependentBuilder));
+
+        Events.getBus().publish(new ScreenChangeEvent(new CampaignGameScreen.Loader()));
 
         log = new FPSLogger();
     }

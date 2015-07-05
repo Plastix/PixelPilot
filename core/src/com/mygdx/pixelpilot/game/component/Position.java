@@ -11,4 +11,10 @@ public class Position extends Component {
         this.x = x;
         this.y = y;
     }
+
+    public void add(float _x, float _y) {
+        x += _x;
+        y += _y;
+    }
+
 }
