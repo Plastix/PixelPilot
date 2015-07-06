@@ -10,7 +10,7 @@ buildscript {
         // lib for artemis-odb weaving.
         // see https://github.com/junkdog/artemis-odb/wiki/Bytecode-weaving
         classpath 'net.onedaybeard.artemis:artemis-odb-gradle-plugin:0.9.0'
-        classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:1.12.+'
+        classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:2.2.2'
 
     }
 }
@@ -38,13 +38,13 @@ allprojects {
 project(":desktop") {
     apply plugin: "java"
 
-
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+        compile "net.onedaybeard.artemis:artemis-odb:$artemisVersion"
     }
 }
 
@@ -86,16 +86,6 @@ project(":ios") {
 project(":core") {
     apply plugin: "java"
     apply plugin: 'provided-base'
-
-
-    configurations {
-        provided
-    }
-
-    sourceSets {
-        // run the annotation processor compile time.
-        main { compileClasspath += [configurations.provided] }
-    }
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"

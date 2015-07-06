@@ -14,7 +14,6 @@ public class Game {
 
     public Game() {
 
-        // note: had to add artemis in the project_structure->modules->desktop->dependencies list
         world = new World();
 
         world.setSystem(new RenderSystem());
