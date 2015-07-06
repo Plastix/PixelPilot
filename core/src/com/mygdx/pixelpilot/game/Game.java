@@ -5,6 +5,7 @@ import com.artemis.utils.EntityBuilder;
 import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.game.component.*;
+import com.mygdx.pixelpilot.game.manager.BackdropManager;
 import com.mygdx.pixelpilot.game.system.MovementSystem;
 import com.mygdx.pixelpilot.game.system.RenderSystem;
 
@@ -15,7 +16,7 @@ public class Game {
     public Game() {
 
         world = new World();
-
+        world.setManager(new BackdropManager());
         world.setSystem(new RenderSystem());
         world.setSystem(new MovementSystem());
 //        world.setSystem(new LevelCreationSyste());
