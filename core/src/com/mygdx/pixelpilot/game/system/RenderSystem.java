@@ -5,13 +5,18 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.game.component.*;
 
 @Wire
 public class RenderSystem extends EntityProcessingSystem {
 
     private SpriteBatch batch;
+    private ExtendViewport viewport;
     private ComponentMapper<Position> position;
     private ComponentMapper<Rotation> rotation;
     private ComponentMapper<Sprite2D> sprite2d;
@@ -30,10 +35,15 @@ public class RenderSystem extends EntityProcessingSystem {
                 )
         );
         batch = new SpriteBatch();
+
+        viewport = new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera());
+        // Pass in true to center camera
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 
     @Override
     protected void begin() {
+        batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
     }
 

@@ -29,7 +29,7 @@ public class Game {
                 new Velocity(((float) Math.random()), ((float) Math.random())),
                 new Renderable(),
                 new Rotation(((float) Math.random()) * 360),
-                new Size(20, 20),
+                new Size(100, 100),
                 new Sprite2D(Assets.Images.plane)
         ).build();
 
