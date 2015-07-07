@@ -6,6 +6,10 @@ public class Rotation extends Component {
 
     public float rotation;
 
+    public Rotation() {
+        this.rotation = 0;
+    }
+
     public Rotation(float rotation) {
         this.rotation = rotation;
     }

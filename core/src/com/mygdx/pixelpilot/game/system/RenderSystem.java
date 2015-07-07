@@ -10,7 +10,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.data.Config;
+import com.mygdx.pixelpilot.data.Assets;
+import com.mygdx.pixelpilot.data.Config;
+import com.mygdx.pixelpilot.effect.background.Backdrop;
 import com.mygdx.pixelpilot.game.component.*;
+import com.mygdx.pixelpilot.game.manager.BackdropManager;
 
 @Wire
 public class RenderSystem extends EntityProcessingSystem {
@@ -22,6 +26,7 @@ public class RenderSystem extends EntityProcessingSystem {
     private ComponentMapper<Sprite2D> sprite2d;
     private ComponentMapper<Renderable> renderable;
     private ComponentMapper<Size> size;
+    private Backdrop backdrop;
 
     @SuppressWarnings("unchecked")
     public RenderSystem() {
@@ -34,17 +39,22 @@ public class RenderSystem extends EntityProcessingSystem {
                         Sprite2D.class
                 )
         );
+
         batch = new SpriteBatch();
 
         viewport = new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera());
         // Pass in true to center camera
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+
+        backdrop = Assets.manager.get("backdrop", Backdrop.class);
+        backdrop.setSize(3000, 3000);
     }
 
     @Override
     protected void begin() {
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
+        backdrop.draw(batch, 1);
     }
 
     @Override

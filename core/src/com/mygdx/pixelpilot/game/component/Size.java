@@ -10,4 +10,9 @@ public class Size extends Component {
         this.width = width;
         this.height = height;
     }
+
+    public Size() {
+        this.width = 1;
+        this.height = 1;
+    }
 }

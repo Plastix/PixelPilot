@@ -11,4 +11,10 @@ public class Velocity extends Component {
         this.x = x;
         this.y = y;
     }
+
+    public Velocity() {
+        this.x = 0;
+        this.y = 0;
+    }
+
 }

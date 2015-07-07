@@ -60,4 +60,5 @@ task afterEclipseImport(description: "Post processing after project generation",
     }
 }
 dependencies {
+    compile "net.onedaybeard.artemis:artemis-odb:0.9.0"
 }
