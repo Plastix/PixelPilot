@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.mygdx.pixelpilot.event.Events;
+import com.mygdx.pixelpilot.event.events.screen.ResizeEvent;
 import com.mygdx.pixelpilot.event.events.screen.ScreenChangeEvent;
 import com.mygdx.pixelpilot.game.campaign.CampaignGameScreen;
 import com.mygdx.pixelpilot.game.menu.MainMenu;
@@ -31,4 +32,8 @@ public class PixelPilot extends Game {
         log.log();
     }
 
+    @Override
+    public void resize(int width, int height) {
+        Events.getBus().publish(new ResizeEvent(width, height));
+    }
 }

@@ -11,10 +11,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.data.Assets;
-import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.effect.background.Backdrop;
+import com.mygdx.pixelpilot.event.Events;
+import com.mygdx.pixelpilot.event.events.screen.ResizeEvent;
+import com.mygdx.pixelpilot.game.camera.GameCamera;
+import com.mygdx.pixelpilot.game.camera.TrackingCamera;
 import com.mygdx.pixelpilot.game.component.*;
-import com.mygdx.pixelpilot.game.manager.BackdropManager;
+import net.engio.mbassy.listener.Handler;
 
 @Wire
 public class RenderSystem extends EntityProcessingSystem {
@@ -39,10 +42,12 @@ public class RenderSystem extends EntityProcessingSystem {
                         Sprite2D.class
                 )
         );
+        Events.getBus().subscribe(this);
 
         batch = new SpriteBatch();
-
+        
         viewport = new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera());
+
         // Pass in true to center camera
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 
@@ -74,5 +79,10 @@ public class RenderSystem extends EntityProcessingSystem {
             sprite2d.sprite.setSize(size.width, size.height);
             sprite2d.sprite.draw(batch);
         }
+    }
+
+    @Handler
+    public void onResize(ResizeEvent event) {
+        viewport.update(event.width, event.height);
     }
 }
