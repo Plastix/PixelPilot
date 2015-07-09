@@ -1,22 +1,30 @@
 package com.mygdx.pixelpilot.game;
 
+import com.artemis.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.mygdx.pixelpilot.game.system.MovementSystem;
+import com.mygdx.pixelpilot.game.system.PlayerInputSystem;
+import com.mygdx.pixelpilot.game.system.RenderSystem;
+import com.mygdx.pixelpilot.game.system.WaveSystem;
 
 public abstract class GameScreen extends ScreenAdapter {
 
     //    protected HUD hud;
 //    protected OldWorld world;
 //    private GameState state;
-    private Game game;
+    protected final World world;
 
     public GameScreen() {
-        game = new Game();
-//        world = new OldWorld(3000, 3000);
-//        hud = new HUD();
-//        state = GameState.PLAYING;
-//        Events.getBus().subscribe(this);
+
+        world = new World();
+        world.setSystem(new RenderSystem());
+        world.setSystem(new MovementSystem());
+        world.setSystem(new PlayerInputSystem());
+        world.setSystem(new WaveSystem());
+
+        world.initialize();
     }
 
 //    protected void setWorld(OldWorld world) {
@@ -32,7 +40,8 @@ public abstract class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(139f / 255f, 166f / 255f, 177f / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.update(delta);
+        world.setDelta(delta);
+        world.process();
 
 //        if (state != GameState.PAUSED) {
 //            world.act(delta);
