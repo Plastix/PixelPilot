@@ -1,21 +1,8 @@
 package com.mygdx.pixelpilot.game.campaign;
 
-import com.mygdx.pixelpilot.data.GameData;
 import com.mygdx.pixelpilot.data.assetpack.*;
-import com.mygdx.pixelpilot.data.level.Level;
-import com.mygdx.pixelpilot.data.level.Wave;
-import com.mygdx.pixelpilot.event.Events;
-import com.mygdx.pixelpilot.event.events.ai.AISpawnEvent;
-import com.mygdx.pixelpilot.event.events.game.WaveSpawnEvent;
-import com.mygdx.pixelpilot.game.plane.Plane;
-import com.mygdx.pixelpilot.game.plane.PlaneFactory;
-import com.mygdx.pixelpilot.game.plane.PlanePreset;
-import com.mygdx.pixelpilot.game.plane.controller.AIController;
 import com.mygdx.pixelpilot.game.GameScreen;
 import com.mygdx.pixelpilot.DependentBuilder;
-import net.engio.mbassy.listener.Handler;
-
-import java.util.List;
 
 public class CampaignGameScreen extends GameScreen {
 

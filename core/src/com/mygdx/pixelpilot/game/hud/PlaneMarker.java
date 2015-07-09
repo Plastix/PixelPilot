@@ -4,13 +4,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.event.events.ai.AIDeathEvent;
-import com.mygdx.pixelpilot.game.plane.Plane;
+import com.mygdx.pixelpilot.game.plane.OldPlane;
 import net.engio.mbassy.listener.Handler;
 
 
-public class PlaneMarker extends Marker<Plane> {
+public class PlaneMarker extends Marker<OldPlane> {
 
-    public PlaneMarker(Plane target) {
+    public PlaneMarker(OldPlane target) {
         super(target);
     }
 

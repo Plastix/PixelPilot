@@ -5,13 +5,13 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.WeaponFireEvent;
-import com.mygdx.pixelpilot.game.plane.Plane;
+import com.mygdx.pixelpilot.game.plane.OldPlane;
 import com.mygdx.pixelpilot.game.plane.armaments.projectile.projectiles.Projectile;
 import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.WeaponDefinition;
 import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.WeaponSlot;
 
 public abstract class Weapon {
-    protected Plane owner;
+    protected OldPlane owner;
     protected Class<? extends Projectile> projectileType;
     private long timeOfLastShot;
     private long reloadTime;
@@ -19,7 +19,7 @@ public abstract class Weapon {
     WeaponSlot slot;
     WeaponDefinition def;
 
-    public Weapon(WeaponDefinition def, Plane owner) {
+    public Weapon(WeaponDefinition def, OldPlane owner) {
         this.projectileType = def.projectileType;
         this.def = def;
         // one unit per frame, over 5 seconds at 60 fps = 60*5 = 300 units

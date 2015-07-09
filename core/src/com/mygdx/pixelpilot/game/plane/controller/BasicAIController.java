@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.ai.AIDeathEvent;
-import com.mygdx.pixelpilot.game.plane.Plane;
+import com.mygdx.pixelpilot.game.plane.OldPlane;
 import com.mygdx.pixelpilot.game.plane.controller.ai.PlayerProximityCallback;
 import com.mygdx.pixelpilot.game.plane.controller.ai.QuadtreeProximityFinder;
 import com.mygdx.pixelpilot.game.OldWorld;
@@ -26,7 +26,7 @@ public class BasicAIController extends AIController {
 
     private final float detectionDistance = 500;
     private final float trackingDistance = 1500;
-    private Plane plane;
+    private OldPlane plane;
     private QuadtreeProximityFinder proximity;
     private Proximity.ProximityCallback<Vector2> targetProximityCallback;
     private SteeringAcceleration<Vector2> accel = new SteeringAcceleration<Vector2>(new Vector2());
@@ -43,7 +43,7 @@ public class BasicAIController extends AIController {
     }
 
     @Override
-    public void control(Plane planeBody) {
+    public void control(OldPlane planeBody) {
         this.plane = planeBody;
         stateMachine.update();
     }
@@ -117,7 +117,7 @@ public class BasicAIController extends AIController {
                     controller.stateMachine.changeState(WANDER);
                 } else {
                     controller.applyBehavior();
-                    Plane plane = controller.plane;
+                    OldPlane plane = controller.plane;
                     Steerable<Vector2> target = controller.getTarget();
                     float x = plane.getX() - target.getPosition().x;
                     float y = plane.getY() - target.getPosition().y;

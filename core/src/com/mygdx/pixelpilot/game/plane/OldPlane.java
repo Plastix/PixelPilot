@@ -19,9 +19,9 @@ import com.mygdx.pixelpilot.util.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Plane extends SteerableActor {
+public class OldPlane extends SteerableActor {
 
-    private PlaneDefinition def;
+    private OldPlaneDefinition def;
     private List<Weapon> weapons;
     private Controller controller;
     private Sprite sprite;
@@ -32,7 +32,7 @@ public class Plane extends SteerableActor {
     private int health;
     private boolean isOnFire;
 
-    public Plane(final PlaneDefinition def, List<InstalledWeaponDefinition> weaponDefs, Controller controller) {
+    public OldPlane(final OldPlaneDefinition def, List<InstalledWeaponDefinition> weaponDefs, Controller controller) {
 
         this.controller = controller;
         this.def = def;

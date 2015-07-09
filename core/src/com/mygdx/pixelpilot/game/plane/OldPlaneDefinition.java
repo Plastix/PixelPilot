@@ -6,7 +6,7 @@ import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.WeaponSlot;
 
 import java.util.List;
 
-public class PlaneDefinition {
+public class OldPlaneDefinition {
 
     public String name;
     public int speed;

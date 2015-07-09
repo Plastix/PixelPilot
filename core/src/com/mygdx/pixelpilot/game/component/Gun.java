@@ -11,4 +11,12 @@ public class Gun extends Component {
         this.shotCount = shotCount;
         this.reloadTime = reloadTime;
     }
+
+    @Override
+    public String toString() {
+        return "Gun{" +
+                "shotCount=" + shotCount +
+                ", reloadTime=" + reloadTime +
+                '}';
+    }
 }

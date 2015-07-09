@@ -1,6 +1,6 @@
 package com.mygdx.pixelpilot.game.plane.armaments.weapon.utils;
 
-import com.mygdx.pixelpilot.game.plane.Plane;
+import com.mygdx.pixelpilot.game.plane.OldPlane;
 import com.mygdx.pixelpilot.game.plane.armaments.weapon.weapons.Weapon;
 
 /**
@@ -14,7 +14,7 @@ public class InstalledWeaponDefinition {
         this.slot = slot;
     }
 
-    public Weapon create(Plane owner){
+    public Weapon create(OldPlane owner){
         Weapon weapon = WeaponFactory.build(owner, this.weapon);
         weapon.mount(slot);
         return weapon;

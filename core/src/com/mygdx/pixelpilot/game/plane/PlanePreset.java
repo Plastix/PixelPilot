@@ -1,5 +1,6 @@
 package com.mygdx.pixelpilot.game.plane;
 
+import com.mygdx.pixelpilot.game.component.PlaneDefinition;
 import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.InstalledWeaponDefinition;
 import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.WeaponSlot;
 import com.mygdx.pixelpilot.game.plane.controller.Controller;

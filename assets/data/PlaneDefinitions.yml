@@ -1,5 +1,5 @@
 - name: Basic Plane
-  speed: 10
+  magnitude: 10
   armor: 20
   minTurnRadius: 130
   spritePath: image/planes/1.png

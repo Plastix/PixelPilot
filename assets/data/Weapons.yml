@@ -3,7 +3,7 @@
   projectileType: StandardBullet
   reloadTime: 50
   lifespan: 1500
-  speed: 15
+  magnitude: 15
   weight: 15
 
 - name: Three Shot Standard
@@ -13,7 +13,7 @@
   projectileType: StandardBullet
   reloadTime: 75
   lifespan: 1500
-  speed: 15
+  magnitude: 15
   weight: 30
 
 - name: Six Shot Standard
@@ -23,5 +23,5 @@
   projectileType: StandardBullet
   reloadTime: 1000
   lifespan: 1500
-  speed: 15
+  magnitude: 15
   weight: 45

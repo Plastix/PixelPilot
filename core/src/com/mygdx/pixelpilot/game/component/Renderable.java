@@ -9,4 +9,11 @@ public class Renderable extends Component {
     public Renderable() {
         isVisible = true;
     }
+
+    @Override
+    public String toString() {
+        return "Renderable{" +
+                "isVisible=" + isVisible +
+                '}';
+    }
 }

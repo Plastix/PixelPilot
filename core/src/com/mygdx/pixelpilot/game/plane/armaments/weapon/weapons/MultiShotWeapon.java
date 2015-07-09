@@ -1,6 +1,6 @@
 package com.mygdx.pixelpilot.game.plane.armaments.weapon.weapons;
 
-import com.mygdx.pixelpilot.game.plane.Plane;
+import com.mygdx.pixelpilot.game.plane.OldPlane;
 import com.mygdx.pixelpilot.game.plane.armaments.projectile.projectiles.Projectile;
 import com.mygdx.pixelpilot.game.plane.armaments.projectile.utils.ProjectileFactory;
 import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.WeaponDefinition;
@@ -10,7 +10,7 @@ public class MultiShotWeapon extends Weapon {
 
     int numShots = 6;
 
-    public MultiShotWeapon(Plane owner, WeaponDefinition def) {
+    public MultiShotWeapon(OldPlane owner, WeaponDefinition def) {
         super(def, owner);
         if (def.weaponProperties.containsKey("numShots")) {
             try {

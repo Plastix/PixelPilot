@@ -12,7 +12,7 @@ import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.ai.steer.behaviors.Seek;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.pixelpilot.game.plane.Plane;
+import com.mygdx.pixelpilot.game.plane.OldPlane;
 import com.mygdx.pixelpilot.game.OldWorld;
 import com.mygdx.pixelpilot.util.Utils;
 
@@ -21,7 +21,7 @@ public class PlayerController extends Controller {
     float turnAmount = 0.5f;
     boolean accelerometer;
     private StateMachine<PlayerController> stateMachine;
-    private Plane plane;
+    private OldPlane plane;
     protected SteeringBehavior<Vector2> behavior;
     private SteeringAcceleration<Vector2> accel = new SteeringAcceleration<Vector2>(new Vector2());
     protected Rectangle worldBounds;
@@ -39,7 +39,7 @@ public class PlayerController extends Controller {
     }
 
     @Override
-    public void control(Plane planeBody) {
+    public void control(OldPlane planeBody) {
         this.plane = planeBody;
         stateMachine.update();
     }

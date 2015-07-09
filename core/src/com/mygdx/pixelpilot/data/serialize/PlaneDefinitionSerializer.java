@@ -3,7 +3,8 @@ package com.mygdx.pixelpilot.data.serialize;
 import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.scalar.ScalarSerializer;
 import com.mygdx.pixelpilot.data.GameData;
-import com.mygdx.pixelpilot.game.plane.PlaneDefinition;
+import com.mygdx.pixelpilot.game.component.PlaneDefinition;
+import com.mygdx.pixelpilot.game.plane.OldPlaneDefinition;
 
 public class PlaneDefinitionSerializer implements ScalarSerializer<PlaneDefinition> {
 

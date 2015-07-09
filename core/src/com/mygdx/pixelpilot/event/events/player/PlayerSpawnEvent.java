@@ -1,9 +1,9 @@
 package com.mygdx.pixelpilot.event.events.player;
 
-import com.mygdx.pixelpilot.game.plane.Plane;
+import com.mygdx.pixelpilot.game.plane.OldPlane;
 
 public class PlayerSpawnEvent extends PlayerEvent {
-    public PlayerSpawnEvent(Plane plane) {
+    public PlayerSpawnEvent(OldPlane plane) {
         super(plane);
     }
 }

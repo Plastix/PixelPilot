@@ -25,6 +25,7 @@ public class MovementSystem extends EntityProcessingSystem {
     @Override
     protected void process(Entity e) {
         Velocity velocity = this.velocity.get(e);
-        position.get(e).add(velocity.x, velocity.y);
+        Position position = this.position.get(e);
+        position.add(velocity.getX(), velocity.getY());
     }
 }

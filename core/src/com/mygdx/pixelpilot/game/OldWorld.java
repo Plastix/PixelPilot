@@ -18,7 +18,7 @@ import com.mygdx.pixelpilot.event.events.WeaponFireEvent;
 import com.mygdx.pixelpilot.event.events.ai.AIDeathEvent;
 import com.mygdx.pixelpilot.event.events.ai.AISpawnEvent;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
-import com.mygdx.pixelpilot.game.plane.Plane;
+import com.mygdx.pixelpilot.game.plane.OldPlane;
 import com.mygdx.pixelpilot.game.plane.armaments.projectile.projectiles.Projectile;
 import com.mygdx.pixelpilot.game.plane.controller.PlayerController;
 import com.mygdx.pixelpilot.game.camera.GameCamera;
@@ -35,7 +35,7 @@ public class OldWorld extends Stage {
     private final Rectangle bounds;
     private Actor backdrop;
     private Group clouds;
-    private List<Plane> planes;
+    private List<OldPlane> planes;
     private GameCamera camera;
     private int width, height;
     private Quadtree storage;
@@ -57,7 +57,7 @@ public class OldWorld extends Stage {
         this.storage = new Quadtree(0, 0, width, height);
         Events.getBus().subscribe(this);
 //        clouds = Cloud.generateClouds(150); // static for now
-        planes = new ArrayList<Plane>();
+        planes = new ArrayList<OldPlane>();
         createBackdrop();
 
 
@@ -105,7 +105,7 @@ public class OldWorld extends Stage {
         return storage;
     }
 
-    private void addPlane(Plane plane, Vector2 spawnPos) {
+    private void addPlane(OldPlane plane, Vector2 spawnPos) {
         plane.setPosition(spawnPos.x, spawnPos.y);
         this.addActor(plane);
         plane.toFront();
@@ -138,7 +138,7 @@ public class OldWorld extends Stage {
 
     @Handler
     public void onAIDeath(AIDeathEvent event) {
-        Plane plane = event.getPlane();
+        OldPlane plane = event.getPlane();
         storage.remove(plane);
         planes.remove(plane);
         plane.remove();

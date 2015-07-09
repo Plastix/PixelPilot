@@ -9,6 +9,9 @@ public class Sprite2D extends Component {
 
     public Sprite sprite;
 
+    public Sprite2D() {
+    }
+
     public Sprite2D(Sprite sprite) {
         this.sprite = sprite;
     }
@@ -19,5 +22,9 @@ public class Sprite2D extends Component {
 
     public Sprite2D(String path) {
         this(Assets.manager.get(path, Texture.class));
+    }
+
+    public void setPath(String path) {
+        sprite = new Sprite(Assets.manager.get(path, Texture.class));
     }
 }

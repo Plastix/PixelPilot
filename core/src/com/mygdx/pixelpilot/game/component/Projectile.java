@@ -9,4 +9,11 @@ public class Projectile extends Component {
     public Projectile(float lifeSpan) {
         this.lifeSpan = lifeSpan;
     }
+
+    @Override
+    public String toString() {
+        return "Projectile{" +
+                "lifeSpan=" + lifeSpan +
+                '}';
+    }
 }

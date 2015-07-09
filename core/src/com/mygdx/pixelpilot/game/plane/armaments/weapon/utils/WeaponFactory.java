@@ -1,6 +1,6 @@
 package com.mygdx.pixelpilot.game.plane.armaments.weapon.utils;
 
-import com.mygdx.pixelpilot.game.plane.Plane;
+import com.mygdx.pixelpilot.game.plane.OldPlane;
 import com.mygdx.pixelpilot.game.plane.armaments.weapon.weapons.MultiShotWeapon;
 import com.mygdx.pixelpilot.game.plane.armaments.weapon.weapons.SingleShotWeapon;
 import com.mygdx.pixelpilot.game.plane.armaments.weapon.weapons.Weapon;
@@ -17,20 +17,20 @@ public class WeaponFactory {
     public static void registerWeapons() {
         providerMap.put(SingleShotWeapon.class, new WeaponProvider<SingleShotWeapon>() {
             @Override
-            public SingleShotWeapon create(Plane owner, WeaponDefinition def) {
+            public SingleShotWeapon create(OldPlane owner, WeaponDefinition def) {
                 return new SingleShotWeapon(owner, def);
             }
         });
 
         providerMap.put(MultiShotWeapon.class, new WeaponProvider<MultiShotWeapon>() {
             @Override
-            public MultiShotWeapon create(Plane owner, WeaponDefinition def) {
+            public MultiShotWeapon create(OldPlane owner, WeaponDefinition def) {
                 return new MultiShotWeapon(owner, def);
             }
         });
     }
 
-    public static Weapon build(Plane owner, WeaponDefinition def) {
+    public static Weapon build(OldPlane owner, WeaponDefinition def) {
         if (isValid(def.weaponType.type)) {
             return providerMap.get(def.weaponType.type).obtain(owner, def);
         } else {

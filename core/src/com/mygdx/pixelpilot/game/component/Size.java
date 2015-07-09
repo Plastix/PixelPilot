@@ -6,6 +6,7 @@ public class Size extends Component {
 
     public float width;
     public float height;
+
     public Size(float width, float height) {
         this.width = width;
         this.height = height;
@@ -14,5 +15,13 @@ public class Size extends Component {
     public Size() {
         this.width = 1;
         this.height = 1;
+    }
+
+    @Override
+    public String toString() {
+        return "Size{" +
+                "width=" + width +
+                ", height=" + height +
+                '}';
     }
 }

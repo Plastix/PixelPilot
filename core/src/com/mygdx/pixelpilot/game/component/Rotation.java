@@ -13,4 +13,16 @@ public class Rotation extends Component {
     public Rotation(float rotation) {
         this.rotation = rotation;
     }
+
+    public Rotation set(float rotation) {
+        this.rotation = rotation;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Rotation{" +
+                "rotation=" + rotation +
+                '}';
+    }
 }

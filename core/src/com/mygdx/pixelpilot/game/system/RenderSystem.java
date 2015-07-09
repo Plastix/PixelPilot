@@ -45,7 +45,7 @@ public class RenderSystem extends EntityProcessingSystem {
         Events.getBus().subscribe(this);
 
         batch = new SpriteBatch();
-        
+
         viewport = new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera());
 
         // Pass in true to center camera
