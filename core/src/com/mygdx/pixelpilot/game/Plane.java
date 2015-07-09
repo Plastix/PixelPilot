@@ -5,7 +5,7 @@ import com.artemis.annotations.Bind;
 import com.artemis.annotations.UseSetter;
 import com.mygdx.pixelpilot.game.component.*;
 
-@Bind({Sprite2D.class, Cullible.class, Position.class, Rotation.class,
+@Bind({Sprite2D.class, Cullable.class, Position.class, Rotation.class,
         Velocity.class, Size.class, Health.class, PlaneDefinition.class, Renderable.class})
 public interface Plane extends EntityFactory<Plane> {
     Plane position(float x, float y);
