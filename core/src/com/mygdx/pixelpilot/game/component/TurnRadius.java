@@ -13,4 +13,11 @@ public class TurnRadius extends Component {
     public TurnRadius(int turnRadius) {
         this.turnRadius = turnRadius;
     }
+
+    @Override
+    public String toString() {
+        return "TurnRadius{" +
+                "turnRadius=" + turnRadius +
+                '}';
+    }
 }
