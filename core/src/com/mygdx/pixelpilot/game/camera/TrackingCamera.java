@@ -9,12 +9,13 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
+import com.mygdx.pixelpilot.game.component.Position;
 import com.mygdx.pixelpilot.util.Utils;
 import net.engio.mbassy.listener.Handler;
 
 public class TrackingCamera extends OrthographicCamera {
 
-    private Actor target;
+    private Position target;
     private Rectangle worldBounds;
     private float baseTrackSpeed;
     private Interpolation interpolator;
@@ -28,13 +29,14 @@ public class TrackingCamera extends OrthographicCamera {
         Events.getBus().subscribe(this);
     }
 
-    public void track(Actor target) {
+    public void track(Position target) {
         this.target = target;
     }
 
     @Override
     public void update() {
         super.update();
+        System.out.println(target);
         if(Gdx.input.isKeyPressed(Input.Keys.I))
             zoom -= 0.1f;
         else if(Gdx.input.isKeyPressed(Input.Keys.J))
@@ -61,8 +63,8 @@ public class TrackingCamera extends OrthographicCamera {
     private void track() {
         Vector3 currPos = position;
 
-        float targetX = target.getX();
-        float targetY = target.getY();
+        float targetX = target.x;
+        float targetY = target.y;
             /*
             * Explanation semi-attempt:
             *   When the camera's leading edge passes the soft border, the lerp speed
@@ -124,8 +126,8 @@ public class TrackingCamera extends OrthographicCamera {
         }
     }
 
-    @Handler
-    public void onPlaneSpawn(PlayerSpawnEvent event) {
-        track(event.getPlane());
-    }
+//    @Handler
+//    public void onPlaneSpawn(PlayerSpawnEvent event) {
+//        track(event.getPlane());
+//    }
 }

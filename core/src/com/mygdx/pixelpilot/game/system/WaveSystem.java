@@ -1,5 +1,6 @@
 package com.mygdx.pixelpilot.game.system;
 
+import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.VoidEntitySystem;
@@ -9,13 +10,16 @@ import com.mygdx.pixelpilot.data.GameData;
 import com.mygdx.pixelpilot.game.Plane;
 import com.mygdx.pixelpilot.game.component.ParticleEmitter;
 import com.mygdx.pixelpilot.game.component.Player;
+import com.mygdx.pixelpilot.game.component.Position;
 import com.mygdx.pixelpilot.game.plane.PlaneDefinition;
+
 
 @Wire
 public class WaveSystem extends VoidEntitySystem {
 
     private World world;
     private Plane plane;
+    private RenderSystem renderSystem;
 
     @Override
     protected void initialize() {
@@ -23,7 +27,7 @@ public class WaveSystem extends VoidEntitySystem {
     }
 
     private void buildPlayer(PlaneDefinition planeDefinition) {
-        plane.health(100)
+        Entity entity = plane.health(100)
                 .position(100, 100)
                 .size(3.5f, 3.5f)
                 .rotation(-90)
@@ -32,7 +36,8 @@ public class WaveSystem extends VoidEntitySystem {
                 .minTurnRadius(planeDefinition.minTurnRadius)
                 .create()
                 .edit().add(new Player())
-                .add(new ParticleEmitter(Assets.manager.get(Assets.Data.smoke, ParticleEffect.class)));
+                .add(new ParticleEmitter(Assets.manager.get(Assets.Data.smoke, ParticleEffect.class))).getEntity();
+        renderSystem.camera.track(entity.getComponent(Position.class));
     }
 
     @Override

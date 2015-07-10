@@ -33,8 +33,8 @@ public class GameCamera extends TrackingCamera {
         this.isPaused = false;
     }
 
-    @Handler
-    public void onPlaneSpawn(PlayerSpawnEvent event) {
-        this.track(event.getPlane());
-    }
+//    @Handler
+//    public void onPlaneSpawn(PlayerSpawnEvent event) {
+//        this.track(event.getPlane());
+//    }
 }

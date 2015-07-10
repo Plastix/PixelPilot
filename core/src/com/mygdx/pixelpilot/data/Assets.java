@@ -67,7 +67,6 @@ public class Assets {
         public static final String play_icon = "image/play_icon.png";
         public static final String restart_icon = "image/restart_icon.png";
         public static final String menu_icon = "image/menu_icon.png";
-
         /* HUD */
         public static final String plane = "image/plane_icon.png";
         public static final String trophy = "image/trophy_icon.png";

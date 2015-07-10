@@ -8,12 +8,14 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.effect.background.Backdrop;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.screen.ResizeEvent;
+import com.mygdx.pixelpilot.game.camera.GameCamera;
 import com.mygdx.pixelpilot.game.component.*;
 import net.engio.mbassy.listener.Handler;
 
@@ -28,6 +30,7 @@ public class RenderSystem extends EntityProcessingSystem {
     private ComponentMapper<Renderable> renderable;
     private ComponentMapper<Size> size;
     private Backdrop backdrop;
+    public GameCamera camera;
 
     @SuppressWarnings("unchecked")
     public RenderSystem() {
@@ -44,7 +47,10 @@ public class RenderSystem extends EntityProcessingSystem {
 
         batch = new SpriteBatch();
 
-        viewport = new ExtendViewport(Config.NativeView.width, Config.NativeView.height, new OrthographicCamera());
+        camera = new GameCamera();
+        camera.setWorldBounds(new Rectangle(0,0,3000,3000));
+
+        viewport = new ExtendViewport(Config.NativeView.width, Config.NativeView.height, camera);
 
         // Pass in true to center camera
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
@@ -67,6 +73,7 @@ public class RenderSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity e) {
+        viewport.getCamera().update();
         if (renderable.get(e).isVisible) {
             Sprite2D sprite2d = this.sprite2d.get(e);
             Position position = this.position.get(e);
