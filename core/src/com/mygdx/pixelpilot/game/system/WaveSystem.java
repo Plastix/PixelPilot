@@ -6,6 +6,7 @@ import com.artemis.systems.VoidEntitySystem;
 import com.mygdx.pixelpilot.data.GameData;
 import com.mygdx.pixelpilot.game.Plane;
 import com.mygdx.pixelpilot.game.component.PlaneDefinition;
+import com.mygdx.pixelpilot.game.component.Player;
 
 @Wire
 public class WaveSystem extends VoidEntitySystem {
@@ -26,8 +27,8 @@ public class WaveSystem extends VoidEntitySystem {
                 .speed(planeDefinition.speed)
                 .setPath(planeDefinition.spritePath)
                 .minTurnRadius(planeDefinition.minTurnRadius)
-                .create();
-//                .edit().add(planeDefinition);
+                .create()
+                .edit().add(new Player());
     }
 
     @Override
