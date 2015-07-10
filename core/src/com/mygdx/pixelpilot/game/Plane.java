@@ -19,7 +19,7 @@ public interface Plane extends EntityFactory<Plane> {
 
     Plane health(float health);
 
-    Plane size(float width, float height);
+    Plane size(float scaleX, float scaleY);
 
     @Bind(Velocity.class)
     @UseSetter("setSpeed")

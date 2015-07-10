@@ -22,7 +22,7 @@ public class WaveSystem extends VoidEntitySystem {
     private void buildPlayer(PlaneDefinition planeDefinition) {
         plane.health(100)
                 .position(100, 100)
-                .size(50, 50)
+                .size(3.5f, 3.5f)
                 .rotation(-90)
                 .speed(planeDefinition.speed)
                 .setPath(planeDefinition.spritePath)

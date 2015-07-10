@@ -9,13 +9,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.data.Assets;
+import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.effect.background.Backdrop;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.screen.ResizeEvent;
-import com.mygdx.pixelpilot.game.camera.GameCamera;
-import com.mygdx.pixelpilot.game.camera.TrackingCamera;
 import com.mygdx.pixelpilot.game.component.*;
 import net.engio.mbassy.listener.Handler;
 
@@ -76,7 +74,7 @@ public class RenderSystem extends EntityProcessingSystem {
             Size size = this.size.get(e);
             sprite2d.sprite.setPosition(position.x, position.y);
             sprite2d.sprite.setRotation(rotation.rotation);
-            sprite2d.sprite.setSize(size.width, size.height);
+            sprite2d.sprite.setScale(size.scaleX, size.scaleY);
             sprite2d.sprite.draw(batch);
         }
     }
