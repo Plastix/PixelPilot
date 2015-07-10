@@ -1,9 +1,15 @@
 package com.mygdx.pixelpilot.game;
 
 import com.artemis.World;
+import com.artemis.WorldConfiguration;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.mygdx.pixelpilot.data.Config;
+import com.mygdx.pixelpilot.game.camera.GameCamera;
 import com.mygdx.pixelpilot.game.system.*;
 
 public abstract class GameScreen extends ScreenAdapter {
@@ -15,7 +21,11 @@ public abstract class GameScreen extends ScreenAdapter {
 
     public GameScreen() {
 
-        world = new World();
+        GameCamera camera = new GameCamera();
+        camera.setWorldBounds(new Rectangle(0,0,3000,3000));
+        ExtendViewport viewport = new ExtendViewport(Config.NativeView.width, Config.NativeView.height, camera);
+
+        world = new World(new WorldConfiguration().register(viewport));
         world.setSystem(new RenderSystem());
         world.setSystem(new MovementSystem());
         world.setSystem(new PlayerInputSystem());

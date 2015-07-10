@@ -23,6 +23,7 @@ import net.engio.mbassy.listener.Handler;
 public class RenderSystem extends EntityProcessingSystem {
 
     private SpriteBatch batch;
+    @Wire
     private ExtendViewport viewport;
     private ComponentMapper<Position> position;
     private ComponentMapper<Rotation> rotation;
@@ -30,7 +31,6 @@ public class RenderSystem extends EntityProcessingSystem {
     private ComponentMapper<Renderable> renderable;
     private ComponentMapper<Size> size;
     private Backdrop backdrop;
-    public GameCamera camera;
 
     @SuppressWarnings("unchecked")
     public RenderSystem() {
@@ -45,16 +45,15 @@ public class RenderSystem extends EntityProcessingSystem {
         );
         Events.getBus().subscribe(this);
 
+    }
+
+    @Override
+    protected void initialize() {
         batch = new SpriteBatch();
 
-        camera = new GameCamera();
-        camera.setWorldBounds(new Rectangle(0,0,3000,3000));
-
-        viewport = new ExtendViewport(Config.NativeView.width, Config.NativeView.height, camera);
-
         // Pass in true to center camera
-        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         backdrop = Assets.manager.get("backdrop", Backdrop.class);
         backdrop.setSize(3000, 3000);
     }

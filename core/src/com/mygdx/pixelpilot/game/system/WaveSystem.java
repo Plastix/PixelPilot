@@ -5,9 +5,11 @@ import com.artemis.World;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.VoidEntitySystem;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.data.GameData;
 import com.mygdx.pixelpilot.game.Plane;
+import com.mygdx.pixelpilot.game.camera.GameCamera;
 import com.mygdx.pixelpilot.game.component.ParticleEmitter;
 import com.mygdx.pixelpilot.game.component.Player;
 import com.mygdx.pixelpilot.game.component.Position;
@@ -19,7 +21,9 @@ public class WaveSystem extends VoidEntitySystem {
 
     private World world;
     private Plane plane;
-    private RenderSystem renderSystem;
+
+    @Wire
+    protected ExtendViewport viewport;
 
     @Override
     protected void initialize() {
@@ -37,7 +41,7 @@ public class WaveSystem extends VoidEntitySystem {
                 .create()
                 .edit().add(new Player())
                 .add(new ParticleEmitter(Assets.manager.get(Assets.Data.smoke, ParticleEffect.class))).getEntity();
-        renderSystem.camera.track(entity.getComponent(Position.class));
+        ((GameCamera) (viewport.getCamera())).track(entity.getComponent(Position.class));
     }
 
     @Override

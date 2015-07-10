@@ -8,6 +8,8 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.mygdx.pixelpilot.game.camera.GameCamera;
 import com.mygdx.pixelpilot.game.component.ParticleEmitter;
 import com.mygdx.pixelpilot.game.component.Position;
 
@@ -19,6 +21,8 @@ public class ParticleEmitterSystem extends EntityProcessingSystem {
     private ComponentMapper<ParticleEmitter> particle;
     private SpriteBatch batch;
 
+    @Wire
+    private ExtendViewport viewport;
 
     @SuppressWarnings("unchecked")
     public ParticleEmitterSystem() {
@@ -32,6 +36,7 @@ public class ParticleEmitterSystem extends EntityProcessingSystem {
 
     @Override
     protected void begin() {
+        batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
     }
 

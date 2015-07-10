@@ -36,7 +36,6 @@ public class TrackingCamera extends OrthographicCamera {
     @Override
     public void update() {
         super.update();
-        System.out.println(target);
         if(Gdx.input.isKeyPressed(Input.Keys.I))
             zoom -= 0.1f;
         else if(Gdx.input.isKeyPressed(Input.Keys.J))
