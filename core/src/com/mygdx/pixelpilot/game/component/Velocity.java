@@ -8,7 +8,7 @@ public class Velocity extends Component {
     public Vector2 vector;
 
     public Velocity() {
-        this(1, 1);
+        this(1, 0);
     }
 
     public Velocity(float x, float y) {
