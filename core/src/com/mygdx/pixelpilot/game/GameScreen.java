@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.game.camera.GameCamera;
+import com.mygdx.pixelpilot.game.manager.ShadowManager;
 import com.mygdx.pixelpilot.game.system.*;
 
 public abstract class GameScreen extends ScreenAdapter {
@@ -31,6 +32,8 @@ public abstract class GameScreen extends ScreenAdapter {
         world.setSystem(new PlayerInputSystem());
         world.setSystem(new WaveSystem());
         world.setSystem(new ParticleEmitterSystem());
+
+        world.setManager(new ShadowManager());
 
         world.initialize();
     }

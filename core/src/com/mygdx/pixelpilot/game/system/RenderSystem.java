@@ -6,16 +6,12 @@ import com.artemis.Entity;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.data.Assets;
-import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.effect.background.Backdrop;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.screen.ResizeEvent;
-import com.mygdx.pixelpilot.game.camera.GameCamera;
 import com.mygdx.pixelpilot.game.component.*;
 import net.engio.mbassy.listener.Handler;
 
@@ -23,6 +19,7 @@ import net.engio.mbassy.listener.Handler;
 public class RenderSystem extends EntityProcessingSystem {
 
     private SpriteBatch batch;
+
     @Wire
     private ExtendViewport viewport;
     private ComponentMapper<Position> position;
@@ -30,6 +27,7 @@ public class RenderSystem extends EntityProcessingSystem {
     private ComponentMapper<Sprite2D> sprite2d;
     private ComponentMapper<Renderable> renderable;
     private ComponentMapper<Size> size;
+    private ComponentMapper<ShadowComponent> shadow;
     private Backdrop backdrop;
 
     @SuppressWarnings("unchecked")
@@ -77,11 +75,21 @@ public class RenderSystem extends EntityProcessingSystem {
             Sprite2D sprite2d = this.sprite2d.get(e);
             Position position = this.position.get(e);
             Rotation rotation = this.rotation.get(e);
+
+            //Draw a shadow if the entity has one
+            if (shadow.has(e)) {
+                ShadowComponent s = shadow.get(e);
+                s.sprite.setRotation(rotation.rotation);
+                s.sprite.setPosition(position.x - s.sprite.getWidth() / 2 - s.offsetX, position.y - s.sprite.getHeight() / 2 - s.offsetY);
+                s.sprite.draw(batch);
+            }
+
             Size size = this.size.get(e);
             sprite2d.sprite.setPosition(position.x - sprite2d.sprite.getWidth() / 2, position.y - sprite2d.sprite.getHeight() / 2);
             sprite2d.sprite.setRotation(rotation.rotation);
             sprite2d.sprite.setScale(size.scaleX, size.scaleY);
             sprite2d.sprite.draw(batch);
+
         }
     }
 
