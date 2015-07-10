@@ -72,7 +72,7 @@ public class RenderSystem extends EntityProcessingSystem {
             Position position = this.position.get(e);
             Rotation rotation = this.rotation.get(e);
             Size size = this.size.get(e);
-            sprite2d.sprite.setPosition(position.x, position.y);
+            sprite2d.sprite.setPosition(position.x - sprite2d.sprite.getWidth() / 2, position.y - sprite2d.sprite.getHeight() / 2);
             sprite2d.sprite.setRotation(rotation.rotation);
             sprite2d.sprite.setScale(size.scaleX, size.scaleY);
             sprite2d.sprite.draw(batch);
