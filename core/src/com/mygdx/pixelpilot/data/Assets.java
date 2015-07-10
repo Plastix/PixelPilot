@@ -1,8 +1,10 @@
 package com.mygdx.pixelpilot.data;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.ParticleEffectLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.mygdx.pixelpilot.data.loader.*;
@@ -45,6 +47,8 @@ public class Assets {
 
             setLoader(Backdrop.class,
                     new BackdropLoader(resolver));
+
+            setLoader(ParticleEffect.class, new ParticleEffectLoader(resolver));
 
         }
     };
@@ -90,6 +94,12 @@ public class Assets {
         public static final String planes = "data/PlaneDefinitions.yml";
         public static final String presets = "data/PlanePresets.yml";
         public static final String levels = "data/Levels.yml";
+
+        public static final String smoke = "data/particle/trail";
+        public static final String fire = "data/particle/fire";
+        public static final String image_dir = "image";
+
+
     }
 }
 

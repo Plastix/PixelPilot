@@ -1,4 +1,4 @@
-package com.mygdx.pixelpilot.game.component;
+package com.mygdx.pixelpilot.game.plane;
 
 
 import com.badlogic.gdx.graphics.Color;

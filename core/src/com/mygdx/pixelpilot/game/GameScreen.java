@@ -4,10 +4,7 @@ import com.artemis.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
-import com.mygdx.pixelpilot.game.system.MovementSystem;
-import com.mygdx.pixelpilot.game.system.PlayerInputSystem;
-import com.mygdx.pixelpilot.game.system.RenderSystem;
-import com.mygdx.pixelpilot.game.system.WaveSystem;
+import com.mygdx.pixelpilot.game.system.*;
 
 public abstract class GameScreen extends ScreenAdapter {
 
@@ -23,6 +20,7 @@ public abstract class GameScreen extends ScreenAdapter {
         world.setSystem(new MovementSystem());
         world.setSystem(new PlayerInputSystem());
         world.setSystem(new WaveSystem());
+        world.setSystem(new ParticleEmitterSystem());
 
         world.initialize();
     }

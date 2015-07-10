@@ -1,15 +1,8 @@
 package com.mygdx.pixelpilot.game.plane;
 
 import com.artemis.Entity;
-import com.artemis.annotations.Wire;
-import com.artemis.utils.EntityBuilder;
 import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.game.Plane;
-import com.mygdx.pixelpilot.game.component.PlaneDefinition;
-import com.mygdx.pixelpilot.game.plane.armaments.weapon.utils.InstalledWeaponDefinition;
-import com.mygdx.pixelpilot.game.plane.controller.Controller;
-
-import java.util.List;
 
 
 public class PlaneFactory {
