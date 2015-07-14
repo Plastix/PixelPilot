@@ -21,7 +21,6 @@ public abstract class GameScreen extends ScreenAdapter {
     protected final World world;
 
     public GameScreen() {
-
         GameCamera camera = new GameCamera();
         camera.setWorldBounds(new Rectangle(0,0,3000,3000));
         ExtendViewport viewport = new ExtendViewport(Config.NativeView.width, Config.NativeView.height, camera);
@@ -31,6 +30,8 @@ public abstract class GameScreen extends ScreenAdapter {
         world.setSystem(new MovementSystem());
         world.setSystem(new PlayerInputSystem());
         world.setSystem(new WaveSystem());
+        world.setSystem(new AISystem());
+        world.setSystem(new TurningSystem());
         world.setSystem(new ParticleEmitterSystem());
 
         world.setManager(new ShadowManager());

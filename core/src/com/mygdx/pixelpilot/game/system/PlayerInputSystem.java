@@ -7,19 +7,16 @@ import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.pixelpilot.game.component.Player;
 import com.mygdx.pixelpilot.game.component.Rotation;
-import com.mygdx.pixelpilot.game.component.TurnRadius;
+import com.mygdx.pixelpilot.game.component.Turning;
 import com.mygdx.pixelpilot.game.component.Velocity;
 import com.mygdx.pixelpilot.util.Utils;
 
 @Wire
 public class PlayerInputSystem extends EntityProcessingSystem {
 
-    private ComponentMapper<Rotation> rotation;
-    private ComponentMapper<Velocity> velocity;
-    private ComponentMapper<TurnRadius> turn;
+    private ComponentMapper<Turning> turning;
     private float turnAmount = 0.5f;
     private boolean hasAccelerometer;
 
@@ -27,25 +24,25 @@ public class PlayerInputSystem extends EntityProcessingSystem {
     public PlayerInputSystem() {
         super(Aspect.getAspectForAll(
                 Player.class,
-                Velocity.class,
-                Rotation.class,
-                TurnRadius.class
+                Turning.class
         ));
         hasAccelerometer = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
     }
 
     @Override
     protected void process(Entity e) {
-        Rotation r = rotation.get(e);
-        Velocity v = velocity.get(e);
-        float minTurnRadius = turn.get(e).turnRadius;
+        Turning turning = this.turning.get(e);
 
         if (hasAccelerometer) {
-            float turn = Utils.map(Gdx.input.getAccelerometerY(), -5, 5, -1, 1);
-            turn(v, r, -turn, minTurnRadius);
+            float maxAccelerometerValue = 5;
+            float maxTurnValue = 1;
+            float turnAmount = Utils.map(Gdx.input.getAccelerometerY(), // map the accelerometer input
+                    -maxAccelerometerValue, maxAccelerometerValue, // from ± 5 (half the full value of ± 10, because we only care up to 180°)
+                    -maxTurnValue, maxTurnValue); // to ± 1 (which is what the turning system accepts)
+            turning.turn(-turnAmount); // then turn the entity
         }
 
-        //Desktop Controls
+        // Desktop Controls
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             turnAmount = Math.min(turnAmount + 0.05f, 1f);
         }
@@ -53,34 +50,17 @@ public class PlayerInputSystem extends EntityProcessingSystem {
             turnAmount = Math.max(turnAmount - 0.05f, 0f);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            turn(v, r, turnAmount, minTurnRadius);
+            turning.turn(turnAmount);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            turn(v, r, -turnAmount, minTurnRadius);
+            turning.turn(-turnAmount);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isTouched()) {
 //            plane.shoot();
         }
-
         if (Gdx.input.isKeyPressed(Input.Keys.V)) {
 //            plane.hit();
         }
 
     }
-
-    /**
-     * Causes the plane to change its heading
-     *
-     * @param turnAmount amount to turn this frame, expects to be in range [-1, 1]
-     */
-    public void turn(Velocity velocity, Rotation rotation, float turnAmount, float minTurnRadius) {
-
-        // based on http://aviation.stackexchange.com/a/2872
-        float minTurnRadiusAng = MathUtils.radDeg * velocity.vector.len() / minTurnRadius;
-
-        float turnAng = Utils.map(turnAmount, -1f, 1f, -minTurnRadiusAng, minTurnRadiusAng);
-        velocity.vector.rotate(turnAng);
-        rotation.set(velocity.vector.angle() - 90);
-    }
-
 }

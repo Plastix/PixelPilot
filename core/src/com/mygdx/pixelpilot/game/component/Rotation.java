@@ -25,4 +25,8 @@ public class Rotation extends Component {
                 "rotation=" + rotation +
                 '}';
     }
+
+    public void add(float angle) {
+        rotation+=angle;
+    }
 }
