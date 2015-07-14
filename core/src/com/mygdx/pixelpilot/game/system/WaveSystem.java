@@ -15,6 +15,7 @@ import com.mygdx.pixelpilot.game.component.ParticleEmitter;
 import com.mygdx.pixelpilot.game.component.Player;
 import com.mygdx.pixelpilot.game.component.Position;
 import com.mygdx.pixelpilot.game.component.ShadowComponent;
+import com.mygdx.pixelpilot.game.component.behavior.WanderBehavior;
 import com.mygdx.pixelpilot.game.plane.PlaneDefinition;
 
 
@@ -42,6 +43,7 @@ public class WaveSystem extends VoidEntitySystem {
                 .minTurnRadius(planeDefinition.minTurnRadius)
                 .create()
                 .edit().add(new Player())
+                .add(new WanderBehavior())
                 .add(new ParticleEmitter(Assets.manager.get(Assets.Data.smoke, ParticleEffect.class)))
                 .add(new ShadowComponent(0, 20, 1.5f, 1.5f, new Color(0, 0, 0, 0.1f)))
                 .getEntity();

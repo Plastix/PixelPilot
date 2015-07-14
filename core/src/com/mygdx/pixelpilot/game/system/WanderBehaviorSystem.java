@@ -3,6 +3,7 @@ package com.mygdx.pixelpilot.game.system;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
+import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
 import com.badlogic.gdx.math.Vector2;
@@ -10,30 +11,31 @@ import com.mygdx.pixelpilot.game.component.Position;
 import com.mygdx.pixelpilot.game.component.Rotation;
 import com.mygdx.pixelpilot.game.component.Turning;
 import com.mygdx.pixelpilot.game.component.Velocity;
-import com.mygdx.pixelpilot.game.component.behavior.Wander;
+import com.mygdx.pixelpilot.game.component.behavior.WanderBehavior;
 import com.mygdx.pixelpilot.util.Utils;
 
+@Wire
 public class WanderBehaviorSystem extends EntityProcessingSystem {
-    ComponentMapper<Velocity> velocity;
-    ComponentMapper<Turning> turning;
-
-    ComponentMapper<Wander> wander;
-    SteeringAcceleration<Vector2> acceleration;
+    private ComponentMapper<Velocity> velocity;
+    private ComponentMapper<Turning> turning;
+    private ComponentMapper<WanderBehavior> wander;
+    private SteeringAcceleration<Vector2> acceleration;
 
     @SuppressWarnings("unchecked")
     public WanderBehaviorSystem() {
         super(Aspect.getAspectForAll(
-                Wander.class,
+                WanderBehavior.class,
                 Position.class,
                 Velocity.class,
                 Turning.class,
                 Rotation.class
         ));
+        acceleration = new SteeringAcceleration<Vector2>(new Vector2());
     }
 
     @Override
     protected void process(Entity entity) {
-        Wander w = this.wander.get(entity);
+        WanderBehavior w = this.wander.get(entity);
         Turning t = this.turning.get(entity);
         Velocity v = this.velocity.get(entity);
         w.wander.calculateSteering(acceleration);
@@ -43,5 +45,6 @@ public class WanderBehaviorSystem extends EntityProcessingSystem {
         } else if (ang > 0) {
             t.turn(Utils.map(ang, 15, 180, -0f, -1f));
         }
+        acceleration.setZero();
     }
 }

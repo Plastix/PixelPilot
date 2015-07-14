@@ -8,9 +8,7 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.pixelpilot.game.component.Player;
-import com.mygdx.pixelpilot.game.component.Rotation;
 import com.mygdx.pixelpilot.game.component.Turning;
-import com.mygdx.pixelpilot.game.component.Velocity;
 import com.mygdx.pixelpilot.util.Utils;
 
 @Wire

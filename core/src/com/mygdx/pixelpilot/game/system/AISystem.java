@@ -7,9 +7,7 @@ import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.mygdx.pixelpilot.game.component.AI;
 import com.mygdx.pixelpilot.game.component.Position;
-import com.mygdx.pixelpilot.game.component.behavior.Attack;
 import com.mygdx.pixelpilot.game.component.behavior.Behavior;
-import com.mygdx.pixelpilot.game.component.behavior.Wander;
 
 @Wire
 public class AISystem extends EntityProcessingSystem {
