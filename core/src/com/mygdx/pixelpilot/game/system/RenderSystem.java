@@ -27,7 +27,7 @@ public class RenderSystem extends EntityProcessingSystem {
     private ComponentMapper<Sprite2D> sprite2d;
     private ComponentMapper<Renderable> renderable;
     private ComponentMapper<Size> size;
-    private ComponentMapper<ShadowComponent> shadow;
+    private ComponentMapper<Shadow> shadow;
     private Backdrop backdrop;
 
     @SuppressWarnings("unchecked")
@@ -78,7 +78,7 @@ public class RenderSystem extends EntityProcessingSystem {
 
             //Draw a shadow if the entity has one
             if (shadow.has(e)) {
-                ShadowComponent s = shadow.get(e);
+                Shadow s = shadow.get(e);
                 s.sprite.setRotation(rotation.rotation);
                 s.sprite.setPosition(position.x - s.sprite.getWidth() / 2 - s.offsetX, position.y - s.sprite.getHeight() / 2 - s.offsetY);
                 s.sprite.draw(batch);

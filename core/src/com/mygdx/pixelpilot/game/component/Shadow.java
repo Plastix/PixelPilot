@@ -4,7 +4,7 @@ import com.artemis.Component;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class ShadowComponent extends Component {
+public class Shadow extends Component {
 
     public int offsetX;
     public int offsetY;
@@ -13,7 +13,7 @@ public class ShadowComponent extends Component {
     public Color shadowColor;
     public Sprite sprite;
 
-    public ShadowComponent(int offsetX, int offsetY, float scaleX, float scaleY, Color shadowColor) {
+    public Shadow(int offsetX, int offsetY, float scaleX, float scaleY, Color shadowColor) {
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.scaleX = scaleX;

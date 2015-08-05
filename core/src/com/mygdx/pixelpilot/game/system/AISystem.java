@@ -6,6 +6,7 @@ import com.artemis.Entity;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.mygdx.pixelpilot.game.component.AI;
+import com.mygdx.pixelpilot.game.component.Eyes;
 import com.mygdx.pixelpilot.game.component.Position;
 import com.mygdx.pixelpilot.game.component.behavior.Behavior;
 

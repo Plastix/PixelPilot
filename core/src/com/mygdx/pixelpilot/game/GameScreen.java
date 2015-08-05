@@ -29,8 +29,10 @@ public abstract class GameScreen extends ScreenAdapter {
         world.setSystem(new MovementSystem());
         world.setSystem(new PlayerInputSystem());
         world.setSystem(new WaveSystem());
+        world.setSystem(new SteerableSystem());
         world.setSystem(new AISystem());
         world.setSystem(new WanderBehaviorSystem());
+        world.setSystem(new SeekBehaviorSystem());
         world.setSystem(new TurningSystem());
         world.setSystem(new ParticleEmitterSystem());
 

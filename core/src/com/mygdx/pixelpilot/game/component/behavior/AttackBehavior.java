@@ -5,10 +5,10 @@ import com.artemis.Entity;
 import com.mygdx.pixelpilot.game.component.Position;
 
 
-public class Attack extends Behavior {
+public class AttackBehavior extends Behavior {
     public Entity target;
 
-    public Attack(Entity target) {
+    public AttackBehavior(Entity target) {
         setTarget(target);
     }
 

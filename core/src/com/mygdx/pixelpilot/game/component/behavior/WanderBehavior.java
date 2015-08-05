@@ -10,7 +10,7 @@ public class WanderBehavior extends Behavior {
 
     public WanderBehavior() {
         this.wander = new Wander<Vector2>(new SteerableActor() {
-
+            /* Help I'm trapped in an anonymous class */
         }).setFaceEnabled(false)
                 .setWanderOffset(50)
                 .setWanderOrientation(90)

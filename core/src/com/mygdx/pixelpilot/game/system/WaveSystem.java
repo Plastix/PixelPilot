@@ -6,16 +6,14 @@ import com.artemis.annotations.Wire;
 import com.artemis.systems.VoidEntitySystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.data.GameData;
 import com.mygdx.pixelpilot.game.Plane;
 import com.mygdx.pixelpilot.game.camera.GameCamera;
-import com.mygdx.pixelpilot.game.component.ParticleEmitter;
-import com.mygdx.pixelpilot.game.component.Player;
-import com.mygdx.pixelpilot.game.component.Position;
-import com.mygdx.pixelpilot.game.component.ShadowComponent;
-import com.mygdx.pixelpilot.game.component.behavior.WanderBehavior;
+import com.mygdx.pixelpilot.game.component.*;
+import com.mygdx.pixelpilot.game.component.behavior.SeekBehavior;
 import com.mygdx.pixelpilot.game.plane.PlaneDefinition;
 
 
@@ -43,9 +41,10 @@ public class WaveSystem extends VoidEntitySystem {
                 .minTurnRadius(planeDefinition.minTurnRadius)
                 .create()
                 .edit().add(new Player())
-                .add(new WanderBehavior())
+                .add(new SeekBehavior(new Vector2(1500,500)))
+                .add(new Target())
                 .add(new ParticleEmitter(Assets.manager.get(Assets.Data.smoke, ParticleEffect.class)))
-                .add(new ShadowComponent(0, 20, 1.5f, 1.5f, new Color(0, 0, 0, 0.1f)))
+                .add(new Shadow(0, 20, 1.5f, 1.5f, new Color(0, 0, 0, 0.1f)))
                 .getEntity();
         ((GameCamera) (viewport.getCamera())).track(entity.getComponent(Position.class));
     }

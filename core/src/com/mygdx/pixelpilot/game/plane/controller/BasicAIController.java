@@ -182,7 +182,9 @@ public class BasicAIController extends AIController {
                         Vector2 temp = new Vector2();
                         @Override
                         public Vector2 getPosition() {
-                            return controller.worldBounds.getCenter(temp);
+                            Vector2 center = controller.worldBounds.getCenter(temp);
+                            System.out.println(center);
+                            return center;
                         }
                     });
                 }
