@@ -19,6 +19,7 @@ public class SeekBehaviorSystem extends BehaviorProcessingSystem {
     private ComponentMapper<Rotation> rotation;
     private ComponentMapper<Position> position;
     private ComponentMapper<Steerable> steerable;
+    private ComponentMapper<Tolerance> tolerance;
 
     private Seek<Vector2> behavior;
 
@@ -44,6 +45,9 @@ public class SeekBehaviorSystem extends BehaviorProcessingSystem {
     protected void process(final Entity e) {
         behavior.setOwner(steerable.get(e));
         behavior.setTarget(seek.get(e).target);
-        applyBehavior(behavior, velocity.get(e), turning.get(e));
+        if (!tolerance.has(e))
+            applyBehavior(behavior, velocity.get(e), turning.get(e));
+        else
+            applyBehavior(behavior, velocity.get(e), turning.get(e), tolerance.get(e).min, tolerance.get(e).max);
     }
 }

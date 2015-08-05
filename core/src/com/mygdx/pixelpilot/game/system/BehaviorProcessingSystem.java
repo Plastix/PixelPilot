@@ -17,14 +17,18 @@ public abstract class BehaviorProcessingSystem extends EntityProcessingSystem {
         acceleration = new SteeringAcceleration<Vector2>(new Vector2());
     }
 
-    void applyBehavior(SteeringBehavior<Vector2> behavior, Velocity v, Turning t) {
+    void applyBehavior(SteeringBehavior<Vector2> behavior, Velocity v, Turning t, float min, float max) {
         behavior.calculateSteering(acceleration);
         float ang = acceleration.linear.angle(v.vector);
         if (ang < 0) {
-            t.turn(Utils.map(ang, -15, -180, 0f, 1f));
+            t.turn(Utils.map(ang, -min, -max, 0f, 1f));
         } else if (ang > 0) {
-            t.turn(Utils.map(ang, 15, 180, -0f, -1f));
+            t.turn(Utils.map(ang, min, max, -0f, -1f));
         }
         acceleration.setZero();
+    }
+    
+    void applyBehavior(SteeringBehavior<Vector2> behavior, Velocity v, Turning t) {
+        applyBehavior(behavior, v, t, 15, 180);
     }
 }
