@@ -7,29 +7,63 @@ import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
+import com.mygdx.pixelpilot.game.StageConfig;
 import com.mygdx.pixelpilot.game.component.Player;
+import com.mygdx.pixelpilot.game.component.Position;
 import com.mygdx.pixelpilot.game.component.Turning;
+import com.mygdx.pixelpilot.game.component.behavior.SeekBehavior;
 import com.mygdx.pixelpilot.util.Utils;
 
 @Wire
-public class PlayerInputSystem extends EntityProcessingSystem {
+public class PlayerSystem extends EntityProcessingSystem {
 
-    private ComponentMapper<Turning> turning;
+    @Wire
+    private StageConfig config;
+
+    private ComponentMapper<Turning> turningMapper;
+    private ComponentMapper<Player> playerMapper;
+    private ComponentMapper<Position> positionMapper;
+    private ComponentMapper<SeekBehavior> seekBehaviorMapper;
+
     private float turnAmount = 0.5f;
     private boolean hasAccelerometer;
 
     @SuppressWarnings("unchecked")
-    public PlayerInputSystem() {
+    public PlayerSystem() {
         super(Aspect.getAspectForAll(
                 Player.class,
                 Turning.class
         ));
         hasAccelerometer = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
+
     }
 
     @Override
     protected void process(Entity e) {
-        Turning turning = this.turning.get(e);
+        if (playerMapper.get(e).controllable) {
+            steer(e);
+        }
+
+        // if we're out of bounds seek center
+        Position position = this.positionMapper.get(e);
+        if (!config.worldBounds.contains(position.x, position.y)) {
+            playerMapper.get(e).controllable = false;
+            if (!seekBehaviorMapper.has(e)) {
+                e.edit().add(new SeekBehavior(new Vector2(
+                        config.worldBounds.width / 2 + config.worldBounds.x,
+                        config.worldBounds.height / 2 + config.worldBounds.y)));
+            }
+        } else {
+            if (seekBehaviorMapper.has(e)) {
+                e.edit().remove(SeekBehavior.class);
+            }
+            playerMapper.get(e).controllable = true;
+        }
+    }
+
+    private void steer(Entity e) {
+        Turning turning = this.turningMapper.get(e);
 
         if (hasAccelerometer) {
             float maxAccelerometerValue = 5;
@@ -59,6 +93,6 @@ public class PlayerInputSystem extends EntityProcessingSystem {
         if (Gdx.input.isKeyPressed(Input.Keys.V)) {
 //            plane.hit();
         }
-
     }
+
 }

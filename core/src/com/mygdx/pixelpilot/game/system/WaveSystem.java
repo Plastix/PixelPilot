@@ -41,7 +41,6 @@ public class WaveSystem extends VoidEntitySystem {
                 .minTurnRadius(planeDefinition.minTurnRadius)
                 .create()
                 .edit().add(new Player())
-                .add(new SeekBehavior(new Vector2(1500,500)))
                 .add(new Target())
                 .add(new ParticleEmitter(Assets.manager.get(Assets.Data.smoke, ParticleEffect.class)))
                 .add(new Shadow(0, 20, 1.5f, 1.5f, new Color(0, 0, 0, 0.1f)))

@@ -20,14 +20,16 @@ public abstract class GameScreen extends ScreenAdapter {
     protected final World world;
 
     public GameScreen() {
+        StageConfig config = new StageConfig();
+        config.worldBounds = new Rectangle(0, 0, 3000, 3000); // todo: how do we use this in GameAssets?
         GameCamera camera = new GameCamera();
-        camera.setWorldBounds(new Rectangle(0, 0, 3000, 3000));
+        camera.setWorldBounds(config.worldBounds);
         ExtendViewport viewport = new ExtendViewport(Config.NativeView.width, Config.NativeView.height, camera);
 
-        world = new World(new WorldConfiguration().register(viewport));
+        world = new World(new WorldConfiguration().register(viewport).register(config));
         world.setSystem(new RenderSystem());
         world.setSystem(new MovementSystem());
-        world.setSystem(new PlayerInputSystem());
+        world.setSystem(new PlayerSystem());
         world.setSystem(new WaveSystem());
         world.setSystem(new SteerableSystem());
         world.setSystem(new AISystem());
@@ -41,13 +43,6 @@ public abstract class GameScreen extends ScreenAdapter {
         world.initialize();
     }
 
-//    protected void setWorld(OldWorld world) {
-//        this.world = world;
-//    }
-
-//    protected void setHUD(HUD hud){
-//        this.hud = hud;
-//    }
 
     @Override
     public void render(float delta) {

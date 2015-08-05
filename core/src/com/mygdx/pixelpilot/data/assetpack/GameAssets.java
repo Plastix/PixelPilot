@@ -12,7 +12,8 @@ public class GameAssets extends AssetPack {
     @Override
     public void queueAssets() {
         add(new Asset("backdrop", Backdrop.class,
-                new BackdropLoader.BackdropParam(3000, 3000, BackdropFactory.ThemePreset.ISLANDS)));
+                new BackdropLoader.BackdropParam(3000, 3000, BackdropFactory.ThemePreset.ISLANDS))); // todo: size adjustable
+
         ParticleEffectLoader.ParticleEffectParameter particleParam = new ParticleEffectLoader.ParticleEffectParameter();
         particleParam.imagesDir = Gdx.files.internal(Assets.Data.image_dir);
         add(new Asset(Assets.Data.smoke, ParticleEffect.class, particleParam));

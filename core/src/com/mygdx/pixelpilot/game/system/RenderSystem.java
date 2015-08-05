@@ -12,6 +12,7 @@ import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.effect.background.Backdrop;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.screen.ResizeEvent;
+import com.mygdx.pixelpilot.game.StageConfig;
 import com.mygdx.pixelpilot.game.component.*;
 import net.engio.mbassy.listener.Handler;
 
@@ -22,6 +23,8 @@ public class RenderSystem extends EntityProcessingSystem {
 
     @Wire
     private ExtendViewport viewport;
+    @Wire // do I need two @Wires?
+    private StageConfig config;
     private ComponentMapper<Position> position;
     private ComponentMapper<Rotation> rotation;
     private ComponentMapper<Sprite2D> sprite2d;
@@ -53,7 +56,7 @@ public class RenderSystem extends EntityProcessingSystem {
 
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         backdrop = Assets.manager.get("backdrop", Backdrop.class);
-        backdrop.setSize(3000, 3000);
+        backdrop.setSize(config.worldBounds.width, config.worldBounds.height);
     }
 
     @Override
