@@ -9,7 +9,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.mygdx.pixelpilot.game.camera.GameCamera;
+import com.mygdx.pixelpilot.game.camera.ParallaxUtil;
+import com.mygdx.pixelpilot.game.component.Parallax;
 import com.mygdx.pixelpilot.game.component.ParticleEmitter;
 import com.mygdx.pixelpilot.game.component.Position;
 
@@ -19,6 +20,7 @@ public class ParticleEmitterSystem extends EntityProcessingSystem {
 
     private ComponentMapper<Position> position;
     private ComponentMapper<ParticleEmitter> particle;
+    private ComponentMapper<Parallax> parallax;
     private SpriteBatch batch;
 
     @Wire
@@ -47,6 +49,10 @@ public class ParticleEmitterSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity entity) {
+        if (parallax.has(entity)) {
+            Parallax p = parallax.get(entity);
+            batch.setProjectionMatrix(ParallaxUtil.calculateParallaxMatrix(viewport.getCamera(), p.parallaxX, p.parallaxY));
+        }
         Position pos = position.get(entity);
         ParticleEmitter emitter = particle.get(entity);
 

@@ -13,6 +13,7 @@ import com.mygdx.pixelpilot.effect.background.Backdrop;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.screen.ResizeEvent;
 import com.mygdx.pixelpilot.game.StageConfig;
+import com.mygdx.pixelpilot.game.camera.ParallaxUtil;
 import com.mygdx.pixelpilot.game.component.*;
 import net.engio.mbassy.listener.Handler;
 
@@ -31,6 +32,7 @@ public class RenderSystem extends EntityProcessingSystem {
     private ComponentMapper<Renderable> renderable;
     private ComponentMapper<Size> size;
     private ComponentMapper<Shadow> shadow;
+    private ComponentMapper<Parallax> parallax;
     private Backdrop backdrop;
 
     @SuppressWarnings("unchecked")
@@ -63,6 +65,7 @@ public class RenderSystem extends EntityProcessingSystem {
     protected void begin() {
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
+        batch.setProjectionMatrix(ParallaxUtil.calculateParallaxMatrix(viewport.getCamera(), 0.5f, 0.5f));
         backdrop.draw(batch, 1);
     }
 
@@ -75,6 +78,17 @@ public class RenderSystem extends EntityProcessingSystem {
     protected void process(Entity e) {
         viewport.getCamera().update();
         if (renderable.get(e).isVisible) {
+
+            //Update batch with parallax
+            if (parallax.has(e)) {
+                Parallax p = parallax.get(e);
+                batch.setProjectionMatrix(ParallaxUtil.calculateParallaxMatrix(viewport.getCamera(), p.parallaxX, p.parallaxY));
+            }
+//            } else {
+//                batch.setProjectionMatrix(viewport.getCamera().combined);
+//            }
+
+
             Sprite2D sprite2d = this.sprite2d.get(e);
             Position position = this.position.get(e);
             Rotation rotation = this.rotation.get(e);

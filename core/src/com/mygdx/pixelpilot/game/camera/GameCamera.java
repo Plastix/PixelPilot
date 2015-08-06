@@ -3,7 +3,6 @@ package com.mygdx.pixelpilot.game.camera;
 import com.mygdx.pixelpilot.event.Events;
 import com.mygdx.pixelpilot.event.events.game.GamePauseEvent;
 import com.mygdx.pixelpilot.event.events.game.GameResumeEvent;
-import com.mygdx.pixelpilot.event.events.player.PlayerSpawnEvent;
 import net.engio.mbassy.listener.Handler;
 
 public class GameCamera extends TrackingCamera {
@@ -18,18 +17,18 @@ public class GameCamera extends TrackingCamera {
 
     @Override
     public void update() {
-        if(!isPaused) {
+        if (!isPaused) {
             super.update();
         }
     }
 
     @Handler
-    public void onPause(GamePauseEvent event){
+    public void onPause(GamePauseEvent event) {
         this.isPaused = true;
     }
 
     @Handler
-    public void onResume(GameResumeEvent event){
+    public void onResume(GameResumeEvent event) {
         this.isPaused = false;
     }
 
