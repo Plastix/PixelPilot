@@ -65,7 +65,6 @@ public class RenderSystem extends EntityProcessingSystem {
     protected void begin() {
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
-        batch.setProjectionMatrix(ParallaxUtil.calculateParallaxMatrix(viewport.getCamera(), 0.5f, 0.5f));
         backdrop.draw(batch, 1);
     }
 
