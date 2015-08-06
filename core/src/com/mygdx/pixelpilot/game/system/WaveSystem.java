@@ -4,6 +4,7 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.VoidEntitySystem;
+import com.artemis.utils.EntityBuilder;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -42,7 +43,7 @@ public class WaveSystem extends VoidEntitySystem {
                 .add(new Target())
                 .add(new ParticleEmitter(Assets.manager.get(Assets.Data.smoke, ParticleEffect.class)))
                 .add(new Shadow(0, 20, 1.5f, 1.5f, new Color(0, 0, 0, 0.1f)))
-                .add(new Parallax(1, 1))
+//                .add(new Parallax(1, 1))
                 .getEntity();
         ((GameCamera) (viewport.getCamera())).track(entity.getComponent(Position.class));
     }

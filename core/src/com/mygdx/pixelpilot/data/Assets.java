@@ -96,6 +96,7 @@ public class Assets {
 
         public static final String smoke = "data/particle/trail";
         public static final String fire = "data/particle/fire";
+        public static final String cloud = "data/particle/cloud";
         public static final String image_dir = "image";
 
 

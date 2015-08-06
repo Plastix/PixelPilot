@@ -1,14 +1,22 @@
 package com.mygdx.pixelpilot.game;
 
+import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
+import com.artemis.utils.EntityBuilder;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.mygdx.pixelpilot.data.Assets;
 import com.mygdx.pixelpilot.data.Config;
 import com.mygdx.pixelpilot.game.camera.GameCamera;
+import com.mygdx.pixelpilot.game.component.Parallax;
+import com.mygdx.pixelpilot.game.component.ParticleEmitter;
+import com.mygdx.pixelpilot.game.component.Position;
 import com.mygdx.pixelpilot.game.manager.ShadowManager;
 import com.mygdx.pixelpilot.game.system.*;
 
@@ -41,6 +49,15 @@ public abstract class GameScreen extends ScreenAdapter {
         world.setManager(new ShadowManager());
 
         world.initialize();
+
+        for (int i = 0; i < 200; i++) {
+            Entity cloud = new EntityBuilder(world)
+                    .with(new Position(MathUtils.random(0, 3000), MathUtils.random(0, 3000)))
+                .with(new Parallax(0.75f, 0.75f))
+                    .with(new ParticleEmitter(Assets.manager.get(Assets.Data.cloud, ParticleEffect.class))).build();
+        }
+
+
     }
 
 

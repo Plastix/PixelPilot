@@ -17,5 +17,6 @@ public class GameAssets extends AssetPack {
         ParticleEffectLoader.ParticleEffectParameter particleParam = new ParticleEffectLoader.ParticleEffectParameter();
         particleParam.imagesDir = Gdx.files.internal(Assets.Data.image_dir);
         add(new Asset(Assets.Data.smoke, ParticleEffect.class, particleParam));
+        add(new Asset(Assets.Data.cloud, ParticleEffect.class, particleParam));
     }
 }
