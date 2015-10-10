@@ -63,9 +63,10 @@ public class RenderSystem extends EntityProcessingSystem {
 
     @Override
     protected void begin() {
-        batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
+        batch.setProjectionMatrix(ParallaxUtil.calculateParallaxMatrix(viewport.getCamera(), 0.5f, 0.5f));
         backdrop.draw(batch, 1);
+        batch.setProjectionMatrix(viewport.getCamera().combined);
     }
 
     @Override
@@ -82,10 +83,9 @@ public class RenderSystem extends EntityProcessingSystem {
             if (parallax.has(e)) {
                 Parallax p = parallax.get(e);
                 batch.setProjectionMatrix(ParallaxUtil.calculateParallaxMatrix(viewport.getCamera(), p.parallaxX, p.parallaxY));
+            } else {
+                batch.setProjectionMatrix(viewport.getCamera().combined);
             }
-//            } else {
-//                batch.setProjectionMatrix(viewport.getCamera().combined);
-//            }
 
 
             Sprite2D sprite2d = this.sprite2d.get(e);
@@ -107,6 +107,7 @@ public class RenderSystem extends EntityProcessingSystem {
             sprite2d.sprite.draw(batch);
 
         }
+
     }
 
     @Handler
